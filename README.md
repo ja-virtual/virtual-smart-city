@@ -1,6 +1,6 @@
 #Smart City Application 
 
-Cette application vas 
+Cette application vas proposer ses services pour les clients ci-dessous afin de manipuler les différents services de la smart city 
 
 #Les acteurs principaux : 
 
