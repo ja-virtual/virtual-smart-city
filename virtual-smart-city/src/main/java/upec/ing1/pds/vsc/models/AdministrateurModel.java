@@ -4,5 +4,6 @@ public class AdministrateurModel {
 	
 	private String name;
 	private String prenom;
+	private int age;
 
 }
