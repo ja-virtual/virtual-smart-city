@@ -4,5 +4,14 @@
   <artifactId>virtual-smart-city</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>virtual-smart-city</name>
+<<<<<<< HEAD
   <description>Application to deserve clients for smart city services</description>
+=======
+  <description>Application to deserve clients for smart-city services</description>
+<properties>
+		<java.version>9</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+	</properties>
+>>>>>>> ef3305edee46914558f6a87c9ef8386a60754cc9
 </project>
