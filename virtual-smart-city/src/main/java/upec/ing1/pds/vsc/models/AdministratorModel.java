@@ -4,6 +4,6 @@ public class AdministratorModel {
 
     private String name;
     private String firstname;
-    private string age;
+    private String age;
 
 }
