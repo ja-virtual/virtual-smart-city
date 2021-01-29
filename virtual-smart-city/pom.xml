@@ -5,4 +5,9 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>virtual-smart-city</name>
   <description>Application to deserve clients for smart-city services</description>
+<properties>
+		<java.version>9</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+	</properties>
 </project>
