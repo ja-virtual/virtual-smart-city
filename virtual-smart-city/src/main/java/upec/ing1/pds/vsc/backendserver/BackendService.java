@@ -1,12 +1,12 @@
-package upec.ing1.pds.vsc.demo;
+package upec.ing1.pds.vsc.backendserver;
 
 import org.apache.commons.cli.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-		public class VSCApplicationDemo {
-			private final static Logger logger = LoggerFactory.getLogger(VSCApplicationDemo.class.getName());
+		public class BackendService {
+			private final static Logger logger = LoggerFactory.getLogger(BackendService.class.getName());
 			public static void main(String[] args) throws Exception {
 				final Options options = new Options();
 				final Option testMode = Option.builder().longOpt("testMode").build();
