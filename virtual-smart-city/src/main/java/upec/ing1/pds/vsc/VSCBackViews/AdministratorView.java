@@ -1,8 +1,7 @@
-package upec.ing1.pds.vsc.views;
+package upec.ing1.pds.vsc.VSCBackViews;
 
 public class AdministratorView {
-    private String name;
-    private String firstname;
-    private String age;
+
+
 
 }

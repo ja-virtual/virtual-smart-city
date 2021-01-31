@@ -1,4 +1,4 @@
-package upec.ing1.pds.vsc.controllers;
+package upec.ing1.pds.vsc.VSCBackControllers;
 
 public class AdministratorController {
 

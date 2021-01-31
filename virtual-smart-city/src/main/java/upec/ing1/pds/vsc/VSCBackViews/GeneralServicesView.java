@@ -1,4 +1,4 @@
-package upec.ing1.pds.vsc.views;
+package upec.ing1.pds.vsc.VSCBackViews;
 
 public class GeneralServicesView {
 

@@ -1,4 +1,4 @@
-package upec.ing1.pds.vsc.backendserver;
+package upec.ing1.pds.vsc.VSCBackServer;
 
 import org.apache.commons.cli.*;
 
