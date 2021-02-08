@@ -10,16 +10,16 @@ import org.slf4j.LoggerFactory;
 			public static void main(String[] args) throws Exception {
 
 
+
+				final CommandLineParser parser = new DefaultParser();
 				final Options opts = new Options();
+				final CommandLine commandLine = parser.parse(opts, args);
 
 				final Option connexionLimit = Option.builder().longOpt("connexionLimit").hasArg().build();
 				opts.addOption(connexionLimit);
 
 				final Option workingTrial = Option.builder().longOpt("workingTrial").build();
 				opts.addOption(workingTrial);
-
-				final CommandLineParser parser = new DefaultParser();
-				final CommandLine commandLine = parser.parse(opts, args);
 
 				int connectionLimit_i = 40;
 				if (commandLine.hasOption("connexionLimit"))
