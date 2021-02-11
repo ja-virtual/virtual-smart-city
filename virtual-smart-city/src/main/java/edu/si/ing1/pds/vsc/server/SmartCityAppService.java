@@ -1,4 +1,4 @@
-package upec.ing1.pds.vsc.VSCBackServer;
+package edu.si.ing1.pds.vsc.server;
 
 import org.apache.commons.cli.*;
 
@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 		public class SmartCityAppService {
 			private final static Logger logger = LoggerFactory.getLogger(SmartCityAppService.class.getName());
 			public static void main(String[] args) throws Exception {
-
 
 
 				final CommandLineParser parser = new DefaultParser();
