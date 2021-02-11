@@ -2,7 +2,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>upec.ing1.pds.vsc</groupId>
+	<groupId>edu.ing1.pds.vsc</groupId>
 	<artifactId>Client</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Client</name>
@@ -18,14 +18,14 @@
 	<dependencies>
 
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.8.0-beta0</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
 			<version>1.8.0-beta0</version>
@@ -38,10 +38,15 @@
 			<artifactId>commons-cli</artifactId>
 			<version>LATEST</version>
 			<scope>compile</scope>
+		</dependency> -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.1.7</version>
 		</dependency>
 
 	</dependencies>
-
+<!--
 	<build>
 		<plugins>
 			<plugin>
@@ -57,5 +62,5 @@
 				</configuration>
 			</plugin>
 		</plugins>
-	</build>
+	</build> -->
 </project>
