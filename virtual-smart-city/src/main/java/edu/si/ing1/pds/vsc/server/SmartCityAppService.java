@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 				final Options opts = new Options();
 				final CommandLine commandLine = parser.parse(opts, args);
 
-				final Option connectionLimit = Option.builder().longOpt("connectionLimit").hasArg().build();
+				final Option connectionLimit = Option.builder().longOpt("connectionLimit").hasArg().ArgName("connectionLimit").build();
 				opts.addOption(connectionLimit);
 
 				final Option workingTrial = Option.builder().longOpt("workingTrial").build();
