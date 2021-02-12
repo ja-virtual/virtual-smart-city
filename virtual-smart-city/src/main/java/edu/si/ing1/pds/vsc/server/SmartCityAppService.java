@@ -14,15 +14,15 @@ import org.slf4j.LoggerFactory;
 				final Options opts = new Options();
 				final CommandLine commandLine = parser.parse(opts, args);
 
-				final Option connexionLimit = Option.builder().longOpt("connexionLimit").hasArg().build();
-				opts.addOption(connexionLimit);
+				final Option connectionLimit = Option.builder().longOpt("connectionLimit").hasArg().build();
+				opts.addOption(connectionLimit);
 
 				final Option workingTrial = Option.builder().longOpt("workingTrial").build();
 				opts.addOption(workingTrial);
 
 				int connectionLimit_i = 40;
-				if (commandLine.hasOption("connexionLimit"))
-					connectionLimit_i = Integer.parseInt(commandLine.getOptionValue("connexionLimit"));
+				if (commandLine.hasOption("connectionLimit"))
+					connectionLimit_i = Integer.parseInt(commandLine.getOptionValue("connectionLimit"));
 
 				boolean workingTrial_i = false;
 				if (commandLine.hasOption("workingTrial"))

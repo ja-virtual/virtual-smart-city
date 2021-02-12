@@ -1,4 +1,4 @@
-package upec.ing1.pds.vsc.client;
+package edu.si.ing1.pds.vsc.client;
 
 public class Client {
 
