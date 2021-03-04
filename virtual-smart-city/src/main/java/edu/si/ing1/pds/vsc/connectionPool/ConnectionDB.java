@@ -10,13 +10,13 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConnectionDB {
-	//les attributs
+	//attribute
 	private String Driver;
 	private String URL;
 	private String username;
 	private String password;
 	
-	//les accesseurs en mode lecture
+	//who have acces read only
 	
 public String getDriver() {
 		return Driver;
@@ -31,7 +31,7 @@ public String getDriver() {
 		return password;
 	}
 	Connection connection=null;
-	//le constructeur
+	//the builder
 public ConnectionDB() 
 {
 	Properties props = new Properties();
@@ -66,10 +66,10 @@ public ConnectionDB()
 	
 	public String Info()
 	{
-		if(connection!=null)
-		return "connection reussie!";
+		if(connection != null)
+		return "connection succed!";
 		else
-			return "erreur!!";	
+			return "error !";
 	}
 
 
