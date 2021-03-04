@@ -51,7 +51,7 @@
 					<archive>
 						<manifest>
 							<mainClass>edu.si.ing1.pds.vsc.server.SmartCityAppService</mainClass>
-							<mainClass>edu.si.ing1.pds.vsc.connectionPool.EssaiMain</mainClass>
+							<mainClass>edu.si.ing1.pds.vsc.connectionPool.ConnectionMain</mainClass>
 							<!--<mainClass>edu.si.ing1.pds.vsc.connectionPool.ConnectionDB</mainClass>
 							<mainClass>edu.si.ing1.pds.vsc.connectionPool.DataSource</mainClass>
 							<mainClass>edu.si.ing1.pds.vsc.connectionPool.EssaiMain</mainClass>
