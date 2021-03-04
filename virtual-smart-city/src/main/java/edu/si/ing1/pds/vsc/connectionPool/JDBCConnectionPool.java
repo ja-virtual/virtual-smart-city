@@ -8,11 +8,11 @@ class JDBCConnectionPool
 {
    private ArrayList<Connection>Collection=new ArrayList<Connection>();
    public JDBCConnectionPool () {}
-    public synchronized void Alimenter(Collection<Connection> con)
+    public synchronized void Feed(Collection<Connection> con)
     {
     	Collection.addAll(con);
     }
-    
+
     public synchronized Connection ConnectionEntity()
     {
     	Random indice=new Random();
@@ -20,11 +20,11 @@ class JDBCConnectionPool
     	Collection.remove(con);
     	return con;
     }
-    public synchronized void Rendre(Connection con)
+    public synchronized void Return(Connection con)
     {
     	Collection.add(con);
     }
-    public synchronized void Fermer()
+    public synchronized void Close()
     {
     	for(Connection c: Collection)
     	{try {
