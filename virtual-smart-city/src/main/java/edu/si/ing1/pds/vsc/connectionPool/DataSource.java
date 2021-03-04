@@ -5,16 +5,16 @@ import java.sql.Connection;
 public class DataSource {
 
 	static JDBCConnectionPool conPool=new JDBCConnectionPool ();
-	public static Connection RendreCon()
+	public static Connection ReturnCon()
 	{
 		return conPool.ConnectionEntity();
 	}
-	public static void RendreCon(Connection con)
+	public static void ReturnCon(Connection con)
 	{
-		conPool.Rendre(con);
+		conPool.Return(con);
 	}
 	public static void Cloture()
 	{
-		conPool.Fermer();
+		conPool.Close();
 	}
 }
