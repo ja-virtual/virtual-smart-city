@@ -7,7 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public class EssaiMain {
+public class
+ConnectionMain {
 static Logger logger=Logger.getLogger("test");
 	public static void main(String[] args) {
 	//	ArrayList<Connection>con=new ArrayList<Connection>();
@@ -15,33 +16,33 @@ static Logger logger=Logger.getLogger("test");
 		logger.info(c.Info());
 	 /*  con.add(new ConnectionDB().connection);
 	    con.add(new ConnectionDB().connection);*/
-		Statement requet;
+		Statement request;
 		
 		try {
 			c.connection.setAutoCommit(false);
-			requet = c.connection.createStatement();
+			request = c.connection.createStatement();
 			//Opertaion Create
-			/*int nb=requet.executeUpdate("insert into personne (nom, age) values('Inès',22)");
+			/*int nb=request.executeUpdate("insert into personne (nom, age) values('Inï¿½s',22)");
 			System.out.println(nb);
 			*/
 			//Opertaion Update
 			/*int nb=0;
-			nb=requet.executeUpdate("update personne set age=40 where nom='Inès'");
+			nb=request.executeUpdate("update personne set age=40 where nom='Inï¿½s'");
 			System.out.println(nb);*/
 			//Opertaion Delete
-		/*	int nb=requet.executeUpdate("delete from personne where age<15");
+		/*	int nb=request.executeUpdate("delete from personne where age<15");
 			System.out.println(nb);*/
-			//operation de lecture READ
-			ResultSet result=requet.executeQuery("select * from personne");
+			//operation READ
+			ResultSet result=request.executeQuery("select * from personne");
 			while(result.next())
 			{
 				String nom=result.getString(2);
 				int age=result.getInt(3);
-				System.out.println("Nom : "+nom+"  et age : "+age);
+				System.out.println("Name : "+nom+"  et age : "+age);
 			}
 			 c.connection.commit();
 			 result.close();
-			 requet.close();
+			 request.close();
 			 c.connection.close();
 			
 
