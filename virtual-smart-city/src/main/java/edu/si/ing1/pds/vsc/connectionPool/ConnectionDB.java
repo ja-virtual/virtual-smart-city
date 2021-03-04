@@ -8,6 +8,7 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.sql.PreparedStatement;
 
 public class ConnectionDB {
 	//attribute
@@ -15,6 +16,9 @@ public class ConnectionDB {
 	private String URL;
 	private String username;
 	private String password;
+	//provisoire
+	private String create;
+	private String update;
 	
 	//who have acces read only
 	
@@ -42,6 +46,7 @@ public ConnectionDB()
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
+	create=props.getProperty("personne.create");
 	Driver=props.getProperty("database.driverClassName");
     URL=props.getProperty("database.url");
 	username=props.getProperty("database.username");
@@ -70,6 +75,24 @@ public ConnectionDB()
 		return "connection succed!";
 		else
 			return "error !";
+	}
+
+
+	public String CreatePersonne(String nom, int age)
+	{
+		try {
+			PreparedStatement pc = connection.prepareStatement(create);
+			pc.setString(1, nom);
+			pc.setInt(2, age);
+			int nb = 0;
+			nb = pc.executeUpdate();
+			if(nb!=0)
+				return nom + " added with success!!";
+		}catch(SQLException ex)
+		{
+			return "failed!!";
+		}
+			return "failed!!";
 	}
 
 

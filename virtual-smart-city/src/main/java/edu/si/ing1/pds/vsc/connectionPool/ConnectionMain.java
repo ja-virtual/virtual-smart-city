@@ -6,22 +6,35 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Logger;
-
+import org.apache.commons.cli.*;
 public class
 ConnectionMain {
 static Logger logger=Logger.getLogger("test");
-	public static void main(String[] args) {
-	//	ArrayList<Connection>con=new ArrayList<Connection>();
+	public static void main(String[] args) throws Exception {
+
+
+		final CommandLineParser parser = new DefaultParser();
+		final Options opts = new Options();
+		final CommandLine commandLine = parser.parse(opts, args);
+
 		ConnectionDB c= new  ConnectionDB();
 		logger.info(c.Info());
-	 /*  con.add(new ConnectionDB().connection);
-	    con.add(new ConnectionDB().connection);*/
+
 		Statement request;
-		
+
 		try {
 			c.connection.setAutoCommit(false);
 			request = c.connection.createStatement();
 			//Opertaion Create
+			final Option age= Option.builder().longOpt("age").build();
+			opts.addOption(age);
+			System.out.println(commandLine.hasOption("age"));
+			int age_test = 27;
+			if (commandLine.hasOption("age")) {
+				age_test = 15;
+				age_test = Integer.parseInt(commandLine.getOptionValue("age"));
+			}
+           System.out.println(c.CreatePersonne("ja_virtual",age_test));
 			/*int nb=request.executeUpdate("insert into personne (nom, age) values('In�s',22)");
 			System.out.println(nb);
 			*/
@@ -37,21 +50,21 @@ static Logger logger=Logger.getLogger("test");
 			while(result.next())
 			{
 				String nom=result.getString(2);
-				int age=result.getInt(3);
-				System.out.println("Name : "+nom+"  et age : "+age);
+				int age_=result.getInt(3);
+				System.out.println("Name : "+nom+"  et age : "+age_);
 			}
 			 c.connection.commit();
 			 result.close();
 			 request.close();
 			 c.connection.close();
-			
+
 
 		} catch (SQLException e1) {
-			
+
 			e1.printStackTrace();
 		}
 
-		
+
 
 
 	}
