@@ -11,33 +11,35 @@ public class
 ConnectionMain {
 static Logger logger=Logger.getLogger("test");
 	public static void main(String[] args) throws Exception {
-
-
-		final CommandLineParser parser = new DefaultParser();
-		final Options opts = new Options();
-		final CommandLine commandLine = parser.parse(opts, args);
-
+		//creation des options
+		Options options = new Options();
+		Option nom = new Option("nom", "nom", true, "le nom de la personne");
+		Option age = new Option("age", "age", true, "l'age de la personne");
+		nom.setRequired(true);
+		age.setRequired(true);
+		options.addOption(nom);
+		options.addOption(age);
+		CommandLineParser parser = new DefaultParser();
+		HelpFormatter formatter = new HelpFormatter();
+		CommandLine commandLine;
+		commandLine = parser.parse(options, args);
+		String nom_test="";
+		int age_test=0;
 		ConnectionDB c= new  ConnectionDB();
 		logger.info(c.Info());
-
 		Statement request;
-
 		try {
 			c.connection.setAutoCommit(false);
 			request = c.connection.createStatement();
 			//Opertaion Create
-			final Option age= Option.builder().longOpt("age").build();
-			opts.addOption(age);
-			int age_test=Integer.parseInt(args[1]);
-			System.out.println(args[0]);
-			if (commandLine.hasOption("age=103")) {
-				age_test = 15;
-				//age_test = Integer.parseInt(commandLine.getOptionValue("age"));
-
-				System.out.println("ok");
+			System.out.println(commandLine.getOptions().length);
+			if (commandLine.hasOption("nom")) {
+				nom_test = commandLine.getOptionValue("nom");
 			}
-			String nom_test = args[0];
-          System.out.println(c.CreatePersonne(nom_test,age_test));
+			if (commandLine.hasOption("age")) {
+				age_test = Integer.parseInt(commandLine.getOptionValue("age"));
+			}
+            System.out.println(c.CreatePersonne(nom_test,age_test));
 			/*int nb=request.executeUpdate("insert into personne (nom, age) values('In�s',22)");
 			System.out.println(nb);
 			*/
@@ -52,9 +54,9 @@ static Logger logger=Logger.getLogger("test");
 			ResultSet result=request.executeQuery("select * from personne");
 			while(result.next())
 			{
-				String nom=result.getString(2);
+				String nom_=result.getString(2);
 				int age_=result.getInt(3);
-				System.out.println("Name : "+nom+"  et age : "+age_);
+				System.out.println("Name : "+nom_+"  et age : "+age_);
 			}
 			 c.connection.commit();
 			 result.close();
