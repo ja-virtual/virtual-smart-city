@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 
 				boolean workingTrial_i = false;
 				if (commandLine.hasOption("workingTrial"))
-					workingTrial_i = true;
+					workingTrial_i = Boolean.parseBoolean(commandLine.getOptionValue("workingTrial"));
 
 				logger.info("VSC Application is running, the workingTrial = "+ workingTrial_i +" & connectionLimit = " +connectionLimit_i+".");
 
