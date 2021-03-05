@@ -28,13 +28,16 @@ static Logger logger=Logger.getLogger("test");
 			//Opertaion Create
 			final Option age= Option.builder().longOpt("age").build();
 			opts.addOption(age);
-			System.out.println(commandLine.hasOption("age"));
-			int age_test = 27;
-			if (commandLine.hasOption("age")) {
+			int age_test=Integer.parseInt(args[1]);
+			System.out.println(args[0]);
+			if (commandLine.hasOption("age=103")) {
 				age_test = 15;
-				age_test = Integer.parseInt(commandLine.getOptionValue("age"));
+				//age_test = Integer.parseInt(commandLine.getOptionValue("age"));
+
+				System.out.println("ok");
 			}
-           System.out.println(c.CreatePersonne("ja_virtual",age_test));
+			String nom_test = args[0];
+          System.out.println(c.CreatePersonne(nom_test,age_test));
 			/*int nb=request.executeUpdate("insert into personne (nom, age) values('In�s',22)");
 			System.out.println(nb);
 			*/
