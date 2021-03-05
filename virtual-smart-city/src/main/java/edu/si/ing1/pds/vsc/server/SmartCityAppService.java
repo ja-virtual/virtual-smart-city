@@ -9,17 +9,15 @@ import org.slf4j.LoggerFactory;
 			private final static Logger logger = LoggerFactory.getLogger(SmartCityAppService.class.getName());
 			public static void main(String[] args) throws Exception {
 
-
-				final CommandLineParser parser = new DefaultParser();
-				final Options opts = new Options();
-				final CommandLine commandLine = parser.parse(opts, args);
-
-				final Option connectionLimit = Option.builder().longOpt("connectionLimit").hasArg().argName("connectionLimit").build();
-				opts.addOption(connectionLimit);
-
-				final Option workingTrial = Option.builder().longOpt("workingTrial").build();
-				opts.addOption(workingTrial);
-
+				Options options = new Options();
+				Option connectionLimit  = new Option("connectionLimit", "connectionLimit", true, "connectionLimit variable");
+				Option workingTrial  = new Option("workingTrial", "workingTrial", true, "workingTrial variable");
+				options.addOption(connectionLimit);
+				options.addOption(workingTrial);
+				CommandLineParser parser = new DefaultParser();
+				HelpFormatter formatter = new HelpFormatter();
+				CommandLine commandLine;
+				commandLine = parser.parse(options, args);
 				int connectionLimit_i = 40;
 				if (commandLine.hasOption("connectionLimit"))
 					connectionLimit_i = Integer.parseInt(commandLine.getOptionValue("connectionLimit"));
