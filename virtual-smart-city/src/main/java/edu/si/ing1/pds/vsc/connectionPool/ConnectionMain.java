@@ -51,7 +51,7 @@ static Logger logger=Logger.getLogger("test");
 		/*	int nb=request.executeUpdate("delete from personne where age<15");
 			System.out.println(nb);*/
 			//operation READ
-			ResultSet result=request.executeQuery("select * from personne");
+			ResultSet result=c.ListPersonne();
 			while(result.next())
 			{
 				String name_=result.getString(2);

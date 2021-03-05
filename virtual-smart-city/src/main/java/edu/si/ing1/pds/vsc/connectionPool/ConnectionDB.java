@@ -1,14 +1,11 @@
 package edu.si.ing1.pds.vsc.connectionPool;
 
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Connection;
+import java.io.*;
 import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+
 import java.util.Properties;
-import java.sql.PreparedStatement;
+import java.sql.*;
 
 public class ConnectionDB {
 	//attribute
@@ -18,6 +15,7 @@ public class ConnectionDB {
 	private String password;
 	//provisoire
 	private String create;
+	private String read;
 	private String update;
 	
 	//who have acces read only
@@ -46,6 +44,7 @@ public ConnectionDB()
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
+	read=props.getProperty("personne.read");
 	create=props.getProperty("personne.create");
 	Driver=props.getProperty("database.driverClassName");
     URL=props.getProperty("database.url");
@@ -93,6 +92,14 @@ public ConnectionDB()
 			return "failed!!";
 		}
 			return "failed!!";
+	}
+
+	public ResultSet ListPersonne() throws Exception
+	{
+			Statement request=connection.createStatement();
+			ResultSet result=null;
+			result=request.executeQuery(read);
+			return result;
 	}
 
 
