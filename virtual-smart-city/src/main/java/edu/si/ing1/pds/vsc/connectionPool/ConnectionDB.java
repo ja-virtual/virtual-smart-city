@@ -68,7 +68,7 @@ public ConnectionDB()
 
 }
 	
-	public String Info()
+	public String info()
 	{
 		if(connection != null)
 		return "connection succed!";
@@ -77,16 +77,16 @@ public ConnectionDB()
 	}
 
 
-	public String CreatePersonne(String nom, int age)
+	public String createPerson(String name, int age)
 	{
 		try {
 			PreparedStatement pc = connection.prepareStatement(create);
-			pc.setString(1, nom);
+			pc.setString(1, name);
 			pc.setInt(2, age);
 			int nb = 0;
 			nb = pc.executeUpdate();
 			if(nb!=0)
-				return nom + " added with success!!";
+				return name + " added with success!!";
 		}catch(SQLException ex)
 		{
 			return "failed!!";
@@ -94,7 +94,7 @@ public ConnectionDB()
 			return "failed!!";
 	}
 
-	public ResultSet ListPersonne() throws Exception
+	public ResultSet listPerson() throws Exception
 	{
 			Statement request=connection.createStatement();
 			ResultSet result=null;

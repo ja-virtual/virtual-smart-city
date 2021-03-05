@@ -5,15 +5,15 @@ import java.sql.Connection;
 public class DataSource {
 
 	static JDBCConnectionPool conPool=new JDBCConnectionPool ();
-	public static Connection ReturnCon()
+	public static Connection takeCon()
 	{
 		return conPool.ConnectionEntity();
 	}
-	public static void ReturnCon(Connection con)
+	public static void returnCon(Connection con)
 	{
 		conPool.Return(con);
 	}
-	public static void Cloture()
+	public static void closure()
 	{
 		conPool.Close();
 	}
