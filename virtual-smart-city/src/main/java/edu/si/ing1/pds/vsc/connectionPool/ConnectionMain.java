@@ -13,17 +13,17 @@ static Logger logger=Logger.getLogger("test");
 	public static void main(String[] args) throws Exception {
 		//creation des options
 		Options options = new Options();
-		Option nom = new Option("nom", "nom", true, "le nom de la personne");
-		Option age = new Option("age", "age", true, "l'age de la personne");
-		nom.setRequired(true);
+		Option name = new Option("name", "name", true, "name of the person");
+		Option age = new Option("age", "age", true, "age of the person");
+		name.setRequired(true);
 		age.setRequired(true);
-		options.addOption(nom);
+		options.addOption(name);
 		options.addOption(age);
 		CommandLineParser parser = new DefaultParser();
 		HelpFormatter formatter = new HelpFormatter();
 		CommandLine commandLine;
 		commandLine = parser.parse(options, args);
-		String nom_test="";
+		String name_test="";
 		int age_test=0;
 		ConnectionDB c= new  ConnectionDB();
 		logger.info(c.Info());
@@ -33,13 +33,13 @@ static Logger logger=Logger.getLogger("test");
 			request = c.connection.createStatement();
 			//Opertaion Create
 			System.out.println(commandLine.getOptions().length);
-			if (commandLine.hasOption("nom")) {
-				nom_test = commandLine.getOptionValue("nom");
+			if (commandLine.hasOption("name")) {
+				name_test = commandLine.getOptionValue("name");
 			}
 			if (commandLine.hasOption("age")) {
 				age_test = Integer.parseInt(commandLine.getOptionValue("age"));
 			}
-            System.out.println(c.CreatePersonne(nom_test,age_test));
+            System.out.println(c.CreatePersonne(name_test,age_test));
 			/*int nb=request.executeUpdate("insert into personne (nom, age) values('In�s',22)");
 			System.out.println(nb);
 			*/
@@ -54,9 +54,9 @@ static Logger logger=Logger.getLogger("test");
 			ResultSet result=request.executeQuery("select * from personne");
 			while(result.next())
 			{
-				String nom_=result.getString(2);
+				String name_=result.getString(2);
 				int age_=result.getInt(3);
-				System.out.println("Name : "+nom_+"  et age : "+age_);
+				System.out.println("Name : "+name_+"  et age : "+age_);
 			}
 			 c.connection.commit();
 			 result.close();
