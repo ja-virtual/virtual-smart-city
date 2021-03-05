@@ -26,7 +26,7 @@ static Logger logger=Logger.getLogger("test");
 		String name_test="";
 		int age_test=0;
 		ConnectionDB c= new  ConnectionDB();
-		logger.info(c.Info());
+		logger.info(c.info());
 		Statement request;
 		try {
 			c.connection.setAutoCommit(false);
@@ -39,7 +39,7 @@ static Logger logger=Logger.getLogger("test");
 			if (commandLine.hasOption("age")) {
 				age_test = Integer.parseInt(commandLine.getOptionValue("age"));
 			}
-            System.out.println(c.CreatePersonne(name_test,age_test));
+            System.out.println(c.createPerson(name_test,age_test));
 			/*int nb=request.executeUpdate("insert into personne (nom, age) values('In�s',22)");
 			System.out.println(nb);
 			*/
@@ -51,7 +51,7 @@ static Logger logger=Logger.getLogger("test");
 		/*	int nb=request.executeUpdate("delete from personne where age<15");
 			System.out.println(nb);*/
 			//operation READ
-			ResultSet result=c.ListPersonne();
+			ResultSet result=c.listPerson();
 			while(result.next())
 			{
 				String name_=result.getString(2);

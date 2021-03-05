@@ -7,11 +7,11 @@ public class DataSource {
 	static JDBCConnectionPool conPool=new JDBCConnectionPool ();
 	public static Connection takeCon()
 	{
-		return conPool.ConnectionEntity();
+		return conPool.connectionEntity();
 	}
 	public static void returnCon(Connection con)
 	{
-		conPool.Return(con);
+		conPool.returnCon(con);
 	}
 	public static void closure()
 	{
