@@ -13,10 +13,11 @@ public class ConnectionDB {
 	private String URL;
 	private String username;
 	private String password;
-	//provisoire
+
 	private String create;
 	private String read;
 	private String update;
+	private String delete;
 	
 	//who have acces read only
 	
@@ -46,6 +47,8 @@ public ConnectionDB()
 	}
 	read=props.getProperty("personne.read");
 	create=props.getProperty("personne.create");
+	update=props.getProperty("personne.update");
+	delete=props.getProperty("personne.delete");
 	Driver=props.getProperty("database.driverClassName");
     URL=props.getProperty("database.url");
 	username=props.getProperty("database.username");
@@ -86,14 +89,99 @@ public ConnectionDB()
 			int nb = 0;
 			nb = pc.executeUpdate();
 			if(nb!=0)
-				return name + " added with success!!";
+				return "The person with the name "+name + " is added with success!!";
 		}catch(SQLException ex)
 		{
 			return "failed!!";
 		}
 			return "failed!!";
 	}
+	public String updatePerson(int id,String name) throws Exception
+	{
+		int age=0;
+		try {
+			ResultSet result=listPerson();
+			while(result.next())
+			{
+				age=3;
+				if(result.getInt(1)==id)
+					age=result.getInt(3);
+				break;
+			}
+			result.close();
+			PreparedStatement pc = connection.prepareStatement(update);
+			pc.setString(1, name);
+			pc.setInt(2, age);
+			pc.setInt(3, id);
+			int nb = 0;
+			nb = pc.executeUpdate();
+			if(nb!=0)
+				return "The person with the name "+name + " is modified with success!!";
+		}catch(SQLException ex)
+		{
+			return "failed with error !!";
+		}
+		return "failed!!";
+	}
+	public String updatePerson(int id,int age)throws Exception
+	{
+		String name="";
+		try {
+			ResultSet result=listPerson();
+			while(result.next())
+			{
+				if(result.getInt(1)==id)
+					name=result.getString(2);
+				break;
 
+			}
+			result.close();
+			PreparedStatement pc = connection.prepareStatement(update);
+			pc.setString(1, name);
+			pc.setInt(2, age);
+			pc.setInt(3, id);
+			int nb = 0;
+			nb = pc.executeUpdate();
+			if(nb!=0)
+				return "The person with the name "+name + " is modified with success!!";
+		}catch(SQLException ex)
+		{
+			return "failed with error !!";
+		}
+		return "failed!!";
+	}
+	public String updatePerson(int id,String name, int age)
+	{
+		try {
+			PreparedStatement pc = connection.prepareStatement(update);
+			pc.setString(1, name);
+			pc.setInt(2, age);
+			pc.setInt(3, id);
+			int nb = 0;
+			nb = pc.executeUpdate();
+			if(nb!=0)
+				return "The person with the name "+name + " is modified with success!!";
+		}catch(SQLException ex)
+		{
+			return "failed with error !!";
+		}
+		return "failed!!";
+	}
+	public String deletePerson(int id)
+	{
+		try {
+			PreparedStatement pc = connection.prepareStatement(delete);
+			pc.setInt(1,id);
+			int nb = 0;
+			nb = pc.executeUpdate();
+			if(nb!=0)
+				return "The person with the id "+id+" is deleted with success!!";
+		}catch(SQLException ex)
+		{
+			return "failed!!";
+		}
+		return "failed!!";
+	}
 	public ResultSet listPerson() throws Exception
 	{
 			Statement request=connection.createStatement();
@@ -101,6 +189,7 @@ public ConnectionDB()
 			result=request.executeQuery(read);
 			return result;
 	}
+
 
 
 }
