@@ -14,13 +14,15 @@ import org.apache.commons.cli.Options;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.si.ing1.pds.vsc.connectionPool.DataSource;
+
 
 public class SmartCityAppServer {
 
 
     private final static Logger logger = LoggerFactory.getLogger(SmartCityAppServer.class.getName());
 
-    //	public static DataSource ds=null;
+    public static DataSource ds=null;
     ServerSocket server;
     public static ServerConfig serverConfig;
 
@@ -67,7 +69,7 @@ public class SmartCityAppServer {
         if (commandLine.hasOption("connectionDuration"))
             connection_duration_i = Integer.parseInt(commandLine.getOptionValue("connectionDuration"));
         logger.info("VSC Application is running, maximal_connection= " + max_connection_i + " & available_connection = " + available_connection_i + " & connection_duration = " + connection_duration_i + ".");
-        //	ds = new DataSource(max_connection_i, available_connection_i, connection_duration_i);
+        	ds = new DataSource(max_connection_i, available_connection_i, connection_duration_i);
         new SmartCityAppServer(serverConfig).serve();
         logger.info("server here");
     }

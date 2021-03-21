@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 import org.apache.commons.cli.*;
 
-import edu.si.ing1.pds.vsc.server.SmartCityAppService;
+import edu.si.ing1.pds.vsc.server.SmartCityAppServer;
 
 public class ConnectionMain {
 
@@ -18,7 +18,7 @@ public class ConnectionMain {
     public static void main(String[] args) throws Exception {
 
         //options creation
-       DataSource ds= SmartCityAppService.ds;       
+       DataSource ds= SmartCityAppServer.ds;
         Options options = new Options();
         //Add an option that contains a short-name (o) and a long-name (operation).
         Option operation = new Option("o", "operation", true, "operation done in the database");
