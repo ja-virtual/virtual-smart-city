@@ -18,7 +18,8 @@ public class ConnectionMain {
     public static void main(String[] args) throws Exception {
 
         //options creation
-       DataSource ds= SmartCityAppServer.ds;
+  /*     DataSource ds= SmartCityAppServer.ds;
+       // DataSource ds= new DataSource(10,3,5);
         Options options = new Options();
         //Add an option that contains a short-name (o) and a long-name (operation).
         Option operation = new Option("o", "operation", true, "operation done in the database");
@@ -39,9 +40,11 @@ public class ConnectionMain {
         int age_test = 0;
         int id_test = 0;
       ConnectionDB c = ds.takeCon();
+      if(c==null)
+      logger.info("null ici");
         Statement request=null;
         try {
-            request = c.connection.createStatement();
+       //     request = c.connection.createStatement();
             //Opertaion Create
             if (commandLine.hasOption("operation")) {
                 operation_name = commandLine.getOptionValue("operation");
@@ -110,11 +113,11 @@ public class ConnectionMain {
 
             e1.printStackTrace();
         } finally {
-            request.close();
+            //request.close();
             c.connection.close();
         }
 
-
+*/
     }
 
 }

@@ -1,7 +1,8 @@
 package edu.si.ing1.pds.vsc.connectionPool;
 
 import java.sql.Connection;
-
+import java.util.ArrayList;
+import edu.si.ing1.pds.vsc.connectionPool.*;
 public class DataSource extends Thread {
 
     //attributs
@@ -35,7 +36,17 @@ public class DataSource extends Thread {
 	
 	//constructor
 	public DataSource(int max_con, int av_con, int con_interv) {
+		setAvailableConnection(av_con);
+		setMaxConnection(max_con);
 		connection_interval=con_interv;
+		ArrayList<ConnectionDB> cons=new ArrayList<ConnectionDB>();
+		for(int i=0;i<av_con;i++)
+		{
+			ConnectionDB c=new ConnectionDB();
+			cons.add(c);
+		}
+		conPool.feed(cons);
+
 	}
 	
 	// run method
@@ -64,6 +75,5 @@ public class DataSource extends Thread {
 	{
 		conPool.Close();
 	}
-	
-	
+
 }
