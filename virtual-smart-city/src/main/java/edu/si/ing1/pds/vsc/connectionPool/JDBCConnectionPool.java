@@ -44,13 +44,14 @@ public class JDBCConnectionPool
    //les methodes
     public synchronized void feed(Collection<ConnectionDB> con)
     {
-        //the estimated size of the collection after the addition of the new connections
+    	collection.addAll(con);
+      /*  //the estimated size of the collection after the addition of the new connections
         int size = used_connection+available_connection+con.size();
 
         if(size <= max_connection)
     	    collection.addAll(con);
         else
-            System.out.println("Maximal number of connection reached!!!");
+            System.out.println("Maximal number of connection reached!!!");*/
 
     }
 
