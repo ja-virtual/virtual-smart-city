@@ -1,0 +1,16 @@
+id: 16
+name: "nom_test1"
+age: 20
+list_person:
+ - id: 11
+   name: "nom_test1"
+   age: 20
+ - id: 12
+   name: "nom_test2"
+   age: 23
+ - id: 13
+   name: "nom_test3"
+   age: 35
+ - id: 14
+   name: "nom_test"
+   age: 2
