@@ -13,10 +13,7 @@ public class DataSource extends Thread {
 	{
 		return conPool.getMax_connection();
 	}
-	public int getAvailableConnection()
-	{
-		return conPool.getAvailable_connection();
-	}
+
 	public int getUsedConnection()
 	{
 		return conPool.getUsed_connection();
@@ -24,29 +21,26 @@ public class DataSource extends Thread {
 	public void setMaxConnection(int max_con)
 	{
 		conPool.setMax_connection(max_con);
+		
 	}
-	public void setAvailableConnection(int available_con)
-	{
-		conPool.setAvailable_connection(available_con);
-	}
-	public void settUsedConnection(int used_con)
+
+	public void setUsedConnection(int used_con)
 	{
 		 conPool.setUsed_connection(used_con);
 	}
 	
 	//constructor
-	public DataSource(int max_con, int av_con, int con_interv) {
-		setAvailableConnection(av_con);
+	public DataSource(int max_con, int con_interv) {
+		setUsedConnection(0);
 		setMaxConnection(max_con);
 		connection_interval=con_interv;
 		ArrayList<ConnectionDB> cons=new ArrayList<ConnectionDB>();
-		for(int i=0;i<av_con;i++)
+		for(int i=0;i<max_con;i++)
 		{
 			ConnectionDB c=new ConnectionDB();
 			cons.add(c);
 		}
 		conPool.feed(cons);
-
 	}
 	
 	// run method

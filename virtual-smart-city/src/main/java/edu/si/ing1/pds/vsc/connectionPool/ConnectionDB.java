@@ -2,12 +2,14 @@ package edu.si.ing1.pds.vsc.connectionPool;
 
 
 import java.io.*;
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.sql.*;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -27,7 +29,7 @@ public class ConnectionDB {
 	private String read;
 	private String update;
 	private String delete;
-	private Person person;
+	private List<Person> person;
 	//who have acces read only
 public String getDriver() {
 		return Driver;
@@ -63,9 +65,10 @@ public ConnectionDB()
     URL=props.getProperty("database.url");
 	username=props.getProperty("database.username");
     password=props.getProperty("database.password");
-	final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+	final ObjectMapper mapper = new ObjectMapper();
 	try {
-       person = mapper.readValue(new File(System.getenv(data_smart_city_enVar)), Person.class);
+    //   person = mapper.readValue(new File(System.getenv(data_smart_city_enVar)), Person.class);
+      person = mapper.readValue(new File(System.getenv(data_smart_city_enVar)), new TypeReference<List<Person>>(){});
 	} catch (JsonParseException e1) {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
@@ -104,8 +107,8 @@ public ConnectionDB()
 public Person RandomPerson()
 {
 	Random index=new Random();
-	int size=person.getList_person().size();
-	Person p=person.getList_person().get(index.nextInt(size-1));
+	int size=person.size();
+	Person p=person.get(index.nextInt(size-1));
 	return p;
 }
 	public int RandomId()
@@ -113,7 +116,8 @@ public Person RandomPerson()
 		int[] id_list=new int[100];
 		ResultSet result=null;
 		try {
-			result = this.listPerson();
+			Statement request=connection.createStatement();
+			result=request.executeQuery(read);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -238,12 +242,20 @@ public Person RandomPerson()
 		}
 		return "failed!!";
 	}
-	public ResultSet listPerson() throws Exception
+	public String listPerson() throws Exception
 	{
 			Statement request=connection.createStatement();
 			ResultSet result=null;
+			StringBuilder r=new StringBuilder();
 			result=request.executeQuery(read);
-			return result;
+	          while (result.next()) {
+	              String name_ = result.getString(2);
+	              int age_ = result.getInt(3);
+	              int id_ = result.getInt(1);
+	             r.append("ID : "+id_+"  and name : " + name_ + "  and age : " + age_+"\n");
+	          }
+	          result.close();
+	          return r.toString();
 	}
 
 

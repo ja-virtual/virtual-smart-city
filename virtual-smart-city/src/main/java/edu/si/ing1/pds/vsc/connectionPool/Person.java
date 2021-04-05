@@ -6,13 +6,7 @@ public class Person {
 	private int id;
     private String name;
     private int age;
-    private List<Person> list_person;
-    public List<Person> getList_person() {
-		return list_person;
-	}
-	public void setList_person(List<Person> list_person) {
-		this.list_person = list_person;
-	}
+
 	public int getId() {return this.id;}
     public String getName() {return this.name;}
     public int getAge() {return this.age;}
