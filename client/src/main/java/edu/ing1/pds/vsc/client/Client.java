@@ -37,14 +37,14 @@ public class Client extends Thread
 		}
 		}catch (Exception ex)
 	{
-		logger.error("error from client's side ");
+		ex.printStackTrace();
+		logger.error( "error from client's side ");
 	}
 	}
     private final static Logger logger = LoggerFactory.getLogger(Client.class.getName());
 	public static void main(String[] args) throws Exception {
 
 		new Client().start();
-
 
 	}
 
