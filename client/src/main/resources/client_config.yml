@@ -1,2 +1,2 @@
-ip : 172.31.254.94
-port : 3322
+listenPort: "1099"
+soTimeout: "2000"
