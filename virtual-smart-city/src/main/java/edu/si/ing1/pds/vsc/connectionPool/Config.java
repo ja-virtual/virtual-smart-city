@@ -16,6 +16,10 @@ public class Config {
 	private int listenPort;
 	private int soTimeout;
 	
+	private String ip;
+	public String getIp() {
+		return ip;
+	}
 	public int getListenPort() {
 		return listenPort;
 	}
