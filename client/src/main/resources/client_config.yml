@@ -1,3 +1,2 @@
-ip : 172.31.254.94
 listenPort: "1099"
 soTimeout: "2000"
