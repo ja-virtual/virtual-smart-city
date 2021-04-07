@@ -14,14 +14,15 @@ import org.slf4j.LoggerFactory;
 public class Client extends Thread
 {
 	public void run()
-	{	try
+	{	 boolean find=false;
+		try
 		{
 		
 		InetAddress host = InetAddress.getLocalHost();
 	      
         String[] operation=new String[] {"add","update","delete","read"};
        ClientConfig config=new ClientConfig();
-       Socket   client_test=new Socket(host.getHostName(),config.getConfig().getListenPort());
+       Socket client_test=new Socket(config.getConfig().getIp(),config.getConfig().getListenPort());
 		int i=1;
 		while(i<5)
 		{
@@ -36,7 +37,7 @@ public class Client extends Thread
 		}
 		}catch (Exception ex)
 	{
-		logger.error("erreur coté client");
+		logger.error("error from client's side ");
 	}
 	}
     private final static Logger logger = LoggerFactory.getLogger(Client.class.getName());

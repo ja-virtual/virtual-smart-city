@@ -11,3 +11,4 @@
 #connexion config
 listenPort: 1099
 soTimeout: 2000
+ip : "172.31.254.93"

@@ -8,6 +8,11 @@ public class ClientCoreConfig {
     private int listenPort;
     private int soTimeout;
 
+    public String getIp() {
+        return ip;
+    }
+
+    private String ip;
     public ClientCoreConfig() {
 
     }
