@@ -9,6 +9,6 @@
   read: "select * from personne order by id"
   update: "update personne set nom=?,age=? where id=?"
 #connexion config
-listenPort: 1099
+listenPort: 3322
 soTimeout: 2000
-ip : "172.31.254.93"
+ip: "172.31.254.94"
