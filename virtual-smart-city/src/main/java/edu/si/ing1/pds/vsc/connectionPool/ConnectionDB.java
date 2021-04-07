@@ -2,122 +2,64 @@ package edu.si.ing1.pds.vsc.connectionPool;
 
 
 import java.io.*;
-import java.util.List;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 import java.sql.*;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParseException;
+
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 
-import java.io.File;
-import java.io.IOException;
 
 public class ConnectionDB {
 	//attribute
-	private String Driver;
-	private String URL;
-	private String username;
-	private String password;
 
-	private String create;
-	private String read;
-	private String update;
-	private String delete;
 	private List<Person> person;
-	//who have acces read only
-public String getDriver() {
-		return Driver;
-	}
-	public String getURL() {
-		return URL;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public Connection connection=null;
-	private static final String data_smart_city_enVar = "CRUD_SCRIPT";
-
+	private static final String crud_script_enVar = "CRUD_SCRIPT";
+	private static final String data_smart_city_enVar = "SMART_CITY";
+	private Config config=null;
+	public Connection connection;
 	//the builder
-public ConnectionDB() 
-{
-	Properties props = new Properties();
-	InputStream inStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties");
-	try {
-		props.load(inStream);
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	read=props.getProperty("personne.read");
-	create=props.getProperty("personne.create");
-	update=props.getProperty("personne.update");
-	delete=props.getProperty("personne.delete");
-	Driver=props.getProperty("database.driverClassName");
-    URL=props.getProperty("database.url");
-	username=props.getProperty("database.username");
-    password=props.getProperty("database.password");
-	final ObjectMapper mapper = new ObjectMapper();
-	try {
-    //   person = mapper.readValue(new File(System.getenv(data_smart_city_enVar)), Person.class);
-      person = mapper.readValue(new File(System.getenv(data_smart_city_enVar)), new TypeReference<List<Person>>(){});
-	} catch (JsonParseException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	} catch (JsonMappingException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	} catch (IOException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
+	public ConnectionDB() 
+	{
 		try {
-			Class.forName(Driver);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+			config=mapper.readValue(new File(System.getenv(data_smart_city_enVar)), Config.class);
+			mapper = new ObjectMapper();
+			person = mapper.readValue(new File(System.getenv(crud_script_enVar)), new TypeReference<List<Person>>(){});
+			Class.forName(config.getDriver());
+			this.connection = DriverManager.getConnection(config.getURL(), 
+			config.getUsername(),config.getPassword());
+		} catch (Exception e) {
+          e.printStackTrace();
 		}
-		try {
-			this.connection = DriverManager.getConnection(URL, 
-					username,password);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 
-}
-	
+	}
+
 	public String info()
 	{
 		if(connection != null)
-		return "connection succed!";
+			return "connection succed!";
 		else
 			return "error !";
 	}
-	
-public Person RandomPerson()
-{
-	Random index=new Random();
-	int size=person.size();
-	Person p=person.get(index.nextInt(size-1));
-	return p;
-}
+
+	public Person RandomPerson()
+	{
+		Random index=new Random();
+		int size=person.size();
+		Person p=person.get(index.nextInt(size-1));
+		return p;
+	}
 	public int RandomId()
 	{
 		int[] id_list=new int[100];
 		ResultSet result=null;
 		try {
 			Statement request=connection.createStatement();
-			result=request.executeQuery(read);
+			result=request.executeQuery(config.getRead());
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -140,7 +82,7 @@ public Person RandomPerson()
 		try {
 
 			Person p=RandomPerson();
-			PreparedStatement pc = connection.prepareStatement(create);
+			PreparedStatement pc = connection.prepareStatement(config.getCreate());
 			pc.setString(1,p.getName());
 			pc.setInt(2,p.getAge());
 			int nb = 0;
@@ -151,66 +93,13 @@ public Person RandomPerson()
 		{
 			return "failed with exception !!";
 		}
-			return "failed!!";
-	}
-/*	public String updatePerson(int id,String name) throws Exception
-	{
-		int age=0;
-		try {
-			ResultSet result=listPerson();
-			while(result.next())
-			{
-				age=3;
-				if(result.getInt(1)==id)
-					age=result.getInt(3);
-				break;
-			}
-			result.close();
-			PreparedStatement pc = connection.prepareStatement(update);
-			pc.setString(1, name);
-			pc.setInt(2, age);
-			pc.setInt(3, id);
-			int nb = 0;
-			nb = pc.executeUpdate();
-			if(nb!=0)
-				return "The person with the name "+name + " is modified with success!!";
-		}catch(SQLException ex)
-		{
-			return "failed with error !!";
-		}
 		return "failed!!";
 	}
-	public String updatePerson(int id,int age)throws Exception
-	{
-		String name="";
-		try {
-			ResultSet result=listPerson();
-			while(result.next())
-			{
-				if(result.getInt(1)==id)
-					name=result.getString(2);
-				break;
 
-			}
-			result.close();
-			PreparedStatement pc = connection.prepareStatement(update);
-			pc.setString(1, name);
-			pc.setInt(2, age);
-			pc.setInt(3, id);
-			int nb = 0;
-			nb = pc.executeUpdate();
-			if(nb!=0)
-				return "The person with the name "+name + " is modified with success!!";
-		}catch(SQLException ex)
-		{
-			return "failed with error !!";
-		}
-		return "failed!!";
-	}*/
 	public String updatePerson()
 	{
 		try {
-			PreparedStatement pc = connection.prepareStatement(update);
+			PreparedStatement pc = connection.prepareStatement(config.getUpdate());
 			Random age=new Random();
 			int id=RandomId();
 			pc.setString(1,"name_updated_"+age.nextInt(80));
@@ -229,7 +118,7 @@ public Person RandomPerson()
 	public String deletePerson()
 	{
 		try {
-			PreparedStatement pc = connection.prepareStatement(delete);
+			PreparedStatement pc = connection.prepareStatement(config.getDelete());
 			int id=RandomId();
 			pc.setInt(1,id);
 			int nb = 0;
@@ -244,18 +133,18 @@ public Person RandomPerson()
 	}
 	public String listPerson() throws Exception
 	{
-			Statement request=connection.createStatement();
-			ResultSet result=null;
-			StringBuilder r=new StringBuilder();
-			result=request.executeQuery(read);
-	          while (result.next()) {
-	              String name_ = result.getString(2);
-	              int age_ = result.getInt(3);
-	              int id_ = result.getInt(1);
-	             r.append("ID : "+id_+"  and name : " + name_ + "  and age : " + age_+"\n");
-	          }
-	          result.close();
-	          return r.toString();
+		Statement request=connection.createStatement();
+		ResultSet result=null;
+		StringBuilder r=new StringBuilder();
+		result=request.executeQuery(config.getRead());
+		while (result.next()) {
+			String name_ = result.getString(2);
+			int age_ = result.getInt(3);
+			int id_ = result.getInt(1);
+			r.append("ID : "+id_+"  and name : " + name_ + "  and age : " + age_+"\n");
+		}
+		result.close();
+		return r.toString();
 	}
 
 
