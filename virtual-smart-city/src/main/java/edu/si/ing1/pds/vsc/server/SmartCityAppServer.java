@@ -46,24 +46,22 @@ public class SmartCityAppServer extends Thread {
    public void run()
    {
 	   this.serve();
-	   int i=1;
-	   while(i<5)
+	   while(ds.getUsedConnection()<max_connection_i )
 	   {
 		      BufferedReader in=null;
 			try {
 				in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 				String operation_name=in.readLine();
-				if(in!=null)
+				if(operation_name!=null)
 					{
 				CrudOperation(operation_name);
 				PrintWriter out = new PrintWriter(client.getOutputStream(),true);
-			//	String operation_name=operation[new Random().nextInt(4)];
 				out.println(CrudOperation(operation_name));
 				System.out.println("connexion number "+(ds.getUsedConnection()+1));
 				ds.setUsedConnection(ds.getUsedConnection()+1);
+				sleep(connection_duration_i);
 					}
 
-				i++;
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -73,8 +71,6 @@ public class SmartCityAppServer extends Thread {
    }
  public String CrudOperation(String operation_name) throws Exception
  {
-	// PrintWriter out = new PrintWriter(server.getOutputStream(),true);
-	//	out.println("bonjour");
 	 ConnectionDB c = ds.takeCon();
 System.out.println(operation_name + " operation :");
 String result="";
