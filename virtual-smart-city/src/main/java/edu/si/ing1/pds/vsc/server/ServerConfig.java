@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 
 public class ServerConfig {
     private final static Logger logger = LoggerFactory.getLogger(ServerConfig.class.getName());
-    private static final String episenServerConfigEnVar = "SMART_CITY_SERVER";
+    private static final String episenServerConfigEnVar = "SMART_CITY";
     private final String episenServerConfigFileLocation;
     private Config config;
 
