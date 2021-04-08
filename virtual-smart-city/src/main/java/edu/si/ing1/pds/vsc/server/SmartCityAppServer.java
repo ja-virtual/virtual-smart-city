@@ -52,7 +52,7 @@ public class SmartCityAppServer extends Thread {
             try {
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 String operation_name=in.readLine();
-                if(in!=null)
+                if(operation_name!=null)
                 {
                     CrudOperation(operation_name);
                     PrintWriter out = new PrintWriter(client.getOutputStream(),true);
