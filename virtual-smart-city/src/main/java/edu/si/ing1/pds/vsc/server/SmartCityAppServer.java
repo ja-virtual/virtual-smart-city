@@ -62,7 +62,7 @@ public class SmartCityAppServer extends Thread {
 				System.out.print("connexion number "+(ds.getUsedConnection()+1)+" asking for a/an ");
 				ds.setUsedConnection(ds.getUsedConnection()+1);
 				//interval between each connexion
-				sleep(connection_duration_i);
+				sleep(connection_duration_i*1000);
 				 if(ds.getUsedConnection()>=max_connection_i ) {
 					  
 					  out.println("Server is occupied!");
