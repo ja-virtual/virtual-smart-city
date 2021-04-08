@@ -46,8 +46,7 @@ public class SmartCityAppServer extends Thread {
     public void run()
     {
         this.serve();
-        int i=0;
-        while(i<max_connection_i )
+        while(ds.getUsedConnection()<max_connection_i )
         {
             BufferedReader in=null;
             try {
@@ -62,8 +61,6 @@ public class SmartCityAppServer extends Thread {
                     System.out.println("connexion number "+(ds.getUsedConnection()+1));
                     ds.setUsedConnection(ds.getUsedConnection()+1);
                 }
-
-                i++;
             } catch (Exception e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
