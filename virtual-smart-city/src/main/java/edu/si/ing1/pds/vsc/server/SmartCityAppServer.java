@@ -46,8 +46,8 @@ public class SmartCityAppServer extends Thread {
    public void run()
    {
 	   this.serve();
-	   int i=1;
-	   while(i<5)
+	   int i=0;
+	   while(i<max_connection_i)
 	   {
 		      BufferedReader in=null;
 			try {
@@ -64,7 +64,9 @@ public class SmartCityAppServer extends Thread {
 					}
 
 				i++;
-			} catch (Exception e1) {
+			}
+			catch (Exception e1)
+            {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
@@ -114,7 +116,7 @@ break;
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {main(String[] args) throws Exception {
     	//connection pool configuration
     	
         serverConfig = new ServerConfig();
