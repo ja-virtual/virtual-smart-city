@@ -59,7 +59,7 @@ public class SmartCityAppServer extends Thread {
 				CrudOperation(operation_name);
 				out = new PrintWriter(client.getOutputStream(),true);
 				out.println(CrudOperation(operation_name));
-				System.out.println("connexion number "+(ds.getUsedConnection()+1));
+				System.out.print("connexion number "+(ds.getUsedConnection()+1)+" asking for a/an ");
 				ds.setUsedConnection(ds.getUsedConnection()+1);
 				//interval between each connexion
 				sleep(connection_duration_i);
@@ -68,7 +68,7 @@ public class SmartCityAppServer extends Thread {
 					  out.println("Server is occupied!");
 				  }
 					}
-
+				System.out.print("***************************************************************\n ");
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

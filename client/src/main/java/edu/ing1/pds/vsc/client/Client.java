@@ -27,26 +27,26 @@ public class Client extends Thread
        PrintWriter out =null;
        BufferedReader in=null;
        int i=0;
-       while(msg!="Server is occupied!")
-		{ msg=null;
-		
-		out = new PrintWriter(client_test.getOutputStream(),true);
-		String operation_name=operation[new Random().nextInt(4)];
-		out.println(operation_name);
-		in = new BufferedReader(new InputStreamReader(client_test.getInputStream()));
-		msg=in.readLine();
-		if(msg!="Server is occupied!")
-			{System.out.println("client  number "+ (++i) +"wants an /a "+operation_name+ "'s operation\n");
-		System.out.println("Server's response\n"+msg+"\n");
-			}
-		 else
-	       {
-	    	   System.out.println(msg+"\n");
-	       }
-		}
-       out.close();
-       in.close();
-        client_test.close();
+       while(msg!="Server is occupied!" && msg!=null) {
+       	out = new PrintWriter(client_test.getOutputStream(), true);
+		   String operation_name = operation[new Random().nextInt(4)];
+		   out.println(operation_name);
+		   in = new BufferedReader(new InputStreamReader(client_test.getInputStream()));
+		   msg = in.readLine();
+		   if(msg==null)
+		   {
+			   out.close();
+			   in.close();
+			   client_test.close();
+			   break;
+		   }
+		   else if (msg != "Server is occupied!") {
+			   System.out.println("client  number " + (++i) + " wants an /a " + operation_name + "'s operation\n");
+			   System.out.println("Server's response\n\n" + msg + "\n");
+				System.out.println("*************************************************************\n\n");
+		   }
+	   }
+System.out.println("Server is now occupied!");
 		}catch (Exception ex)
 	{
 		logger.error("error from client's side ");
