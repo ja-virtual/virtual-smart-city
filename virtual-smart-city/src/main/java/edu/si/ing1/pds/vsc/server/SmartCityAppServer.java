@@ -45,17 +45,19 @@ public class SmartCityAppServer extends Thread {
     }
    public void run()
    {
+	   PrintWriter out=null;
+	      BufferedReader in=null;
 	   this.serve();
 	   while(ds.getUsedConnection()<max_connection_i )
 	   {
-		      BufferedReader in=null;
+		 
 			try {
 				in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 				String operation_name=in.readLine();
 				if(operation_name!=null)
 					{
 				CrudOperation(operation_name);
-				PrintWriter out = new PrintWriter(client.getOutputStream(),true);
+				out = new PrintWriter(client.getOutputStream(),true);
 				out.println(CrudOperation(operation_name));
 				System.out.println("connexion number "+(ds.getUsedConnection()+1));
 				ds.setUsedConnection(ds.getUsedConnection()+1);
@@ -73,7 +75,15 @@ public class SmartCityAppServer extends Thread {
 			}
 
 	   }
-	 
+	 try {
+		 in.close();
+		 out.close();
+		server.close();
+		
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
    }
  public String CrudOperation(String operation_name) throws Exception
  {
