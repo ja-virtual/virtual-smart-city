@@ -3,7 +3,7 @@ package edu.si.ing1.pds.vsc.connectionPool;
 import java.sql.Connection;
 import java.util.ArrayList;
 import edu.si.ing1.pds.vsc.connectionPool.*;
-public class DataSource extends Thread {
+public class DataSource {
 
     //attributs
 	static JDBCConnectionPool conPool=new JDBCConnectionPool ();
@@ -42,19 +42,7 @@ public class DataSource extends Thread {
 		}
 		conPool.feed(cons);
 	}
-	
-	// run method
-   public void run()
-   {
-	ConnectionDB condb=new ConnectionDB();
-	conPool.returnCon(condb);
-	try {
-		sleep(connection_interval);
-	} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-   }
+
 	
 	//methods
 	public static ConnectionDB takeCon()
