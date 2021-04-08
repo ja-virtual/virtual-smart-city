@@ -51,7 +51,7 @@ public class JDBCConnectionPool
     public synchronized ConnectionDB connectionEntity()
     {
 
-        if(used_connection<= max_connection) {
+        if(used_connection < max_connection) {
             Random indice = new Random();
             ConnectionDB con = collection.get(indice.nextInt(collection.size()));
             collection.remove(con);
