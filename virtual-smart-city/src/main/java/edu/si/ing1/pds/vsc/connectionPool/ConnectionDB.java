@@ -131,7 +131,7 @@ public class ConnectionDB {
 		}
 		return "failed!!";
 	}
-	public String listPerson() throws Exception
+	public StringBuilder listPerson() throws Exception
 	{
 		Statement request=connection.createStatement();
 		ResultSet result=null;
@@ -141,10 +141,11 @@ public class ConnectionDB {
 			String name_ = result.getString(2);
 			int age_ = result.getInt(3);
 			int id_ = result.getInt(1);
-			r.append("ID : "+id_+"  and name : " + name_ + "  and age : " + age_+"\n");
+			r.append("ID : "+id_+"  and name : " + name_ + "  and age : " + age_);
+			r.append(System.getProperty("line.separator"));
 		}
 		result.close();
-		return r.toString();
+		return r;
 	}
 
 

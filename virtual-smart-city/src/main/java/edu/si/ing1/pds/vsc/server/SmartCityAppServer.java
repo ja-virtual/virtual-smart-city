@@ -95,7 +95,7 @@ String result="";
     	  break;
       case "read":
           //Read operation
-    	 result=c.listPerson();
+    	 result=c.listPerson().toString();
     	 break;
       default:
 result="operation non-existent!!";
