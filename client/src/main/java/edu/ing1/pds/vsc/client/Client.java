@@ -24,12 +24,13 @@ public class Client extends Thread
        ClientConfig config=new ClientConfig();
        Socket client_test=new Socket(config.getConfig().getIp(),config.getConfig().getListenPort());
        String msg="";
+       int i=0;
        while(msg!=null)
 		{ msg=null;
 		PrintWriter out = new PrintWriter(client_test.getOutputStream(),true);
 		String operation_name=operation[new Random().nextInt(4)];
 		out.println(operation_name);
-		System.out.println("client  number "+i+"wants an /a "+operation_name+ "'s operation\n");
+		System.out.println("client  number "+ (++i) +"wants an /a "+operation_name+ "'s operation\n");
 		BufferedReader in = new BufferedReader(new InputStreamReader(client_test.getInputStream()));
 		msg=in.readLine();
 		if(msg!=null)
