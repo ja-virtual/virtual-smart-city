@@ -61,7 +61,10 @@ public class SmartCityAppServer extends Thread {
 				ds.setUsedConnection(ds.getUsedConnection()+1);
 				//interval between each connexion
 				sleep(connection_duration_i);
-
+				 if(ds.getUsedConnection()>=max_connection_i ) {
+					  
+					  out.println("Server is occupied!");
+				  }
 					}
 
 			} catch (Exception e1) {
@@ -70,6 +73,7 @@ public class SmartCityAppServer extends Thread {
 			}
 
 	   }
+	 
    }
  public String CrudOperation(String operation_name) throws Exception
  {

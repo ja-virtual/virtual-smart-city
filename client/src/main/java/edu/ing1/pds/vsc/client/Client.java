@@ -25,17 +25,23 @@ public class Client extends Thread
        Socket client_test=new Socket(config.getConfig().getIp(),config.getConfig().getListenPort());
        String msg="";
        int i=0;
-       while(msg!=null)
+       while(msg!="Server is occupied!")
 		{ msg=null;
 		PrintWriter out = new PrintWriter(client_test.getOutputStream(),true);
 		String operation_name=operation[new Random().nextInt(4)];
 		out.println(operation_name);
-		System.out.println("client  number "+ (++i) +"wants an /a "+operation_name+ "'s operation\n");
 		BufferedReader in = new BufferedReader(new InputStreamReader(client_test.getInputStream()));
 		msg=in.readLine();
-		if(msg!=null)
+		if(msg!="Server is occupied!")
+			{System.out.println("client  number "+ (++i) +"wants an /a "+operation_name+ "'s operation\n");
 		System.out.println("Server's response\n"+msg+"\n");
+			}
+		 else
+	       {
+	    	   System.out.println(msg+"\n");
+	       }
 		}
+      
 		}catch (Exception ex)
 	{
 		logger.error("error from client's side ");
