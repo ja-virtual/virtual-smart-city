@@ -59,7 +59,9 @@ public class SmartCityAppServer extends Thread {
 				out.println(CrudOperation(operation_name));
 				System.out.println("connexion number "+(ds.getUsedConnection()+1));
 				ds.setUsedConnection(ds.getUsedConnection()+1);
+				//interval between each connexion
 				sleep(connection_duration_i);
+
 					}
 
 			} catch (Exception e1) {
