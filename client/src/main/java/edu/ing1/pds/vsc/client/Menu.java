@@ -32,10 +32,12 @@ class Menu extends JFrame implements ItemListener {
 	        Menu obj = new Menu(); 
 	  
 	        // définir la disposition du frame 
-	        frame.setLayout(new FlowLayout()); 
-	  
+	        GridLayout grid=new GridLayout(5,1);
+	        
+	        frame.setLayout(grid); 
+	   
 	        // tableau de chaînes contenant des langages
-	        String s1[] = {"- saisir votre entreprise - : ", "EDF", "Apple", "Microsoft", "Windows", "Samsung" }; 
+	        String s1[] = {"- saisir votre entreprise -  ", "EDF", "Apple", "Microsoft", "Windows", "Samsung" }; 
 	      
 	        // créer une case à cocher
 	        combobox = new JComboBox(s1); 
@@ -62,27 +64,21 @@ class Menu extends JFrame implements ItemListener {
 	        // créer un nouveau panneau
 	        JPanel p = new JPanel(); 
 
-	        // ajouter combobox et labels au panneau
-	        p.add(l1);
-	        p.add(combobox); 
-	     
-
-	        // ajouter le panneau au frame
-	        frame.add(p); 
-
-	        // définir la taille du frame 
-	        frame.setSize(400, 200); 
-
-	        frame.show(); 
+	        // ajouter le panneau et les boutons au frame
+	    //    frame.add(p);    
+	        p.add(btn);
+	        p.add(btn2);
 	        
-	        
-	        frame.add(btn);
-	        frame.add(btn2);
-	        frame.add(btn3);
-	      // frame.setSize(900,700);
+	       // définir la taille du frame 
 	        frame.setPreferredSize(new Dimension(650, 850));
+	        // frame.setSize(900,700);
 	        
-	        frame.setResizable(false);
+	        //defining the properties of the frame
+	 	    frame.add(l1);
+	        frame.add(combobox); 
+	        frame.add(p);
+	        frame.add(btn3);
+	         frame.setResizable(false);
 	        frame.setLocationRelativeTo(null);
 	        frame.setLayout(null);
 	        frame.setVisible(true);
