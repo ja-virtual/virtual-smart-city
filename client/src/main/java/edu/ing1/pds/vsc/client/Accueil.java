@@ -1,5 +1,6 @@
 package edu.ing1.pds.vsc.client;
 
+
 import javax.imageio.ImageIO;
 import javax.swing.*; 
 import java.awt.*; 
