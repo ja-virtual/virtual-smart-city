@@ -8,34 +8,35 @@ import java.io.File;
 import java.io.IOException; 
 
 public class Menu {
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	 // frame 
-    static JFrame frame; 
+   static JFrame frame = new JFrame();
     // combobox 
     static JComboBox combobox; 
     // label 
     static JLabel l1; 
+      static final String NOT_SELECTABLE_OPTION = "saisir le nom de votre entreprise ";
+	  static final String NORMAL_OPTION = "Normal Option";
 
     public static void main(String[] args) throws IOException 
     {
         // créer un nouveau frame 
         frame = new JFrame("frame"); 
-     //   ImageIcon icone = new ImageIcon("logo-ja-virtual.png");
+        
+     //ImageIcon icone = new ImageIcon("logo-ja-virtual.png");
         BufferedImage img = ImageIO.read(new File("logo-ja-virtual.png"));
         JLabel pic = new JLabel(new ImageIcon(img));
         frame.add(pic);
+        
         // créer un objet
-        Menu obj = new Menu(); 
-  
+        ActionListener obj = new ActionListener() {//add actionlistner to listen for change
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //To do later
+            }
+        };
+        // ajouter ItemListener
+        combobox.addActionListener(obj); 
+        
         // définir la disposition du frame 
         frame.setLayout(new FlowLayout()); 
   
@@ -46,12 +47,38 @@ public class Menu {
         combobox = new JComboBox(s1); 
 
 	     combobox.setSelectedIndex(0); // aucune sélection par défaut
-        // ajouter ItemListener
-        combobox.addItemListener(obj); 
+	     
+      
   
        combobox.setToolTipText("saisir le nom de votre entreprise");
         
-        
+       combobox.setModel(new DefaultComboBoxModel<String>() {
+           boolean selectionAllowed = true;
+ 	      @Override
+ 	      public void setSelectedItem(Object anObject) {
+ 	        if (!NOT_SELECTABLE_OPTION.equals(anObject)) {
+ 	          super.setSelectedItem(anObject);
+ 	        } else if (selectionAllowed) {
+ 	          // Allow this just once
+ 	          selectionAllowed = false;
+ 	          super.setSelectedItem(anObject);
+ 	        }
+ 	      }
+ 	    });
+
+ 	    combobox.addItem(NOT_SELECTABLE_OPTION);
+ 	    combobox.addItem(NORMAL_OPTION);
+
+ 	    frame.add(combobox);
+ 	    frame.pack();
+ 	    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+ 	    SwingUtilities.invokeLater(new Runnable() {
+ 	      @Override
+ 	      public void run() {
+ 	        frame.setVisible(true);
+ 	      }
+ 	    });
         
         // créer des étiquettes
         l1 = new JLabel("Bienvenue sur Ja-Virtual\n"); 
@@ -65,6 +92,7 @@ public class Menu {
         JButton btn3 = new JButton("Mairie");
         btn3.setBounds(150,250,100,40);
         btn3.setBackground(Color.green); 
+        
         // créer un nouveau panneau
         JPanel p = new JPanel(); 
 
@@ -79,9 +107,8 @@ public class Menu {
         // définir la taille du frame 
         frame.setSize(400, 200); 
 
-        frame.show(); 
         
-        
+  
         frame.add(btn);
         frame.add(btn2);
         frame.add(btn3);
@@ -105,43 +132,7 @@ public class Menu {
 	
 	
 
-	  private static JFrame frame = new JFrame();
-	  private static final String NOT_SELECTABLE_OPTION = " - Select an Option - ";
-	  private static final String NORMAL_OPTION = "Normal Option";
 
-	  public static void main(String[] args) throws Exception {
-	    JComboBox<String> comboBox = new JComboBox<String>();
-
-	    comboBox.setModel(new DefaultComboBoxModel<String>() {
-	      private static final long serialVersionUID = 1L;
-	      boolean selectionAllowed = true;
-
-	      @Override
-	      public void setSelectedItem(Object anObject) {
-	        if (!NOT_SELECTABLE_OPTION.equals(anObject)) {
-	          super.setSelectedItem(anObject);
-	        } else if (selectionAllowed) {
-	          // Allow this just once
-	          selectionAllowed = false;
-	          super.setSelectedItem(anObject);
-	        }
-	      }
-	    });
-
-	    comboBox.addItem(NOT_SELECTABLE_OPTION);
-	    comboBox.addItem(NORMAL_OPTION);
-
-	    frame.add(comboBox);
-	    frame.pack();
-	    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-	    SwingUtilities.invokeLater(new Runnable() {
-	      @Override
-	      public void run() {
-	        frame.setVisible(true);
-	      }
-	    });
-	  }
 
 
 
