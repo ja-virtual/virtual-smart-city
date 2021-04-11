@@ -27,7 +27,7 @@ public class Accueil extends JFrame  {
 	 	        jp.add(j3);
 	 	        
 	 	        
-	 	        frame.show();
+	 	     
 	 		    frame.setSize(300,300);
 	 	        frame.setLayout(null);
 	 	        frame.setVisible(true);
