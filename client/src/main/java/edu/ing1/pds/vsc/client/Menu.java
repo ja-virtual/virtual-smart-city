@@ -35,7 +35,7 @@ class Menu extends JFrame implements ItemListener {
 	        frame.setLayout(new FlowLayout()); 
 	  
 	        // tableau de chaînes contenant des langages
-	        String s1[] = {"EDF", "Apple", "Microsoft", "Windows", "Samsung" }; 
+	        String s1[] = {"- saisir votre entreprise - : ", "EDF", "Apple", "Microsoft", "Windows", "Samsung" }; 
 	      
 	        // créer une case à cocher
 	        combobox = new JComboBox(s1); 
@@ -44,8 +44,7 @@ class Menu extends JFrame implements ItemListener {
 	        // ajouter ItemListener
 	        combobox.addItemListener(obj); 
 	  
-	       combobox.setToolTipText("saisir le nom de votre entreprise");
-	        
+	      
 	        
 	        
 	        // créer des étiquettes
@@ -66,7 +65,7 @@ class Menu extends JFrame implements ItemListener {
 	        // ajouter combobox et labels au panneau
 	        p.add(l1);
 	        p.add(combobox); 
-	       
+	     
 
 	        // ajouter le panneau au frame
 	        frame.add(p); 
@@ -80,7 +79,11 @@ class Menu extends JFrame implements ItemListener {
 	        frame.add(btn);
 	        frame.add(btn2);
 	        frame.add(btn3);
-	        frame.setSize(300,300);
+	      // frame.setSize(900,700);
+	        frame.setPreferredSize(new Dimension(650, 850));
+	        
+	        frame.setResizable(false);
+	        frame.setLocationRelativeTo(null);
 	        frame.setLayout(null);
 	        frame.setVisible(true);
 	    } 
