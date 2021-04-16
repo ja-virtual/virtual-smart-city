@@ -1,11 +1,13 @@
+package edu.ing1.pds.vsc.client;
+
 import java.awt.*;
 
 import javax.swing.*;
 
 
-public class test extends JFrame {
+public class Accueil extends JFrame {
 
-	public test()
+	public Accueil()
 	{
 		setSize(new Dimension(450,450));
 		setLocationRelativeTo(null);
@@ -87,7 +89,7 @@ public class test extends JFrame {
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new test();
+		new Accueil();
 	}
 }
 
