@@ -248,6 +248,7 @@ public class ListSensorEquip extends JFrame {
                 dispose();
             }
         });
+
         menuBar.add(list);
         menuBar.add(plan);
         list.add(list_sensor);

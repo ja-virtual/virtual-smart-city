@@ -19,7 +19,6 @@ public class MappingUC extends JFrame {
         setLayout(new BorderLayout());
 
         //Left menu creation
-
         left.setMinimumSize(new Dimension(250, 480));
         left.setPreferredSize(new Dimension(250, 480));
         left.setMaximumSize(new Dimension(250, 480));
