@@ -1,32 +1,35 @@
 package edu.ing1.pds.vsc.client;
 
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.ObjectInputStream;
 
 import javax.swing.*;
 
 
-public class HomePage extends JFrame {
-	 
+public class HomePage extends JFrame implements ActionListener  {
+	private Mairie fen;
 	public HomePage()
 	{
-		
+
 		setSize(new Dimension(450,450));
 		setLocationRelativeTo(null);
 		setLayout(new GridBagLayout());
 
 		//  JPanel panel = new JPanel(new GridBagLayout());
 
-		//créer un frame
-		
+		//crï¿½er un frame
+
 		JLabel image = new JLabel();
 		ImageIcon  img= new ImageIcon(("logo-ja-virtual.png"));
-		
+
 //		getClass().getClassLoader().getResource
-		   
+
 
 		image.setIcon( new ImageIcon(img.getImage().getScaledInstance(75,75, Image.SCALE_SMOOTH)));
-		
+
 		JLabel phrase_acceuil = new JLabel("Bienvenue sur Ja-Virtual");
 		phrase_acceuil.setFont(new Font("Serif", Font.BOLD, 25));
 		JComboBox nom_entreprise=new JComboBox();
@@ -36,11 +39,13 @@ public class HomePage extends JFrame {
 		nom_entreprise.addItem("Entreprise 2" );
 		nom_entreprise.addItem("Entreprise 3" );
 		nom_entreprise.addItem("Entreprise 4" );
-	//	JButton annuler = new JButton("Annuler");
+		//	JButton annuler = new JButton("Annuler");
 		JButton valider= new JButton("Valider");
 		JButton municipalite = new JButton("Mairie");
 
+		municipalite.addActionListener((ActionListener) this);
 
+		this.setVisible(true);
 		GridBagConstraints c = new GridBagConstraints();
 		c.insets=new Insets(15,1,15,1);
 
@@ -69,7 +74,7 @@ public class HomePage extends JFrame {
 
 		c.ipadx=45;
 		c.ipady=5;
-	//	this.getContentPane().add(annuler,c);
+		//	this.getContentPane().add(annuler,c);
 
 		c.gridy = 7;//change the y location
 
@@ -81,7 +86,7 @@ public class HomePage extends JFrame {
 
 		this.getContentPane().add(municipalite,c);
 
-	
+
 		nom_entreprise.getEditor().getEditorComponent().setBackground(Color.white);
 		nom_entreprise.setFont(new Font("Serif", Font.ITALIC, 16));
 		nom_entreprise.setBackground(Color.white);
@@ -93,9 +98,17 @@ public class HomePage extends JFrame {
 		getContentPane().setBackground(color);
 		setResizable(false);
 		setVisible(true);
-		
-		
-	//ObjectInputStream O = new ObjectInputStream();
+
+
+		//ObjectInputStream O = new ObjectInputStream();
+	}
+
+	public void actionPerformed(ActionEvent e){
+
+		fen = new Mairie();
+		this.dispose();
+
+
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
