@@ -14,12 +14,9 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
-import connexionjdbc.AnalyserDao;
-import connexionjdbc.AnalyserDaoImpl;
 
 public class Mairie extends JFrame {
 
-	private AnalyserDao analyserDao = new AnalyserDaoImpl();
 
 
 	private static final String LOGO_ICON_PATH = "C:\\\\Users\\\\compt\\\\eclipse-workspace\\\\projet\\\\src\\\\projet\\\\logo.png";
@@ -34,9 +31,6 @@ public class Mairie extends JFrame {
 
 	// Les valeurs de Jtable
 
-	Object[][] valeurs = { { "Degré de température", "", "Lumière" }, { "Nombre de capteurs", analyserDao.getNombreCapteurs(), "capteurs" },
-			{ "consommation électricité", "", "Lumière" }, { "nombre d'équipements", analyserDao.getNombreServices(), "équipements" },
-			{ "occupation de workspace", "", "workspace" } };
 
 	DefaultTableModel tabModel;
 
