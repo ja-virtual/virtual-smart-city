@@ -1,4 +1,4 @@
-package edu.ing1.pds.vsc.client;
+package edu.ing1.pds.vsc.client.windows;
 
 public class MainClass {
 
