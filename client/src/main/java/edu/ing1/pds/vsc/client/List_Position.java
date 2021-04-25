@@ -96,7 +96,7 @@ public class List_Position extends JFrame {
         });
 
 
-        p=new JPanel(new BorderLayout());
+        p=new JPanel(new GridLayout());
 
         image = new JLabel();
         img= new ImageIcon("C:\\Users\\elori\\Downloads\\use_case_icon.png");
@@ -131,12 +131,12 @@ public class List_Position extends JFrame {
             }
         });
 
-        p=new JPanel(new BorderLayout());
+        p=new JPanel(new GridLayout());
         image = new JLabel();
         img= new ImageIcon("C:\\Users\\elori\\Downloads\\use_case_icon.png");
         image.setIcon( new ImageIcon(img.getImage().getScaledInstance(65,65, Image.SCALE_SMOOTH)));
 
-        use_case = new JLabel("Mappage Cap/Equ");
+        use_case = new JLabel("Mappage C/E");
         use_case.setFont(new Font("Serif", Font.BOLD, 15));
         p.add(image,BorderLayout.WEST);
         p.add(use_case,BorderLayout.CENTER);
@@ -165,7 +165,7 @@ public class List_Position extends JFrame {
             }
         });
 
-        p=new JPanel(new BorderLayout());
+        p=new JPanel(new GridLayout());
         image = new JLabel();
         img= new ImageIcon("C:\\Users\\elori\\Downloads\\use_case_icon.png");
         image.setIcon( new ImageIcon(img.getImage().getScaledInstance(65,65, Image.SCALE_SMOOTH)));
@@ -208,14 +208,14 @@ public class List_Position extends JFrame {
 
         menuBar.setBorderPainted(isDoubleBuffered());
         menuBar.setSize(750,45);
-        JMenu list=new JMenu("Liste des elements ра mapper");
+        JMenu list=new JMenu("Liste des emplacements ");
         list.setSize(750,45);
         JMenu plan=new JMenu("Plan");
         plan.addMenuListener((MenuListener) new MenuListener() {
 
             public void menuSelected(MenuEvent e) {
 
-                List_Position menuItem1=new List_Position();
+                Map_Full menuItem1=new Map_Full();
                 dispose();
             }
 
@@ -233,28 +233,30 @@ public class List_Position extends JFrame {
             }
         });
         plan.setSize(150,45);
-        JMenuItem list_sensor=new JMenuItem("Liste des capteurs ра mapper");
-        JMenuItem list_equipment=new JMenuItem("Liste des equipements ра mapper");
-        list_sensor.addActionListener((ActionListener) new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
+       list.addMenuListener((MenuListener) new MenuListener() {
 
-                List_Position menuItem1=new List_Position();
+            public void menuSelected(MenuEvent e) {
+
+            	 List_Position menuItem1=new List_Position();
                 dispose();
             }
-        });
 
-        list_equipment.addActionListener((ActionListener) new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
 
-                List_Position menuItem2=new List_Position();
-                dispose();
+            @Override
+            public void menuDeselected(MenuEvent e) {
+                //nothing to code
+
+            }
+
+            @Override
+            public void menuCanceled(MenuEvent e) {
+                //nothing to code
+
             }
         });
-
+     
         menuBar.add(list);
         menuBar.add(plan);
-        list.add(list_sensor);
-        list.add(list_equipment);
         right.add(menuBar, BorderLayout.NORTH);
 
         this.getContentPane().add(left,BorderLayout.WEST);

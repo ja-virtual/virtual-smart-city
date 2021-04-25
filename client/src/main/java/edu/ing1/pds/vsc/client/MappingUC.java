@@ -4,6 +4,8 @@ package edu.ing1.pds.vsc.client;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -21,6 +23,7 @@ public class MappingUC extends JFrame {
         setLayout(new BorderLayout());
 
         //Left menu creation
+
         left.setMinimumSize(new Dimension(250, 480));
         left.setPreferredSize(new Dimension(250, 480));
         left.setMaximumSize(new Dimension(250, 480));
@@ -29,61 +32,171 @@ public class MappingUC extends JFrame {
         JLabel image = new JLabel();
         ImageIcon  img= new ImageIcon("C:\\Users\\elori\\Downloads\\logo_ja_virtual.png");
         image.setIcon( new ImageIcon(img.getImage().getScaledInstance(70,70, Image.SCALE_SMOOTH)));
+
+
         JLabel phrase_acceuil = new JLabel("Bienvenue sur Ja-Virtual");
         phrase_acceuil.setFont(new Font("Serif", Font.BOLD, 13));
         p.add(image);
         p.add(phrase_acceuil);
         p.setBackground(color);
         left.add(p);
-
-
-        p=new JPanel();
+        p=new JPanel(new GridLayout());
         image = new JLabel();
         img= new ImageIcon("C:\\Users\\elori\\Downloads\\use_case_icon.png");
         image.setIcon( new ImageIcon(img.getImage().getScaledInstance(65,65, Image.SCALE_SMOOTH)));
 
 
-        JLabel use_case = new JLabel("Fonctionnalité 1");
+        JLabel use_case = new JLabel("Fonctionnalite 1");
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+               Accueil t = new Accueil();
+                t.setVisible(true);
+                dispose();
+            }
+        });
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseEntered(MouseEvent e)
+            {
+                e.getComponent().setBackground(Color.white);
+            }
+            public void mouseExited(MouseEvent e)
+            {
+                e.getComponent().setBackground(color);
+            }
+        });
         use_case.setFont(new Font("Serif", Font.BOLD, 15));
-        p.add(image);
-        p.add(use_case);
+        p.add(image,BorderLayout.WEST);
+        p.add(use_case,BorderLayout.CENTER);
         p.setBackground(color);
         left.add(p);
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                Accueil t = new Accueil();
+                t.setVisible(true);
+                dispose();
+            }
+        });
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseEntered(MouseEvent e)
+            {
+                e.getComponent().setBackground(Color.white);
+            }
+            public void mouseExited(MouseEvent e)
+            {
+                e.getComponent().setBackground(color);
+            }
+        });
 
+
+        p=new JPanel(new GridLayout());
 
         image = new JLabel();
         img= new ImageIcon("C:\\Users\\elori\\Downloads\\use_case_icon.png");
         image.setIcon( new ImageIcon(img.getImage().getScaledInstance(65,65, Image.SCALE_SMOOTH)));
 
-        use_case = new JLabel("Fonctionnalité 2");
+        use_case = new JLabel("Fonctionnalite 2");
         use_case.setFont(new Font("Serif", Font.BOLD, 15));
-        p.add(image);
-        p.add(use_case);
+        p.add(image,BorderLayout.WEST);
+        p.add(use_case,BorderLayout.CENTER);
         p.setBackground(color);
         left.add(p);
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                // you can open a new frame here as
+                // i have assumed you have declared "frame" as instance variable
+                Accueil t = new Accueil();
+                t.setVisible(true);
+                dispose();
+            }
+        });
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseEntered(MouseEvent e)
+            {
+                e.getComponent().setBackground(Color.white);
+            }
+            public void mouseExited(MouseEvent e)
+            {
+                e.getComponent().setBackground(color);
+            }
+        });
 
-        p=new JPanel();
+        p=new JPanel(new GridLayout());
+        image = new JLabel();
+        img= new ImageIcon("C:\\Users\\elori\\Downloads\\use_case_icon.png");
+        image.setIcon( new ImageIcon(img.getImage().getScaledInstance(65,65, Image.SCALE_SMOOTH)));
+
+        use_case = new JLabel("Mappage C/E");
+        use_case.setFont(new Font("Serif", Font.BOLD, 15));
+        p.add(image,BorderLayout.WEST);
+        p.add(use_case,BorderLayout.CENTER);
+        p.setBackground(color);
+        left.add(p);
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                // you can open a new frame here as
+                // i have assumed you have declared "frame" as instance variable
+                Accueil t = new Accueil();
+                t.setVisible(true);
+                dispose();
+            }
+        });
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseEntered(MouseEvent e)
+            {
+                e.getComponent().setBackground(Color.white);
+            }
+            public void mouseExited(MouseEvent e)
+            {
+                e.getComponent().setBackground(color);
+            }
+        });
+
+        p=new JPanel(new GridLayout());
         image = new JLabel();
         img= new ImageIcon("C:\\Users\\elori\\Downloads\\use_case_icon.png");
         image.setIcon( new ImageIcon(img.getImage().getScaledInstance(65,65, Image.SCALE_SMOOTH)));
 
 
-        use_case = new JLabel("Mappage Cap/Equ");
+        use_case = new JLabel("Fonctionnalite 4");
         use_case.setFont(new Font("Serif", Font.BOLD, 15));
-        p.add(image);
-        p.add(use_case);
+        p.add(image,BorderLayout.WEST);
+        p.add(use_case,BorderLayout.CENTER);
         p.setBackground(color);
         left.add(p);
-        image = new JLabel();
-        img= new ImageIcon("C:\\Users\\elori\\Downloads\\use_case_icon.png");
-        image.setIcon( new ImageIcon(img.getImage().getScaledInstance(65,65, Image.SCALE_SMOOTH)));
-
-        use_case = new JLabel("Fonctionnalité 4");
-        use_case.setFont(new Font("Serif", Font.BOLD, 15));
-        p.add(image);
-        p.add(use_case);
-        p.setBackground(color);
-        left.add(p);
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                // you can open a new frame here as
+                // i have assumed you have declared "frame" as instance variable
+                Accueil t = new Accueil();
+                t.setVisible(true);
+                dispose();
+            }
+        });
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseEntered(MouseEvent e)
+            {
+                e.getComponent().setBackground(Color.white);
+            }
+            public void mouseExited(MouseEvent e)
+            {
+                e.getComponent().setBackground(color);
+            }
+        });
 
         //creation of the right menu
         right.setBackground(Color.white);
@@ -93,14 +206,14 @@ public class MappingUC extends JFrame {
 
         menuBar.setBorderPainted(isDoubleBuffered());
         menuBar.setSize(750,45);
-        JMenu list=new JMenu("Liste des éléments à mapper");
+        JMenu list=new JMenu("Liste des emplacements ");
         list.setSize(750,45);
         JMenu plan=new JMenu("Plan");
         plan.addMenuListener((MenuListener) new MenuListener() {
 
             public void menuSelected(MenuEvent e) {
 
-                List_Position menuItem1=new List_Position();
+                Map_Full menuItem1=new Map_Full();
                 dispose();
             }
 
@@ -118,27 +231,30 @@ public class MappingUC extends JFrame {
             }
         });
         plan.setSize(150,45);
-        JMenuItem List_Position=new JMenuItem("Liste des capteurs à mapper");
-        JMenuItem list_equipment=new JMenuItem("Liste des équipements à mapper");
-        List_Position.addActionListener((ActionListener) new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
+       list.addMenuListener((MenuListener) new MenuListener() {
 
-                List_Position menuItem1=new List_Position();
+            public void menuSelected(MenuEvent e) {
+
+            	 List_Position menuItem1=new List_Position();
                 dispose();
             }
-        });
 
-        list_equipment.addActionListener((ActionListener) new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
 
-                List_Position menuItem2=new List_Position();
-                dispose();
+            @Override
+            public void menuDeselected(MenuEvent e) {
+                //nothing to code
+
+            }
+
+            @Override
+            public void menuCanceled(MenuEvent e) {
+                //nothing to code
+
             }
         });
+     
         menuBar.add(list);
         menuBar.add(plan);
-        list.add(List_Position);
-        list.add(list_equipment);
         right.add(menuBar, BorderLayout.NORTH);
 
         this.getContentPane().add(left,BorderLayout.WEST);

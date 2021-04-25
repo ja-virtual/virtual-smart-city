@@ -11,10 +11,12 @@ import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Client extends Thread
+public class Client
 {
-	public void run()
-	{	 boolean find=false;
+	
+    private final static Logger logger = LoggerFactory.getLogger(Client.class.getName());
+	public static void main(String[] args) throws Exception {
+
 		try
 		{
 		
@@ -52,12 +54,6 @@ System.out.println("Server is now occupied!");
 		logger.error("error from client's side ");
 		ex.printStackTrace();
 	}
-	}
-    private final static Logger logger = LoggerFactory.getLogger(Client.class.getName());
-	public static void main(String[] args) throws Exception {
-
-		new Client().start();
-
 
 	}
 

@@ -3,6 +3,7 @@ package edu.si.ing1.pds.vsc.server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -19,6 +20,8 @@ import org.slf4j.LoggerFactory;
 import java.sql.*;
 import java.util.Random;
 
+import edu.ing1.pds.vsc.client.ClasseMonObjet;
+import edu.ing1.pds.vsc.client.ObjectInputStream;
 import edu.si.ing1.pds.vsc.connectionPool.*;
 import edu.si.ing1.pds.vsc.server.*;
 
@@ -52,10 +55,14 @@ public class SmartCityAppServer extends Thread {
 	   {
 		 
 			try {
+				ObjectInputStream ois = new ObjectInputStream(fis);
+				monObjet= (ClasseMonObjet) ois.readObject();
+				
 				in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 				String operation_name=in.readLine();
 				if(operation_name!=null)
 					{
+					
 				CrudOperation(operation_name);
 				out = new PrintWriter(client.getOutputStream(),true);
 				out.println(CrudOperation(operation_name));
