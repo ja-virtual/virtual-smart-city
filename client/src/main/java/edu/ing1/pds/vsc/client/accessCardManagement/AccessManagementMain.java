@@ -21,10 +21,6 @@ public class AccessManagementMain extends JFrame {
 	JPanel left = new JPanel(new GridLayout(5,1));
 	Color color=new Color(190,245,116);
 
-	private void Interface()
-	{
-
-	}
 	public AccessManagementMain()
 	{
 		setLayout(new BorderLayout());

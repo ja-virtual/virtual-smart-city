@@ -1,21 +1,36 @@
 package edu.ing1.pds.vsc.client;
 
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
-public class MappingUC extends JFrame {
+import edu.ing1.pds.vsc.client.Map_Full.Graphic;
 
-    private JPanel right=new JPanel();
+public class Map_WorkSpace extends JFrame {
+	
+	private JPanel right=new JPanel();
     JPanel left = new JPanel(new GridLayout(5,1));
     Color color=new Color(190,245,116);
     private void Interface()
@@ -266,14 +281,70 @@ public class MappingUC extends JFrame {
         setResizable(false);
 
     }
-    public MappingUC()
+    public Map_WorkSpace()
     {
-        Interface();
-        setVisible(true);
+    	Interface();
+     	// frame = new JFrame("My Drawing");
+          
+           Canvas canvas = new Graphic();
+           canvas.setSize(750, 750);
+           JPanel p3=new JPanel(new BorderLayout());
+           JPanel p4=new JPanel(new GridLayout(4,2));
+           JCheckBox sensor=new JCheckBox("Capteur");
+           JCheckBox equipment=new JCheckBox("Equipement");
+           JComboBox positions=new JComboBox();
+           JButton mapper=new JButton("Mapper");
+           JComboBox sensors=new JComboBox();
+           JButton move_sens=new JButton("déplacer");
+           JComboBox equipments=new JComboBox();
+           JButton move_equ=new JButton("déplacer");
+           p4.add(sensor);
+           p4.add(equipment);
+           p4.add(positions);
+           p4.add(mapper);
+           p4.add(sensors);
+           p4.add(move_sens);
+           p4.add(equipments);
+           p4.add(move_equ);
+           p3.add(p4,BorderLayout.NORTH);
+           p3.add(canvas,BorderLayout.CENTER);
+           right.add(p3,BorderLayout.CENTER);
+           
+
+       setVisible(true);
     }
     public static void main(String[] args) {
-        new MappingUC();
-
+      new Map_WorkSpace();
     }
 
+  
+    class Graphic extends Canvas
+    {
+    	public void paint(Graphics g) {
+    	    
+    		
+    	        g.drawRect(50,200,575,220);
+    	   
+    	        g.fillRect(70,220,80,80);
+    	        g.fillRect(170,220,90,80);
+    	        g.fillRect(280,220,160,80);
+    	        g.fillRect(460,220,35,80);
+    	        g.fillRect(515,220,35,80);
+    	        g.setColor(Color.red);
+    	        g.fillRect(570,220,35,80);
+    	   
+    	     
+    	    
+    	        g.fillRect(70,320,80,80);
+    	        g.fillRect(170,320,90,80);
+    	        g.fillRect(280,320,160,80);
+    	        g.fillRect(460,320,35,80);
+    	        g.fillRect(515,320,35,80);
+    	        g.setColor(color);
+    	        g.fillRect(570,320,35,80);
+    	        ;
+    	       // g.drawString("hajar", 150, 200);
+    	 
+    	}	
+    }
 }

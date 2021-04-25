@@ -1,8 +1,10 @@
-package edu.ing1.pds.vsc.client;
+package edu.ing1.pds.vsc.client.MappingManagement;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -13,10 +15,15 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
+import edu.ing1.pds.vsc.client.Accueil;
+import edu.ing1.pds.vsc.client.List_Position;
+import edu.ing1.pds.vsc.client.Map_Full;
+
 public class InfoMapping extends JFrame {
 
-    private JPanel left_menu=new JPanel();
+    private JPanel right=new JPanel();
     JPanel left = new JPanel(new GridLayout(5,1));
+    Color color=new Color(190,245,116);
     private void Interface()
     {
         setLayout(new BorderLayout());
@@ -37,73 +44,182 @@ public class InfoMapping extends JFrame {
         phrase_acceuil.setFont(new Font("Serif", Font.BOLD, 13));
         p.add(image);
         p.add(phrase_acceuil);
-        Color color=new Color(190,245,116);
         p.setBackground(color);
         left.add(p);
-        p=new JPanel();
+        p=new JPanel(new GridLayout());
         image = new JLabel();
         img= new ImageIcon("C:\\Users\\elori\\Downloads\\use_case_icon.png");
         image.setIcon( new ImageIcon(img.getImage().getScaledInstance(65,65, Image.SCALE_SMOOTH)));
 
 
-        JLabel use_case = new JLabel("Fonctionnalité 1");
+        JLabel use_case = new JLabel("Fonctionnalite 1");
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+               Accueil t = new Accueil();
+                t.setVisible(true);
+                dispose();
+            }
+        });
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseEntered(MouseEvent e)
+            {
+                e.getComponent().setBackground(Color.white);
+            }
+            public void mouseExited(MouseEvent e)
+            {
+                e.getComponent().setBackground(color);
+            }
+        });
         use_case.setFont(new Font("Serif", Font.BOLD, 15));
-        p.add(image);
-        p.add(use_case);
+        p.add(image,BorderLayout.WEST);
+        p.add(use_case,BorderLayout.CENTER);
         p.setBackground(color);
         left.add(p);
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                Accueil t = new Accueil();
+                t.setVisible(true);
+                dispose();
+            }
+        });
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseEntered(MouseEvent e)
+            {
+                e.getComponent().setBackground(Color.white);
+            }
+            public void mouseExited(MouseEvent e)
+            {
+                e.getComponent().setBackground(color);
+            }
+        });
 
+
+        p=new JPanel(new GridLayout());
 
         image = new JLabel();
         img= new ImageIcon("C:\\Users\\elori\\Downloads\\use_case_icon.png");
         image.setIcon( new ImageIcon(img.getImage().getScaledInstance(65,65, Image.SCALE_SMOOTH)));
 
-        use_case = new JLabel("Fonctionnalité 2");
+        use_case = new JLabel("Fonctionnalite 2");
         use_case.setFont(new Font("Serif", Font.BOLD, 15));
-        p.add(image);
-        p.add(use_case);
+        p.add(image,BorderLayout.WEST);
+        p.add(use_case,BorderLayout.CENTER);
         p.setBackground(color);
         left.add(p);
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                // you can open a new frame here as
+                // i have assumed you have declared "frame" as instance variable
+                Accueil t = new Accueil();
+                t.setVisible(true);
+                dispose();
+            }
+        });
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseEntered(MouseEvent e)
+            {
+                e.getComponent().setBackground(Color.white);
+            }
+            public void mouseExited(MouseEvent e)
+            {
+                e.getComponent().setBackground(color);
+            }
+        });
 
-        p=new JPanel();
+        p=new JPanel(new GridLayout());
+        image = new JLabel();
+        img= new ImageIcon("C:\\Users\\elori\\Downloads\\use_case_icon.png");
+        image.setIcon( new ImageIcon(img.getImage().getScaledInstance(65,65, Image.SCALE_SMOOTH)));
+
+        use_case = new JLabel("Mappage C/E");
+        use_case.setFont(new Font("Serif", Font.BOLD, 15));
+        p.add(image,BorderLayout.WEST);
+        p.add(use_case,BorderLayout.CENTER);
+        p.setBackground(color);
+        left.add(p);
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                // you can open a new frame here as
+                // i have assumed you have declared "frame" as instance variable
+                Accueil t = new Accueil();
+                t.setVisible(true);
+                dispose();
+            }
+        });
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseEntered(MouseEvent e)
+            {
+                e.getComponent().setBackground(Color.white);
+            }
+            public void mouseExited(MouseEvent e)
+            {
+                e.getComponent().setBackground(color);
+            }
+        });
+
+        p=new JPanel(new GridLayout());
         image = new JLabel();
         img= new ImageIcon("C:\\Users\\elori\\Downloads\\use_case_icon.png");
         image.setIcon( new ImageIcon(img.getImage().getScaledInstance(65,65, Image.SCALE_SMOOTH)));
 
 
-        use_case = new JLabel("Mappage Cap/Equ");
+        use_case = new JLabel("Fonctionnalite 4");
         use_case.setFont(new Font("Serif", Font.BOLD, 15));
-        p.add(image);
-        p.add(use_case);
+        p.add(image,BorderLayout.WEST);
+        p.add(use_case,BorderLayout.CENTER);
         p.setBackground(color);
         left.add(p);
-        image = new JLabel();
-        img= new ImageIcon("C:\\Users\\elori\\Downloads\\use_case_icon.png");
-        image.setIcon( new ImageIcon(img.getImage().getScaledInstance(65,65, Image.SCALE_SMOOTH)));
-
-        use_case = new JLabel("Fonctionnalité 4");
-        use_case.setFont(new Font("Serif", Font.BOLD, 15));
-        p.add(image);
-        p.add(use_case);
-        p.setBackground(color);
-        left.add(p);
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                // you can open a new frame here as
+                // i have assumed you have declared "frame" as instance variable
+                Accueil t = new Accueil();
+                t.setVisible(true);
+                dispose();
+            }
+        });
+        p.addMouseListener(new MouseAdapter()
+        {
+            public void mouseEntered(MouseEvent e)
+            {
+                e.getComponent().setBackground(Color.white);
+            }
+            public void mouseExited(MouseEvent e)
+            {
+                e.getComponent().setBackground(color);
+            }
+        });
 
         //creation of the right menu
-        left_menu.setBackground(Color.white);
-        left_menu.setLayout(new BorderLayout());
+        right.setBackground(Color.white);
+        right.setLayout(new BorderLayout());
 
         JMenuBar menuBar=new JMenuBar();
 
         menuBar.setBorderPainted(isDoubleBuffered());
         menuBar.setSize(750,45);
-        JMenu list=new JMenu("Liste des elements a�mapper");
+        JMenu list=new JMenu("Liste des emplacements ");
         list.setSize(750,45);
         JMenu plan=new JMenu("Plan");
         plan.addMenuListener((MenuListener) new MenuListener() {
 
             public void menuSelected(MenuEvent e) {
 
-                ListSensorEquip menuItem1=new ListSensorEquip("test");
+                Map_Full menuItem1=new Map_Full();
                 dispose();
             }
 
@@ -121,31 +237,34 @@ public class InfoMapping extends JFrame {
             }
         });
         plan.setSize(150,45);
-        JMenuItem ListSensorEquip=new JMenuItem("Liste des capteurs a mapper");
-        JMenuItem list_equipment=new JMenuItem("Liste des Equipements a  mapper");
-        ListSensorEquip.addActionListener((ActionListener) new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
+       list.addMenuListener((MenuListener) new MenuListener() {
 
-                ListSensorEquip menuItem1=new ListSensorEquip("Sensor");
+            public void menuSelected(MenuEvent e) {
+
+            	 List_Position menuItem1=new List_Position();
                 dispose();
             }
-        });
 
-        list_equipment.addActionListener((ActionListener) new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
 
-                ListSensorEquip menuItem2=new ListSensorEquip("Equipment");
-                dispose();
+            @Override
+            public void menuDeselected(MenuEvent e) {
+                //nothing to code
+
+            }
+
+            @Override
+            public void menuCanceled(MenuEvent e) {
+                //nothing to code
+
             }
         });
+     
         menuBar.add(list);
         menuBar.add(plan);
-        list.add(ListSensorEquip);
-        list.add(list_equipment);
-        left_menu.add(menuBar, BorderLayout.NORTH);
+        right.add(menuBar, BorderLayout.NORTH);
 
         this.getContentPane().add(left,BorderLayout.WEST);
-        this.getContentPane().add(left_menu,BorderLayout.CENTER);
+        this.getContentPane().add(right,BorderLayout.CENTER);
         left.setBackground(color);
 
         setSize(new Dimension(950,780));
@@ -214,7 +333,7 @@ public class InfoMapping extends JFrame {
         p_inter.add(label);
         p_inter.add(textField);
         p3.add(p_inter);
-        left_menu.add(p3,BorderLayout.CENTER);
+        right.add(p3,BorderLayout.CENTER);
 
 
         //longitude field
@@ -249,7 +368,7 @@ public class InfoMapping extends JFrame {
         p_inter.setBackground(Color.white);
         p_inter.add(b1);
         p3.add(p_inter);
-        left_menu.add(p3,BorderLayout.CENTER);
+        right.add(p3,BorderLayout.CENTER);
         p3.setBackground(Color.white);
         setVisible(true);
     }
