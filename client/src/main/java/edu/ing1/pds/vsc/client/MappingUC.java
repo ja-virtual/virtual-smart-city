@@ -1,3 +1,5 @@
+package edu.ing1.pds.vsc.client;
+
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -98,7 +100,7 @@ public class MappingUC extends JFrame {
 
             public void menuSelected(MenuEvent e) {
 
-                List_Sensor menuItem1=new List_Sensor("Test");
+                List_Position menuItem1=new List_Position();
                 dispose();
             }
 
@@ -116,12 +118,12 @@ public class MappingUC extends JFrame {
             }
         });
         plan.setSize(150,45);
-        JMenuItem list_sensor=new JMenuItem("Liste des capteurs à mapper");
+        JMenuItem List_Position=new JMenuItem("Liste des capteurs à mapper");
         JMenuItem list_equipment=new JMenuItem("Liste des équipements à mapper");
-        list_sensor.addActionListener((ActionListener) new ActionListener() {
+        List_Position.addActionListener((ActionListener) new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
 
-                List_Sensor menuItem1=new List_Sensor("Sensor");
+                List_Position menuItem1=new List_Position();
                 dispose();
             }
         });
@@ -129,13 +131,13 @@ public class MappingUC extends JFrame {
         list_equipment.addActionListener((ActionListener) new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
 
-                List_Sensor menuItem2=new List_Sensor("Equipment");
+                List_Position menuItem2=new List_Position();
                 dispose();
             }
         });
         menuBar.add(list);
         menuBar.add(plan);
-        list.add(list_sensor);
+        list.add(List_Position);
         list.add(list_equipment);
         right.add(menuBar, BorderLayout.NORTH);
 

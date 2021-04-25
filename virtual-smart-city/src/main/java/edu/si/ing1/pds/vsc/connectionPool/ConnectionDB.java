@@ -1,43 +1,34 @@
 package edu.si.ing1.pds.vsc.connectionPool;
 
-
 import java.io.*;
 import java.util.*;
 import java.sql.*;
 
-
 import com.fasterxml.jackson.core.type.TypeReference;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
-
+import edu.ing1.pds.vsc.client.Person;
 
 public class ConnectionDB {
-	//attribute
 
-	private List<Person> person;
-	private static final String crud_script_enVar = "CRUD_SCRIPT";
 	private static final String data_smart_city_enVar = "SMART_CITY";
 	private Config config=null;
 	public Connection connection;
 	//the builder
-	public ConnectionDB() 
+	public ConnectionDB()
 	{
 		try {
 			ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 			config=mapper.readValue(new File(System.getenv(data_smart_city_enVar)), Config.class);
 			mapper = new ObjectMapper();
-			person = mapper.readValue(new File(System.getenv(crud_script_enVar)), new TypeReference<List<Person>>(){});
 			Class.forName(config.getDriver());
-			this.connection = DriverManager.getConnection(config.getURL(), 
-			config.getUsername(),config.getPassword());
+			this.connection = DriverManager.getConnection(config.getURL(),
+					config.getUsername(),config.getPassword());
 		} catch (Exception e) {
-          e.printStackTrace();
+			e.printStackTrace();
 		}
-
 	}
-
 	public String info()
 	{
 		if(connection != null)
@@ -45,7 +36,6 @@ public class ConnectionDB {
 		else
 			return "error !";
 	}
-
 	public Person RandomPerson()
 	{
 		Random index=new Random();
@@ -80,7 +70,6 @@ public class ConnectionDB {
 	public String createPerson()
 	{
 		try {
-
 			Person p=RandomPerson();
 			PreparedStatement pc = connection.prepareStatement(config.getCreate());
 			pc.setString(1,p.getName());
@@ -95,7 +84,6 @@ public class ConnectionDB {
 		}
 		return "failed!!";
 	}
-
 	public String updatePerson()
 	{
 		try {
@@ -147,6 +135,5 @@ public class ConnectionDB {
 		result.close();
 		return r;
 	}
-
 
 }

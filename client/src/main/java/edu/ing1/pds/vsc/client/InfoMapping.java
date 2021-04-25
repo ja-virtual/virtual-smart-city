@@ -1,4 +1,4 @@
-package Step1;
+package edu.ing1.pds.vsc.client;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -96,14 +96,14 @@ public class InfoMapping extends JFrame {
 
         menuBar.setBorderPainted(isDoubleBuffered());
         menuBar.setSize(750,45);
-        JMenu list=new JMenu("Liste des éléments à mapper");
+        JMenu list=new JMenu("Liste des elements a�mapper");
         list.setSize(750,45);
         JMenu plan=new JMenu("Plan");
         plan.addMenuListener((MenuListener) new MenuListener() {
 
             public void menuSelected(MenuEvent e) {
 
-                List_Sensor menuItem1=new List_Sensor("test");
+                ListSensorEquip menuItem1=new ListSensorEquip("test");
                 dispose();
             }
 
@@ -121,12 +121,12 @@ public class InfoMapping extends JFrame {
             }
         });
         plan.setSize(150,45);
-        JMenuItem list_sensor=new JMenuItem("Liste des capteurs à mapper");
-        JMenuItem list_equipment=new JMenuItem("Liste des équipements à mapper");
-        list_sensor.addActionListener((ActionListener) new ActionListener() {
+        JMenuItem ListSensorEquip=new JMenuItem("Liste des capteurs a mapper");
+        JMenuItem list_equipment=new JMenuItem("Liste des Equipements a  mapper");
+        ListSensorEquip.addActionListener((ActionListener) new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
 
-                List_Sensor menuItem1=new List_Sensor("Sensor");
+                ListSensorEquip menuItem1=new ListSensorEquip("Sensor");
                 dispose();
             }
         });
@@ -134,13 +134,13 @@ public class InfoMapping extends JFrame {
         list_equipment.addActionListener((ActionListener) new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
 
-                List_Sensor menuItem2=new List_Sensor("Equipment");
+                ListSensorEquip menuItem2=new ListSensorEquip("Equipment");
                 dispose();
             }
         });
         menuBar.add(list);
         menuBar.add(plan);
-        list.add(list_sensor);
+        list.add(ListSensorEquip);
         list.add(list_equipment);
         left_menu.add(menuBar, BorderLayout.NORTH);
 
