@@ -166,7 +166,7 @@ CREATE TABLE TokenGenerator(
 
 
 CREATE TABLE AccessCard(
-   id_accessCard INT,
+   id_accessCard VARCHAR(50) NOT NULL UNIQUE,
    type_card VARCHAR(50) NOT NULL,
    statut_card VARCHAR(50) NOT NULL,
    id_matricule INT NOT NULL,
@@ -174,7 +174,6 @@ CREATE TABLE AccessCard(
    id_empowerment INT NOT NULL,
    id_token INT NOT NULL,
    id_accessLevel INT NOT NULL,
-   PRIMARY KEY(id_accessCard),
    FOREIGN KEY(id_matricule) REFERENCES Employee(id_matricule),
    FOREIGN KEY(id_generalServices) REFERENCES GeneralServices(id_generalServices),
    FOREIGN KEY(id_empowerment) REFERENCES Empowerment(id_empowerment),
