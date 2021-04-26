@@ -1,0 +1,149 @@
+---
+- id_generalservices: 3
+  idcompany: 1
+- id_generalservices: 2
+  idcompany: 2
+- id_generalservices: 4
+  idcompany: 3
+- id_generalservices: 5
+  idcompany: 4
+- id_generalservices: 1
+  idcompany: 5
+
+---
+- id_empowerment: 5
+  type_empowerment: IT
+  id_equipement: 3
+- id_empowerment: 1
+  type_empowerment: IT
+  id_equipement: 2
+- id_empowerment: 4
+  type_empowerment: IT
+  id_equipement: 1
+- id_empowerment: 2
+  type_empowerment: IT
+  id_equipement: 4
+- id_empowerment: 3
+  type_empowerment: Security
+  id_equipement: 4
+
+---
+- id_person: 1
+  firstname: Isidore
+  lastname: Davidsohn
+  age: 29
+- id_person: 4
+  firstname: Ketty
+  lastname: Bill
+  age: 53
+- id_person: 2
+  firstname: Brittni
+  lastname: Lea
+  age: 32
+- id_person: 3
+  firstname: Emmy
+  lastname: Lording
+  age: 39
+- id_person: 5
+  firstname: Merilee
+  lastname: L'Estrange
+  age: 45
+
+---
+- id_matricule: 4
+  fonction: Apprentice
+  manager: Amy Heyns
+  id_person: 5
+- id_matricule: 2
+  fonction: Manager
+  manager: Lee Growden
+  id_person: 3
+- id_matricule: 5
+  fonction: System Architect
+  manager: Jeralee Hebbes
+  id_person: 1
+- id_matricule: 3
+  fonction: System Architect
+  manager: Laurette Wybron
+  id_person: 2
+- id_matricule: 1
+  fonction: Apprentice
+  manager: Rosabella Roddan
+  id_person: 4
+
+---
+- id_accesslevel: 1
+  id_equipement: 1
+  id_workspace: 1
+- id_accesslevel: 2
+  id_equipement: 3
+  id_workspace: 4
+- id_accesslevel: 3
+  id_equipement: 5
+  id_workspace: 4
+- id_accesslevel: 4
+  id_equipement: 4
+  id_workspace: 1
+- id_accesslevel: 5
+  id_equipement: 4
+  id_workspace: 1
+
+---
+- id_token: 1
+  token: frojfoejzf4484ezaerth
+  id_accesslevel: 3
+- id_token: 2
+  token: frojfoejzf4484ezae86d
+  id_accesslevel: 2
+- id_token: 3
+  token: frojfoejzf4484ezaezef
+  id_accesslevel: 2
+- id_token: 4
+  token: frojfoejzf4484ezae862
+  id_accesslevel: 2
+- id_token: 5
+  token: frojfoejzf4484ezaeze5
+  id_accesslevel: 1
+
+---
+- id_accesscard: AXSKL63IO
+  type_card: Visitor
+  statut_card: Warning
+  id_matricule: 1
+  id_generalservices: 2
+  id_empowerment: 1
+  id_token: 5
+  id_accesslevel: 1
+- id_accesscard: AXSKL645O
+  type_card: Visitor
+  statut_card: Warning
+  id_matricule: 1
+  id_generalservices: 5
+  id_empowerment: 5
+  id_token: 3
+  id_accesslevel: 2
+- id_accesscard: AXSKLOP95
+  type_card: Outside Technician
+  statut_card: KO
+  id_matricule: 5
+  id_generalservices: 2
+  id_empowerment: 2
+  id_token: 5
+  id_accesslevel: 3
+- id_accesscard: AXSKLOH63
+  type_card: Security agent
+  statut_card: OK
+  id_matricule: 1
+  id_generalservices: 2
+  id_empowerment: 5
+  id_token: 1
+  id_accesslevel: 1
+- id_accesscard: AXSKLVB6Z
+  type_card: Security agent
+  statut_card: OK
+  id_matricule: 3
+  id_generalservices: 3
+  id_empowerment: 3
+  id_token: 5
+  id_accesslevel: 3
+
