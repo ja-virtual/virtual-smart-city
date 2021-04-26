@@ -12,14 +12,14 @@ insert into Person (id_person, firstname, lastname, age) values (1, 'Isidore', '
 insert into Person (id_person, firstname, lastname, age) values (4, 'Ketty', 'Bill', 53);
 insert into Person (id_person, firstname, lastname, age) values (2, 'Brittni', 'Lea', 32);
 insert into Person (id_person, firstname, lastname, age) values (3, 'Emmy', 'Lording', 39);
-insert into Person (id_person, firstname, lastname, age) values (1, 'Merilee', 'L'' Estrange', 45);
+insert into Person (id_person, firstname, lastname, age) values (5, 'Merilee', 'L'' Estrange', 45);
 
 -- Employee INSERT
 
-insert into Employee (id_matricule, fonction, manager, id_person) values (2, 'Apprentice', 'Amy Heyns', 4);
+insert into Employee (id_matricule, fonction, manager, id_person) values (4, 'Apprentice', 'Amy Heyns', 5);
 insert into Employee (id_matricule, fonction, manager, id_person) values (2, 'Manager', 'Lee Growden', 3);
-insert into Employee (id_matricule, fonction, manager, id_person) values (5, 'System Architect', 'Jeralee Hebbes', 3);
-insert into Employee (id_matricule, fonction, manager, id_person) values (3, 'System Architect', 'Laurette Wybron', 3);
+insert into Employee (id_matricule, fonction, manager, id_person) values (5, 'System Architect', 'Jeralee Hebbes', 1);
+insert into Employee (id_matricule, fonction, manager, id_person) values (3, 'System Architect', 'Laurette Wybron', 2);
 insert into Employee (id_matricule, fonction, manager, id_person) values (1, 'Apprentice', 'Rosabella Roddan', 4);
 
 
@@ -33,11 +33,11 @@ insert into Empowerment (id_empowerment, type_empowerment, id_equipement) values
 
 -- Access Level INSERT
 
-insert into AccessLevel (id_accesslevel, id_equipement, id_workspace) values (3, 1, 1);
-insert into AccessLevel (id_accesslevel, id_equipement, id_workspace) values (1, 3, 4);
+insert into AccessLevel (id_accesslevel, id_equipement, id_workspace) values (1, 1, 1);
+insert into AccessLevel (id_accesslevel, id_equipement, id_workspace) values (2, 3, 4);
 insert into AccessLevel (id_accesslevel, id_equipement, id_workspace) values (3, 5, 4);
-insert into AccessLevel (id_accesslevel, id_equipement, id_workspace) values (3, 4, 1);
-insert into AccessLevel (id_accesslevel, id_equipement, id_workspace) values (2, 4, 1);
+insert into AccessLevel (id_accesslevel, id_equipement, id_workspace) values (4, 4, 1);
+insert into AccessLevel (id_accesslevel, id_equipement, id_workspace) values (5, 4, 1);
 
 -- Token Generator INSERT
 
@@ -49,11 +49,11 @@ insert into TokenGenerator (id_token, token, id_accesslevel) values (5, 'frojfoe
 
 -- ACCESS CARD INSERT
 
-insert into AccessCard (id_accesscard, type_card, statut_card, id_matricule, id_generalservices, id_empowerment, id_token, id_accesslevel) values (1, 'Visitor', 'Warning', 1, 2, 1, 5, 1);
-insert into AccessCard (id_accesscard, type_card, statut_card, id_matricule, id_generalservices, id_empowerment, id_token, id_accesslevel) values (2, 'Visitor', 'Warning', 1, 5, 5, 3, 2);
-insert into AccessCard (id_accesscard, type_card, statut_card, id_matricule, id_generalservices, id_empowerment, id_token, id_accesslevel) values (3, 'Visitor', 'KO', 5, 2, 2, 5, 3);
-insert into AccessCard (id_accesscard, type_card, statut_card, id_matricule, id_generalservices, id_empowerment, id_token, id_accesslevel) values (4, 'Security agent', 'OK', 1, 2, 5, 1, 1);
-insert into AccessCard (id_accesscard, type_card, statut_card, id_matricule, id_generalservices, id_empowerment, id_token, id_accesslevel) values (5, 'Security agent', 'OK', 5, 3, 3, 5, 3);
+insert into AccessCard (id_accesscard, type_card, statut_card, id_matricule, id_generalservices, id_empowerment, id_token, id_accesslevel) values (AXSKL63IO, 'Visitor', 'Warning', 1, 2, 1, 5, 1);
+insert into AccessCard (id_accesscard, type_card, statut_card, id_matricule, id_generalservices, id_empowerment, id_token, id_accesslevel) values (AXSKL645O, 'Visitor', 'Warning', 1, 5, 5, 3, 2);
+insert into AccessCard (id_accesscard, type_card, statut_card, id_matricule, id_generalservices, id_empowerment, id_token, id_accesslevel) values (AXSKLOP95, 'Outside Technician', 'KO', 5, 2, 2, 5, 3);
+insert into AccessCard (id_accesscard, type_card, statut_card, id_matricule, id_generalservices, id_empowerment, id_token, id_accesslevel) values (AXSKLOH63, 'Security agent', 'OK', 1, 2, 5, 1, 1);
+insert into AccessCard (id_accesscard, type_card, statut_card, id_matricule, id_generalservices, id_empowerment, id_token, id_accesslevel) values (AXSKLVB6Z, 'Security agent', 'OK', 5, 3, 3, 5, 3);
 
 
 
