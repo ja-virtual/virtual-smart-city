@@ -141,7 +141,7 @@ CREATE TABLE Employee(
    id_matricule INT,
    fonction VARCHAR(50) NOT NULL,
    manager VARCHAR(50) NOT NULL,
-   id_person INT,
+   id_person INT NOT NULL,
    PRIMARY KEY(id_matricule),
    FOREIGN KEY(id_person) REFERENCES Person(id_person)
 
