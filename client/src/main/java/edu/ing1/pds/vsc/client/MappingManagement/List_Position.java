@@ -1,35 +1,26 @@
-package edu.ing1.pds.vsc.client;
+package edu.ing1.pds.vsc.client.MappingManagement;
 
-import java.awt.BorderLayout;
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 
-public class Map_Full extends JFrame {
-	
-	private JPanel right=new JPanel();
-    JPanel left = new JPanel(new GridLayout(5,1));
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+import java.util.Vector;
+
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+
+import edu.ing1.pds.vsc.client.HomePage;
+
+public class List_Position extends JFrame {
+
+    private JPanel right=new JPanel();
+    private JPanel left = new JPanel(new GridLayout(5,1));
     Color color=new Color(190,245,116);
     private void Interface()
     {
@@ -64,7 +55,7 @@ public class Map_Full extends JFrame {
         {
             public void mouseClicked(MouseEvent e)
             {
-               Accueil t = new Accueil();
+               HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -89,7 +80,7 @@ public class Map_Full extends JFrame {
         {
             public void mouseClicked(MouseEvent e)
             {
-                Accueil t = new Accueil();
+                HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -125,7 +116,7 @@ public class Map_Full extends JFrame {
             {
                 // you can open a new frame here as
                 // i have assumed you have declared "frame" as instance variable
-                Accueil t = new Accueil();
+                HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -159,7 +150,7 @@ public class Map_Full extends JFrame {
             {
                 // you can open a new frame here as
                 // i have assumed you have declared "frame" as instance variable
-                Accueil t = new Accueil();
+                HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -194,7 +185,7 @@ public class Map_Full extends JFrame {
             {
                 // you can open a new frame here as
                 // i have assumed you have declared "frame" as instance variable
-                Accueil t = new Accueil();
+                HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -226,7 +217,12 @@ public class Map_Full extends JFrame {
 
             public void menuSelected(MenuEvent e) {
 
-                Map_Full menuItem1=new Map_Full();
+                try {
+					Map_Full menuItem1=new Map_Full();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
                 dispose();
             }
 
@@ -279,60 +275,114 @@ public class Map_Full extends JFrame {
         setResizable(false);
 
     }
-    public Map_Full()
+    public List_Position()
     {
-    	Interface();
-     	// frame = new JFrame("My Drawing");
-          
-           Canvas canvas = new Graphic();
-           canvas.setSize(750, 750);
-           JPanel p3=new JPanel(new BorderLayout());
-           JPanel p4=new JPanel(new GridLayout(2,2));
-           JComboBox building=new JComboBox();
-           JComboBox floor=new JComboBox();
-           JComboBox workSpace=new JComboBox();
-           p4.add(floor);
-           p4.add(building);
-           p4.add(workSpace);
-           p3.add(p4,BorderLayout.NORTH);
-           p3.add(canvas,BorderLayout.CENTER);
-           right.add(p3,BorderLayout.CENTER);
-           
+        Interface();
+        JLabel Title=new JLabel("Liste d'emplacement");
+        Title.setFont(new Font("Serif", Font.BOLD, 45));
+        Title.setHorizontalAlignment(JLabel.CENTER);
+        JPanel p3=new JPanel(new BorderLayout());
+        p3.add(Title,BorderLayout.NORTH);
+        TableCellRenderer tableRenderer;
+        JTable table = new JTable(new JTableButtonModel());
+        tableRenderer = table.getDefaultRenderer(JButton.class);
+        table.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tableRenderer));
 
-       setVisible(true);
+
+        table.setRowSelectionAllowed(false);
+        JScrollPane scrollPane = new JScrollPane(table);
+        table.setRowHeight(table.getRowHeight() + 20);
+        table.getTableHeader().setPreferredSize(
+                new Dimension(scrollPane.WIDTH,40)
+        );
+        table.getTableHeader().setBackground(color);
+        scrollPane.setBackground(Color.white);
+        DefaultTableCellRenderer custom = new DefaultTableCellRenderer();
+        custom.setHorizontalAlignment(JLabel.CENTER);
+        for (int i=0 ; i<table.getColumnCount()-1 ; i++)
+        {
+            table.getColumnModel().getColumn(i).setCellRenderer(custom);
+        }
+        p3.add(scrollPane,BorderLayout.CENTER);
+        p3.setBackground(Color.white);
+        right.add(p3);
+
+
+        setVisible(true);
     }
     public static void main(String[] args) {
-      new Map_Full();
+        new List_Position();
+
     }
 
-  
-    class Graphic extends Canvas
-    {
-    	public void paint(Graphics g) {
-    	    
-    		
-    	        g.drawRect(50,200,575,220);
-    	   
-    	        g.fillRect(70,220,80,80);
-    	        g.fillRect(170,220,90,80);
-    	        g.fillRect(280,220,160,80);
-    	        g.fillRect(460,220,35,80);
-    	        g.fillRect(515,220,35,80);
-    	        g.setColor(Color.red);
-    	        g.fillRect(570,220,35,80);
-    	   
-    	     
-    	    
-    	        g.fillRect(70,320,80,80);
-    	        g.fillRect(170,320,90,80);
-    	        g.fillRect(280,320,160,80);
-    	        g.fillRect(460,320,35,80);
-    	        g.fillRect(515,320,35,80);
-    	        g.setColor(color);
-    	        g.fillRect(570,320,35,80);
-    	        ;
-    	       // g.drawString("hajar", 150, 200);
-    	 
-    	}	
+    class JTableButtonRenderer implements TableCellRenderer,ActionListener {
+        private TableCellRenderer defaultRenderer;
+        public JTableButtonRenderer(TableCellRenderer renderer) {
+            defaultRenderer = renderer;
+        }
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            if(value instanceof Component)
+                return (Component)value;
+            return defaultRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        }
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			dispose();
+			
+		}
+    }
+    class JTableButtonModel extends AbstractTableModel {
+
+        private Vector<Vector<Object>> data = new  Vector<Vector<Object>>();
+
+        private String[] columns=new String[3];
+        public JTableButtonModel()
+        {
+         
+                try {
+                    Class.forName("org.postgresql.Driver");
+
+                    Connection con=DriverManager.getConnection("jdbc:postgresql://localhost:5432/TestHajar","postgres","admin");
+                    ResultSet rs = con.createStatement().executeQuery("SELECT * FROM personne");
+                    columns[0]=" ID Emplacement";
+                    columns[1]=" Date de fournissement";
+                    columns[2]=" ";
+                    while(rs.next()) {
+
+                    	 Vector<Object> row = new Vector<Object>();
+                        row.add(rs.getString("nom"));
+                        row.add(rs.getInt("age"));
+                        JButton map=new JButton("Mapper");
+                        
+                        row.add(map);
+
+                        data.add(row);
+                    }
+                    rs.close();
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        
+        public String getColumnName(int column) {
+            return columns[column];
+        }
+        public int getRowCount() {
+            return data.size();
+        }
+        public int getColumnCount() {
+            return columns.length;
+        }
+        public Object getValueAt(int row, int column) {
+            return data.get(row).get(column);
+        }
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+        public Class getColumnClass(int column) {
+            return getValueAt(0, column).getClass();
+        }
     }
 }
+

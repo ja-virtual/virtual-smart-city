@@ -10,14 +10,13 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
-import edu.ing1.pds.vsc.client.Accueil;
-import edu.ing1.pds.vsc.client.List_Position;
-import edu.ing1.pds.vsc.client.Map_Full;
+import edu.ing1.pds.vsc.client.HomePage;
+
+
+
 
 public class InfoMapping extends JFrame {
 
@@ -57,7 +56,7 @@ public class InfoMapping extends JFrame {
         {
             public void mouseClicked(MouseEvent e)
             {
-               Accueil t = new Accueil();
+               HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -82,7 +81,7 @@ public class InfoMapping extends JFrame {
         {
             public void mouseClicked(MouseEvent e)
             {
-                Accueil t = new Accueil();
+                HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -118,7 +117,7 @@ public class InfoMapping extends JFrame {
             {
                 // you can open a new frame here as
                 // i have assumed you have declared "frame" as instance variable
-                Accueil t = new Accueil();
+                HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -152,7 +151,7 @@ public class InfoMapping extends JFrame {
             {
                 // you can open a new frame here as
                 // i have assumed you have declared "frame" as instance variable
-                Accueil t = new Accueil();
+                HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -187,7 +186,7 @@ public class InfoMapping extends JFrame {
             {
                 // you can open a new frame here as
                 // i have assumed you have declared "frame" as instance variable
-                Accueil t = new Accueil();
+                HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -219,7 +218,12 @@ public class InfoMapping extends JFrame {
 
             public void menuSelected(MenuEvent e) {
 
-                Map_Full menuItem1=new Map_Full();
+                try {
+					Map_Full map=new Map_Full();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
                 dispose();
             }
 
@@ -365,7 +369,23 @@ public class InfoMapping extends JFrame {
         p_inter=new JPanel();
         b1=new JButton("Mapper");
         b1.setPreferredSize(new Dimension(250,50));
-        p_inter.setBackground(Color.white);
+        b1.addActionListener(new ActionListener()
+        		{
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						Connect_Server b=new Connect_Server();
+						Object b1=b.allBuilding();
+						if(b1!=null)
+						{Building btest=(Building)b1;
+						System.out.println("well done"+btest.getId_building());
+						}
+						else
+							System.out.println("null result");	
+						
+					}
+        	
+        		});        p_inter.setBackground(Color.white);
         p_inter.add(b1);
         p3.add(p_inter);
         right.add(p3,BorderLayout.CENTER);

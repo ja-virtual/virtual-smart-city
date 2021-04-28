@@ -1,4 +1,4 @@
-package edu.ing1.pds.vsc.client;
+package edu.ing1.pds.vsc.client.MappingManagement;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
@@ -26,9 +26,10 @@ import javax.swing.JPanel;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
-import edu.ing1.pds.vsc.client.Map_Full.Graphic;
+import edu.ing1.pds.vsc.client.HomePage;
 
-public class Map_WorkSpace extends JFrame {
+
+public class Map_Workspace extends JFrame {
 	
 	private JPanel right=new JPanel();
     JPanel left = new JPanel(new GridLayout(5,1));
@@ -66,7 +67,7 @@ public class Map_WorkSpace extends JFrame {
         {
             public void mouseClicked(MouseEvent e)
             {
-               Accueil t = new Accueil();
+               HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -91,7 +92,7 @@ public class Map_WorkSpace extends JFrame {
         {
             public void mouseClicked(MouseEvent e)
             {
-                Accueil t = new Accueil();
+                HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -127,7 +128,7 @@ public class Map_WorkSpace extends JFrame {
             {
                 // you can open a new frame here as
                 // i have assumed you have declared "frame" as instance variable
-                Accueil t = new Accueil();
+                HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -161,7 +162,7 @@ public class Map_WorkSpace extends JFrame {
             {
                 // you can open a new frame here as
                 // i have assumed you have declared "frame" as instance variable
-                Accueil t = new Accueil();
+                HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -196,7 +197,7 @@ public class Map_WorkSpace extends JFrame {
             {
                 // you can open a new frame here as
                 // i have assumed you have declared "frame" as instance variable
-                Accueil t = new Accueil();
+                HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -228,7 +229,12 @@ public class Map_WorkSpace extends JFrame {
 
             public void menuSelected(MenuEvent e) {
 
-                Map_Full menuItem1=new Map_Full();
+                try {
+					Map_Full menuItem1=new Map_Full();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
                 dispose();
             }
 
@@ -281,7 +287,7 @@ public class Map_WorkSpace extends JFrame {
         setResizable(false);
 
     }
-    public Map_WorkSpace()
+    public Map_Workspace()
     {
     	Interface();
      	// frame = new JFrame("My Drawing");
@@ -291,30 +297,51 @@ public class Map_WorkSpace extends JFrame {
            JPanel p3=new JPanel(new BorderLayout());
            JPanel p4=new JPanel(new GridLayout(4,2));
            JCheckBox sensor=new JCheckBox("Capteur");
+      	 
            JCheckBox equipment=new JCheckBox("Equipement");
            JComboBox positions=new JComboBox();
            JButton mapper=new JButton("Mapper");
            JComboBox sensors=new JComboBox();
-           JButton move_sens=new JButton("déplacer");
+           JButton move_sens=new JButton("Déplacer");
            JComboBox equipments=new JComboBox();
-           JButton move_equ=new JButton("déplacer");
+           JButton move_equ=new JButton("Déplacer");
+           sensor.addActionListener(new ActionListener() {
+      		 public void actionPerformed(ActionEvent e) {
+      		        JCheckBox sensor_cb = (JCheckBox) e.getSource();
+      		        if (sensor_cb.isSelected()) {
+      		            p4.add(sensors);
+      		        } else {
+      		        	   p4.remove(sensors);
+      		        }}
+      		 });
+         equipment.addActionListener(new ActionListener() {
+    		 public void actionPerformed(ActionEvent e) {
+    		        JCheckBox equipment_cb = (JCheckBox) e.getSource();
+    		        if (equipment_cb.isSelected()) {
+    		            p4.add(equipments);
+    		        } else {
+    		        	   p4.remove(equipments);
+    		        }}
+    		 });
            p4.add(sensor);
+           sensor.setSelected(true);
+           equipment.setSelected(true);
            p4.add(equipment);
            p4.add(positions);
            p4.add(mapper);
-           p4.add(sensors);
+          // p4.add(sensors);
            p4.add(move_sens);
-           p4.add(equipments);
+         //  p4.add(equipments);
            p4.add(move_equ);
            p3.add(p4,BorderLayout.NORTH);
            p3.add(canvas,BorderLayout.CENTER);
            right.add(p3,BorderLayout.CENTER);
-           
+      
 
        setVisible(true);
     }
     public static void main(String[] args) {
-      new Map_WorkSpace();
+      new Map_Workspace();
     }
 
   

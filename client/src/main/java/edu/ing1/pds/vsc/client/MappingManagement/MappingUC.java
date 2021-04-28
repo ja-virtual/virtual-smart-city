@@ -1,4 +1,4 @@
-package edu.ing1.pds.vsc.client;
+package edu.ing1.pds.vsc.client.MappingManagement;
 
 
 import java.awt.*;
@@ -12,6 +12,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+
+import edu.ing1.pds.vsc.client.HomePage;
 
 public class MappingUC extends JFrame {
 
@@ -51,7 +53,7 @@ public class MappingUC extends JFrame {
         {
             public void mouseClicked(MouseEvent e)
             {
-               Accueil t = new Accueil();
+               HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -76,7 +78,7 @@ public class MappingUC extends JFrame {
         {
             public void mouseClicked(MouseEvent e)
             {
-                Accueil t = new Accueil();
+                HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -112,7 +114,7 @@ public class MappingUC extends JFrame {
             {
                 // you can open a new frame here as
                 // i have assumed you have declared "frame" as instance variable
-                Accueil t = new Accueil();
+                HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -146,7 +148,7 @@ public class MappingUC extends JFrame {
             {
                 // you can open a new frame here as
                 // i have assumed you have declared "frame" as instance variable
-                Accueil t = new Accueil();
+                HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -181,7 +183,7 @@ public class MappingUC extends JFrame {
             {
                 // you can open a new frame here as
                 // i have assumed you have declared "frame" as instance variable
-                Accueil t = new Accueil();
+                HomePage t = new HomePage();
                 t.setVisible(true);
                 dispose();
             }
@@ -213,7 +215,12 @@ public class MappingUC extends JFrame {
 
             public void menuSelected(MenuEvent e) {
 
-                Map_Full menuItem1=new Map_Full();
+                try {
+					Map_Full menuItem1=new Map_Full();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
                 dispose();
             }
 
