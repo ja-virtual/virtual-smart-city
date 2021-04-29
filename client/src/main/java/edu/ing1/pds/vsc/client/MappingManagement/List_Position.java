@@ -303,6 +303,12 @@ public class List_Position extends JFrame {
         {
             table.getColumnModel().getColumn(i).setCellRenderer(custom);
         }
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+                InfoMapping im=new InfoMapping();
+                dispose();
+            }
+        });
         p3.add(scrollPane,BorderLayout.CENTER);
         p3.setBackground(Color.white);
         right.add(p3);
@@ -353,7 +359,7 @@ public class List_Position extends JFrame {
                         row.add(rs.getString("nom"));
                         row.add(rs.getInt("age"));
                         JButton map=new JButton("Mapper");
-                        
+                        map.setBackground(color);
                         row.add(map);
 
                         data.add(row);

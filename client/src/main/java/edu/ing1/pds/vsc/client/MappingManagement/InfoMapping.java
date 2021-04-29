@@ -292,11 +292,12 @@ public class InfoMapping extends JFrame {
         p_inter.setBackground(Color.white);
         p_inter.setPreferredSize(new Dimension(250,10));
         p_inter.add(info_position,BorderLayout.CENTER);
+        b1.setBackground(color);
         p_inter.add(b1);
         p3.add(p_inter);
 
         //the fields
-        p_inter=new JPanel(new GridLayout(5,1,25,10));
+        p_inter=new JPanel(new GridLayout(7,1,5,3));
 
         //Local Business Field
         JLabel label=new JLabel("Espace loue concerne");
@@ -304,7 +305,7 @@ public class InfoMapping extends JFrame {
         Border margin = new EmptyBorder(30,30,30,30);
         label.setBorder(new CompoundBorder(border, margin));
         JTextField textField=new JTextField();
-        textField.setPreferredSize(new Dimension(50,30));
+        textField.setPreferredSize(new Dimension(70,100));
         textField.setEditable(false);
         p_inter.setBackground(Color.white);
         p_inter.add(label);
@@ -318,7 +319,7 @@ public class InfoMapping extends JFrame {
         margin = new EmptyBorder(30,30,30,30);
         label.setBorder(new CompoundBorder(border, margin));
         textField=new JTextField();
-        textField.setPreferredSize(new Dimension(50,30));
+        textField.setPreferredSize(new Dimension(70,40));
         textField.setEditable(false);
         p_inter.setBackground(Color.white);
         p_inter.add(label);
@@ -331,7 +332,7 @@ public class InfoMapping extends JFrame {
         margin = new EmptyBorder(30,30,30,30);
         label.setBorder(new CompoundBorder(border, margin));
         textField=new JTextField();
-        textField.setPreferredSize(new Dimension(50,30));
+        textField.setPreferredSize(new Dimension(70,40));
         textField.setEditable(false);
         p_inter.setBackground(Color.white);
         p_inter.add(label);
@@ -346,7 +347,7 @@ public class InfoMapping extends JFrame {
         margin = new EmptyBorder(30,30,30,30);
         label.setBorder(new CompoundBorder(border, margin));
         textField=new JTextField();
-        textField.setPreferredSize(new Dimension(50,30));
+        textField.setPreferredSize(new Dimension(70,40));
         textField.setEditable(false);
         p_inter.setBackground(Color.white);
         p_inter.add(label);
@@ -358,36 +359,66 @@ public class InfoMapping extends JFrame {
         margin = new EmptyBorder(30,30,30,30);
         label.setBorder(new CompoundBorder(border, margin));
         textField=new JTextField();
-        textField.setPreferredSize(new Dimension(50,30));
+        textField.setPreferredSize(new Dimension(70,40));
         textField.setEditable(false);
         p_inter.setBackground(Color.white);
         p_inter.add(label);
         p_inter.add(textField);
 
+        //Field type of mapped object
+        label=new JLabel("type objet mappé");
+        border = label.getBorder();
+        margin = new EmptyBorder(30,30,30,30);
+        label.setBorder(new CompoundBorder(border, margin));
+        JComboBox mapped_object=new JComboBox();
+        mapped_object.setPreferredSize(new Dimension(70,100));
+        textField.setEditable(false);
+        p_inter.setBackground(Color.white);
+        p_inter.add(label);
+        p_inter.add(mapped_object);
+
+        //Field type of object mapped choosed
+        label=new JLabel("sous-type objet mappé");
+        border = label.getBorder();
+        margin = new EmptyBorder(30,30,30,30);
+        label.setBorder(new CompoundBorder(border, margin));
+        JComboBox type_mapped_object=new JComboBox();
+        type_mapped_object.setPreferredSize(new Dimension(70,100));
+        textField.setEditable(false);
+        p_inter.setBackground(Color.white);
+        p_inter.add(label);
+        p_inter.add(type_mapped_object);
 
         //mapping button
         p_inter=new JPanel();
+        p3.add(p_inter);
+        JPanel space=new JPanel();
+        space.setPreferredSize(new Dimension(450,40));
         b1=new JButton("Mapper");
+        b1.setBackground(color);
         b1.setPreferredSize(new Dimension(250,50));
+        space.setBackground(Color.white);
         b1.addActionListener(new ActionListener()
         		{
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						Connect_Server b=new Connect_Server();
+					/*	Connect_Server b=new Connect_Server();
 						Object b1=b.allBuilding();
 						if(b1!=null)
 						{Building btest=(Building)b1;
 						System.out.println("well done"+btest.getId_building());
 						}
 						else
-							System.out.println("null result");	
+							System.out.println("null result");	*/
 						
 					}
         	
-        		});        p_inter.setBackground(Color.white);
+        		});    
+        p_inter.setBackground(Color.white);
+        p_inter.add(space);
         p_inter.add(b1);
-        p3.add(p_inter);
+      //  p3.add(p_inter);
         right.add(p3,BorderLayout.CENTER);
         p3.setBackground(Color.white);
         setVisible(true);

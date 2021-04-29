@@ -529,7 +529,7 @@ public class Map_Full extends JFrame  {
 			super.paint(g);
 
 			g.drawRect(50,100,575,235);
-			System.out.println("you are successful!!");
+	
 			if(open_space1!=null && open_space2!=null &&open_space3!=null && open_space4!=null && individual1!=null && individual2!=null &&individual3!=null && individual4!=null&& reunion1!=null && reunion2!=null )
 			{
 				
@@ -667,7 +667,7 @@ public class Map_Full extends JFrame  {
 				{
 					g.drawRect(70,225,95,95);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(open_space3.toString(), 80,265);
+					g.drawString(open_space3.toString(), 80,270);
 				}
 				else if(open_space3.getId_generalServices()==1)
 				{
@@ -675,7 +675,7 @@ public class Map_Full extends JFrame  {
 					g.fillRect(70,225,95,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(open_space3.toString(), 80,265);
+					g.drawString(open_space3.toString(), 80,270);
 					
 				}
 				else
@@ -684,14 +684,14 @@ public class Map_Full extends JFrame  {
 					g.fillRect(70,225,95,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(open_space3.toString(), 80,265);
+					g.drawString(open_space3.toString(), 80,270);
 				}
 				
 				if(open_space4.getIs_available()==true)
 				{
 					g.drawRect(180,225,95,95);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(open_space4.toString(), 190,265);
+					g.drawString(open_space4.toString(), 190,270);
 				}
 				else if(open_space4.getId_generalServices()==1)
 				{
@@ -700,7 +700,7 @@ public class Map_Full extends JFrame  {
 					g.fillRect(180,225,95,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(open_space4.toString(), 190,265);
+					g.drawString(open_space4.toString(), 190,270);
 				}
 				else
 				{
@@ -708,14 +708,14 @@ public class Map_Full extends JFrame  {
 					g.fillRect(180,225,95,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(open_space4.toString(), 190,265);
+					g.drawString(open_space4.toString(), 190,270);
 				}
 				
 				if(reunion2.getIs_available()==true)
 				{
 					g.drawRect(290,225,200,95);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(reunion2.toString(),350,265);
+					g.drawString(reunion2.toString(),350,270);
 				}
 				else if(reunion2.getId_generalServices()==1)
 				{
@@ -723,7 +723,7 @@ public class Map_Full extends JFrame  {
 					g.fillRect(290,225,200,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(reunion2.toString(), 350,265);
+					g.drawString(reunion2.toString(), 350,270);
 				}
 				else
 				{
@@ -732,7 +732,7 @@ public class Map_Full extends JFrame  {
 					g.fillRect(290,225,200,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(reunion2.toString(), 350,265);
+					g.drawString(reunion2.toString(), 350,270);
 				}
 				
 				if(individual3.getIs_available()==true)
@@ -761,7 +761,7 @@ public class Map_Full extends JFrame  {
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
 					g.drawString("Idv\n",520,160);
-					g.drawString(individual3.getId_workspace(),520,170);
+					g.drawString(individual3.getId_workspace(),520,270);
 			
 					
 				}

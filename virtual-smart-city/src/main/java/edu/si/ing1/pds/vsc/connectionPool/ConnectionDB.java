@@ -12,7 +12,7 @@ import edu.ing1.pds.vsc.client.Person;
 
 public class ConnectionDB {
 
-	private static final String data_smart_city_enVar = "SMART_CITY";
+	private static final String data_smart_city_enVar = "SMART_CITY_SERVER";
 	private Config config=null;
 	public Connection connection;
 	//the builder
@@ -29,7 +29,7 @@ public class ConnectionDB {
 			e.printStackTrace();
 		}
 	}
-	public String info()
+/*	public String info()
 	{
 		if(connection != null)
 			return "connection succed!";
@@ -135,5 +135,5 @@ public class ConnectionDB {
 		result.close();
 		return r;
 	}
-
+*/
 }

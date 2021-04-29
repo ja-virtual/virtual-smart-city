@@ -10,7 +10,7 @@ import javax.swing.*;
 
 
 public class HomePage extends JFrame implements ActionListener  {
-	private Mairie fen;
+	//private Mairie fen;
 	public HomePage()
 	{
 
@@ -105,7 +105,7 @@ public class HomePage extends JFrame implements ActionListener  {
 
 	public void actionPerformed(ActionEvent e){
 
-		fen = new Mairie();
+	//	fen = new Mairie();
 		this.dispose();
 
 

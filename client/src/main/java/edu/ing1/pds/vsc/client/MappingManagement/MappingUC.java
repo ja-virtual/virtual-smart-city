@@ -6,6 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -13,11 +21,14 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
+import ch.qos.logback.classic.Logger;
+import edu.ing1.pds.vsc.client.ClientToServer;
 import edu.ing1.pds.vsc.client.HomePage;
+import edu.ing1.pds.vsc.client.Request;
 
 public class MappingUC extends JFrame {
 
-    private JPanel right=new JPanel();
+    private JPanel right=new JPanel(new BorderLayout());
     JPanel left = new JPanel(new GridLayout(5,1));
     Color color=new Color(190,245,116);
     private void Interface()
@@ -276,6 +287,37 @@ public class MappingUC extends JFrame {
     public MappingUC()
     {
         Interface();
+        JPanel p3=new JPanel();
+        JComboBox workSpaces=new JComboBox();
+        workSpaces.setPreferredSize(new Dimension(150,30));
+        JButton fill=new JButton("Remplir");
+        fill.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					ClientToServer connection=new ClientToServer();
+					Request request=new Request();
+					request.setName_request("all_workspaces");
+					HashMap<String,Object>param=new HashMap<String,Object>();
+					param.put("id_building",1);
+					request.setData(param);
+					try {
+						Request response=connection.SendRequest(request);
+						ArrayList<Map>workspaces=(ArrayList<Map>)response.getData();
+						for(Map n : workspaces)
+							  workSpaces.addItem(n.get("id_workspace"));
+					} catch (Exception e1) {
+
+						e1.printStackTrace();
+					}
+
+				
+			}
+        	
+        });
+        p3.add(workSpaces);
+        p3.add(fill);
+        right.add(p3,BorderLayout.CENTER);
         setVisible(true);
     }
     public static void main(String[] args) {
