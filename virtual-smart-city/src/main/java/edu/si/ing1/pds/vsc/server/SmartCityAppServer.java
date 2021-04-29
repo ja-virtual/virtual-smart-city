@@ -34,10 +34,10 @@ public class SmartCityAppServer extends Thread {
 
     private final static Logger logger = LoggerFactory.getLogger(SmartCityAppServer.class.getName());
 
-   // public static DataSource ds=new DataSource(5,5);
+    public static DataSource ds=new DataSource(5,5);
     ServerSocket server;
     Socket client;
- //   public static ServerConfig serverConfig;
+   public static ServerConfig serverConfig;
     public static  int max_connection_i = 0, connection_duration_i = 0;
 
     public SmartCityAppServer() {
@@ -55,8 +55,8 @@ public class SmartCityAppServer extends Thread {
 	   PrintWriter out=null;
 	      BufferedReader in=null;
 	   this.serve();
-	 //  while(ds.getUsedConnection()<max_connection_i )
-	//   {
+	 while(ds.getUsedConnection()<max_connection_i )
+	 {
 		 
 			try {
 				in = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -65,7 +65,7 @@ public class SmartCityAppServer extends Thread {
 				logger.info(operation);
 				Request request=mapper.readValue(operation,Request.class);
 				logger.info(request.getName_request());
-				ServerToClient connection=new ServerToClient();
+				ServerToClient connection=new ServerToClient(ds);
 				String response=connection.SendResponse(request);
 				out=new PrintWriter(client.getOutputStream(),true);
 				out.println(response);
@@ -74,7 +74,7 @@ public class SmartCityAppServer extends Thread {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-
+	 }
 	   
 	 try {
 		 in.close();
@@ -86,35 +86,6 @@ public class SmartCityAppServer extends Thread {
 		e.printStackTrace();
 	}
    }
- /*public String CrudOperation(String operation_name) throws Exception
- {
-	 ConnectionDB c = ds.takeCon();
-System.out.println(operation_name + " operation :");
-String result="";
-	  switch (operation_name) {
-      case "add":
-          //Add operation
-        result= c.createPerson();
-        break;
-      case "update":
-          // Update operation
-    	result= c.updatePerson();
-    	break;
-      case "delete":
-          //Delete operation
-    	  result= c.deletePerson();
-    	  break;
-      case "read":
-          //Read operation
-    	 result=c.listPerson().toString();
-    	 break;
-      default:
-result="operation non-existent!!";
-break;
-  }	
-	  c.connection.close();
-	  return result;
- }*/
 
     public void serve() {
         try {
@@ -166,7 +137,7 @@ break;
         logger.info("VSC Application is running, maximal_connection= " + max_connection_i + " & connection_duration = " + connection_duration_i + ".");
         
         //connection pool created
-   //     ds = new DataSource(max_connection_i, connection_duration_i);
+    ds = new DataSource(max_connection_i, connection_duration_i);
 
         SmartCityAppServer service=new SmartCityAppServer();
         logger.info("server here");

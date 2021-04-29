@@ -1,12 +1,24 @@
 package edu.ing1.pds.vsc.client.MappingManagement;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.ing1.pds.vsc.client.ClientToServer;
+import edu.ing1.pds.vsc.client.Request;
+
 public class WorkSpace {
-	  private String  id_workspace;
-	  private String  type_workspace;
-	  private int floor_number;
-	  private boolean is_available;
-	  private int id_building;
-	  private int id_general_services;
+
+	private final static Logger logger = LoggerFactory.getLogger(WorkSpace.class.getName());
+	private String  id_workspace;
+	private String  type_workspace;
+	private int floor_number;
+	private boolean is_available;
+	private int id_building;
+	private int id_general_services;
 	public String getId_workspace() {
 		return id_workspace;
 	}
@@ -47,7 +59,7 @@ public class WorkSpace {
 			int id_general_services) {
 		super();
 		this.id_workspace = id_workspace;
-	this.type_workspace=workSpace_type;
+		this.type_workspace=workSpace_type;
 		this.floor_number = floor_number;
 		this.is_available = is_available;
 		this.id_building = id_building;
@@ -56,6 +68,25 @@ public class WorkSpace {
 	public String toString()
 	{
 		return type_workspace+" "+id_workspace;
+	}
+	static public ArrayList<Map> List_WorkSpace(ClientToServer connection,int id_building, int floor_number)
+	{
+		ArrayList<Map>workspaces=null;
+		try
+		{
+			Request request=new Request();
+			request.setName_request("all_workspaces");
+			HashMap<String,Object>param=new HashMap<String,Object>();
+			param.put("id_building",id_building);
+			param.put("floor_number",floor_number);
+			request.setData(param);
+			Request response=connection.SendRequest(request);
+			workspaces=(ArrayList<Map>)response.getData();
+		}catch(Exception e)
+		{
+			logger.info("Server is maybe occupied");
+		}
+		return workspaces;
 	}
 
 }
