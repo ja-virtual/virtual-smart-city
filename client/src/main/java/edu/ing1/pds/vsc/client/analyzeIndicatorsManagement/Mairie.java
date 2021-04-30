@@ -16,8 +16,8 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
-import connexionjdbc.AnalyserDao;
-import connexionjdbc.AnalyserDaoImpl;
+import edu.ing1.pds.vsc.client.analyzeIndicatorsManagement.AnalyserDao;
+import edu.ing1.pds.vsc.client.analyzeIndicatorsManagement.AnalyserDaoImpl;
 
 public class Mairie extends JFrame {
 
