@@ -12,9 +12,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -32,16 +30,9 @@ import net.proteanit.sql.DbUtils;
 		Init init;
 		
 		Connection connect = null;
-		static JTable table = new JTable();
+		JTable table = new JTable();
 		static JComboBox box = new JComboBox();
-		
-		private static int windowsId;
-//		
-//
-		public static int getWindowsId() {
-			return windowsId;
-		}
-
+		int selection;
 
 		/**
 		 * 
@@ -153,9 +144,11 @@ import net.proteanit.sql.DbUtils;
 			else if (e.getActionCommand() == "Charger mes fenetres") {
 				
 				try {
+					
+					
 				
 				Statement stmt1 = connect.createStatement ();
-				String sql1 = " select * from Sensor where type = 'Fenetre' ";
+				String sql1 = " select * from equipment where type_equipment = 'fenetre' ";
 				ResultSet rs1 = stmt1.executeQuery(sql1);
 				table.setShowGrid(true);
 			    table.setShowVerticalLines(true);
@@ -164,30 +157,23 @@ import net.proteanit.sql.DbUtils;
 			    
 			    
 			    Statement stmt2 = connect.createStatement ();
-			    String sql2 = " select * from Sensor where type = 'Fenetre' " ;
+			    String sql2 = " select * from equipment where type_equipment = 'fenetre' " ;
 			    ResultSet rs2 = stmt2.executeQuery(sql2);
 				while(rs2.next()) {
 					int id = rs2.getInt(1);
-					
-					//String fenetre = "Fenetre avec id N°"+id; 
-					
+										
 					box.addItem(id);
-					//windowsId = new ArrayList< Integer>();
-					//windowsId.add(id);
 					
-					//box = new JComboBox(windowsId);
-					//box.addActionListener()new Ac;
-					
-					//windowsId = new ArrayList< Integer>();
-					//windowsId.add(id);
-					
+										
 					box.addActionListener(new ActionListener() {
 			            public void actionPerformed(ActionEvent event) {
 			                // Get the source of the component, which is our combo
 			                // box.
 			               if (event.getSource()== box) {
-			            	   windowsId = (int) box.getSelectedItem();
-			            	   //System.out.println(i);
+			            	  selection = (int) box.getSelectedItem();
+			            	  // System.out.println(selection);
+			            	 // i=getWindows();
+			            	 
 			               }
 			            }
 			        });
@@ -209,8 +195,28 @@ import net.proteanit.sql.DbUtils;
 
 				config = new Config("Virtual Smart City");
 				this.dispose();
-				int selection = (int) Windows.getWindowsId();
-				//System.out.println(getWindowsId());
+				
+				
+				try {
+					
+					Statement stmt = connect.createStatement ();
+					//System.out.println(selection);
+					//String i = (String) box.getSelectedItem();
+					//System.out.println(i);
+					int n1=stmt.executeUpdate (" insert into Windows (id_windows, blind, opacity, id_equipment) values ("+selection+", 'Niveau 0','Aucun',"+selection+") ");
+					System.out.println("Nouvelle insertion dans \"fenetre \" ");
+					int n2=stmt.executeUpdate (" insert into Temperature (id_temperature, degree, id_windows) values ("+selection+", 20, "+selection+") ");
+					System.out.println("Nouvelle insertion dans \"temperature \" ");
+					int n3=stmt.executeUpdate (" insert into Lighting (id_light, level, id_windows) values ("+selection+", 'Aucun', "+selection+") ");
+					System.out.println("Nouvelle insertion dans \"lighting \" ");
+				      stmt. close ();
+				}
+				
+				catch(Exception e1) {
+					e1.printStackTrace();
+				}
+					
+				
 			}
 			else if (e.getActionCommand() == "Fenetres electro-chromatiques") {
 				

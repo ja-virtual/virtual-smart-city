@@ -7,17 +7,14 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,16 +23,18 @@ import javax.swing.JTable;
 
 import net.proteanit.sql.DbUtils;
 
-	public class Config extends JFrame implements ActionListener{
+	public class Config extends JFrame implements ActionListener {
 		Welcome welcome;
 		Windows window;
 		
 		Connection connect = null;
-		static JTable table1 = new JTable();
-		//static JComboBox box1 = new JComboBox();
-		static JTable table2 = new JTable();
-		//static JComboBox box2 = new JComboBox();
-		//Window[] selection = Windows.getWindows();
+		JTable table1 = new JTable();
+		//JTable sptab1 = new JTable();
+		//JTable sptab2 = new JTable();
+	
+		JTable table2 = new JTable();
+		
+		int selection;
 		
 	
 		/**
@@ -92,42 +91,49 @@ import net.proteanit.sql.DbUtils;
 				mainPanel.setLayout(new GridLayout(3,1));
 				this.getContentPane().add(mainPanel, BorderLayout.CENTER);
 				
-				JPanel northPanel = new JPanel();
-				northPanel.setLayout(new FlowLayout());
+				JPanel pan1 = new JPanel();
+				pan1.setLayout(new FlowLayout());
 				
-				JButton bouton1 = new JButton("Voir statut");
+				JButton bouton1 = new JButton("Statut par defaut");
 				bouton1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				bouton1.addActionListener(this);
 				
 				JScrollPane pane1 = new JScrollPane(table1);
-				northPanel.add(bouton1);
-				northPanel.add(pane1);
+				pane1.setPreferredSize(new Dimension(500,100));
+			
+				pan1.add(bouton1);
+				pan1.add(pane1);
+				mainPanel.add(pan1);
 				
+				JPanel pan2 = new JPanel();
+				pan2.setLayout(new FlowLayout());
 				
-				mainPanel.add(northPanel);
-				
-				
-				JPanel middlePanel = new JPanel();
-				middlePanel.setLayout(new FlowLayout());
-
-				JButton bouton2 = new JButton("Actualiser");
+				JButton bouton2 = new JButton("Configurer temperature");
 				bouton2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				bouton2.addActionListener(this);
-								
-				JScrollPane pane2 = new JScrollPane(table2);
-				middlePanel.add(bouton2);
-				middlePanel.add(pane2);
-				
-				mainPanel.add(middlePanel);
-				
-				JPanel southPanel = new JPanel();
-				southPanel.setLayout(new FlowLayout());
-				JButton bouton3 = new JButton("Quitter");
+				JButton bouton3 = new JButton("Configurer eclairage");
 				bouton3.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				bouton3.addActionListener(this);
+				pan2.add(bouton2);
+				pan2.add(bouton3);
 				
-				southPanel.add(bouton3);
-				mainPanel.add(southPanel);
+				mainPanel.add(pan2);
+				
+				
+				JPanel pan3 = new JPanel();
+				pan3.setLayout(new FlowLayout());
+
+				JButton bouton4 = new JButton("Actualiser statut");
+				bouton4.setFont(new Font("Tahoma", Font.PLAIN, 20));
+				bouton4.addActionListener(this);
+								
+				JScrollPane pane3 = new JScrollPane(table2);
+				pane3.setPreferredSize(new Dimension(500,100));
+				pan3.add(bouton4);
+				pan3.add(pane3);
+				
+				mainPanel.add(pan3);
+				
 						
 					this.setVisible(true);
 			}
@@ -138,15 +144,14 @@ import net.proteanit.sql.DbUtils;
 			if (e.getActionCommand() == "Quitter") {
 				System.exit(0);
 			}
-			else if (e.getActionCommand() == "Voir statut") {
+			else if (e.getActionCommand() == "Statut par defaut") {
 
 				try {
-					//Windows win = new Windows("Virtual Smart city");
-					int selection = (int) Windows.getWindowsId();
+					
+					selection =  (int) Windows.box.getSelectedItem();
 					Statement stmt1 = connect.createStatement ();
-					//id = new ArrayList< Integer>();
-					//windowId = Windows.getWindows();
-					String sql1 = " select * from Windows where id = selection ";
+					
+					String sql1 = " select * from Windows where id_equipment = "+selection+" ";
 					ResultSet rs1 = stmt1.executeQuery(sql1);
 					table1.setShowGrid(true);
 				    table1.setShowVerticalLines(true);
@@ -164,16 +169,111 @@ import net.proteanit.sql.DbUtils;
 				}
 
 			}
-			else if (e.getActionCommand() == "Actualiser") {
+			
+			else if (e.getActionCommand() == "Configurer eclairage") {
+				
+				try {
+					
+					Statement statement1 = connect.createStatement ();
+					String req1 = " select level from Lighting where id_windows = "+selection+" ";
+					ResultSet result1 = statement1.executeQuery(req1);
+					
+					while(result1.next()) { 
+						
+						String level = result1.getString(1);
+					
+					switch (level) {
+					
+					  case "Aucun":
+						  String update1 = "update Windows set blind = 'Niveau 0', opacity = 'Aucun' where id_windows = "+selection+" "; 
+						  int n1=statement1.executeUpdate(update1);
+					   break;
+					  case "Faible":
+						  String update2 = "update Windows set blind = 'Niveau 1', opacity = 'Faible' where id_windows = "+selection+" "; 
+						  int n2=statement1.executeUpdate(update2);
+					   break;
+					  case "Moyen":
+						  String update3 = "update Windows set blind = 'Niveau 2', opacity = 'Moyen' where id_windows = "+selection+" "; 
+						  int n3=statement1.executeUpdate(update3);
+						   break;
+					  case "Fort":
+						  String update4 = "update Windows set blind = 'Niveau 3', opacity = 'Fort' where id_windows = "+selection+" "; 
+						  int n4=statement1.executeUpdate(update4);
+						   break;
+						
+					  default:
+						  String update5 = "update Windows set blind = 'Niveau 4' and opacity = 'Fort' where id_windows = "+selection+" "; 
+						  int n5=statement1.executeUpdate(update5);
+						  	  
+					} 
+					}
+					
+					result1.close();
+					statement1.close();
+					
+					
+				}
+					
+					catch (Exception e2) {
+						e2.printStackTrace();
+					}
+			
+			}		
+			
+			else if (e.getActionCommand() == "Configurer temperature") {
+				
+				try {
+					
+					Statement statement2 = connect.createStatement ();
+					String req2 = " select degree from Temperature where id_windows = "+selection+" ";
+					ResultSet result2 = statement2.executeQuery(req2);
+					
+					while(result2.next()) {
+						int degree = result2.getInt(1);
+					switch (degree) {
+					
+					  case 20:
+						  String update6 = "update Windows set blind = 'Niveau 0', opacity = 'Aucun' where id_windows = "+selection+" "; 
+						  int n6=statement2.executeUpdate(update6);
+					   break;
+					  case 21:
+						  String update7 = "update Windows set blind = 'Niveau 1', opacity = 'Faible' where id_windows = "+selection+" "; 
+						  int n7=statement2.executeUpdate(update7);
+					   break;
+					  case 22:
+						  String update8 = "update Windows set blind = 'Niveau 2', opacity = 'Moyen' where id_windows = "+selection+" "; 
+						  int n8=statement2.executeUpdate(update8);
+						   break;
+					  case 23:
+						  String update9 = "update Windows set blind = 'Niveau 3', opacity = 'Fort' where id_windows = "+selection+" "; 
+						  int n9=statement2.executeUpdate(update9);
+						   break;
+						
+					  default:
+						  String update10 = "update Windows set blind = 'Niveau 4', opacity = 'Fort' where id_windows = "+selection+" "; 
+						  int n10=statement2.executeUpdate(update10);
+					}
+					}  
+						  result2.close();
+							statement2.close();
+							
+									}
+								
+								catch (Exception e3) {
+									e3.printStackTrace();
+								}
+						}
+			
+			else if (e.getActionCommand() == "Actualiser statut") {
 				
 				try {
 					
 					Statement stmt2 = connect.createStatement ();
-					String sql2 = " select * from Windows where type = 'Fenetre' ";
+					String sql2 = " select * from Windows where id_equipment = "+selection+" ";
 					ResultSet rs2 = stmt2.executeQuery(sql2);
-					table1.setShowGrid(true);
-				    table1.setShowVerticalLines(true);
-				    table1.setModel(DbUtils.resultSetToTableModel(rs2));
+					table2.setShowGrid(true);
+				    table2.setShowVerticalLines(true);
+				    table2.setModel(DbUtils.resultSetToTableModel(rs2));
 				
 				
 				rs2.close();
@@ -181,8 +281,8 @@ import net.proteanit.sql.DbUtils;
 				
 				}
 					
-					catch (Exception e2) {
-						e2.printStackTrace();
+					catch (Exception e4) {
+						e4.printStackTrace();
 					}
 			}
 			else if (e.getActionCommand() == "Fenetres electro-chromatiques") {

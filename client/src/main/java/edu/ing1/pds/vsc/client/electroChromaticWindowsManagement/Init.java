@@ -140,7 +140,7 @@ import net.proteanit.sql.DbUtils;
 			try {
 				
 				Statement stmt = connect.createStatement ();
-				String sql = " select * from Sensor ";
+				String sql = " select * from equipment ";
 				ResultSet rs = stmt.executeQuery(sql);
 				
 			      table.setShowGrid(true);
