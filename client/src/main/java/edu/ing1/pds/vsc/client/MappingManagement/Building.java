@@ -12,13 +12,19 @@ import edu.ing1.pds.vsc.client.Request;
 
 public class Building {
 	private final static Logger logger = LoggerFactory.getLogger(Building.class.getName());
+	
+	//attribut
 	private int id_building;
 
+	
+	// constructor
 	public Building(int id_building) {
 		super();
 		this.id_building = id_building;
 	}
 
+	
+	//getter and setter
 	public int getId_building() {
 		return id_building;
 	}
@@ -26,7 +32,9 @@ public class Building {
 	public void setId_building(int id_building) {
 		this.id_building = id_building;
 	}
-	static public ArrayList<Map> All_Buildings(ClientToServer connection)
+	
+	//return  a list of all the buildings
+	public static ArrayList<Map> allBuildings(ClientToServer connection)
 	{
 		ArrayList<Map>workspaces=null;
 		try

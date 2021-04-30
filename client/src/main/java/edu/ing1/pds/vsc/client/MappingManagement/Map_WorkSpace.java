@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,6 +31,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
+import edu.ing1.pds.vsc.client.ClientToServer;
 import edu.ing1.pds.vsc.client.HomePage;
 
 
@@ -36,10 +39,11 @@ import edu.ing1.pds.vsc.client.HomePage;
 
 public class Map_WorkSpace extends JFrame {
 
+	private ClientToServer connection=new ClientToServer();
 	private JPanel right=new JPanel();
 	JPanel left = new JPanel(new GridLayout(5,1));
 	Color color=new Color(190,245,116);
-	Canvas map = new Map();
+	Canvas map = new Workspace_Map();
 	WorkSpace my_workspace;
 	private void Interface()
 	{
@@ -349,24 +353,47 @@ public class Map_WorkSpace extends JFrame {
 		setVisible(true);
 	}
 	public static void main(String[] args) {
-		new Map_WorkSpace(new WorkSpace("Hajar","open Space",1,true, 1,1));
+		new Map_WorkSpace(new WorkSpace("2","salle de reunion",1,true, 1,1));
 	}
 
 
-	class Map extends Canvas
+	class Workspace_Map extends Canvas
 	{
 		public void paint(Graphics g) {
 
-
-			if(my_workspace.getType_workspace().equals("open Space"))
-			{
-				final ImageIcon icon = new ImageIcon("C:\\Users\\elori\\OneDrive\\Desktop\\emplacement.png");
-				Image img = icon.getImage();
-			
-				g.drawImage(img,120,140, this);
-
+			g.drawRect(120,140,450,450);
+		
+			ArrayList<Map>positions=Positions.listPositions(connection,my_workspace.getId_workspace());
+			System.out.println(positions);
+			if(my_workspace.getType_workspace().equals("salle de reunion"))
+			{ 
+				System.out.println("hihi in !");
 				g.drawRect(120,140,450,450);
-				g.drawImage(getIconImage(),150,130,null);
+				//g.drawImage(getIconImage(),150,130,null);
+				for(Map position: positions)
+				{ System.out.println("hihi really in!");
+					if((Boolean)position.get("is_available")==true)
+					{
+						g.drawOval((Integer)position.get("latitude"),(Integer)position.get("latitude"),45,45);
+						g.drawString("position libre",((Integer)position.get("latitude")+10),((Integer)position.get("longitude")+10));
+					}
+					else
+					{
+						ArrayList<Map>sensors=Sensor.listSensors(connection,(Integer)position.get("id_position"));
+						for(Map sensor: sensors)
+						{
+							if((Integer)sensor.get("id_position")==(Integer)position.get("id_position"))
+							{
+								g.fillOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
+							}
+						}
+
+					}
+					/*	g.fillOval(450,200,45,45);
+				g.fillOval(330,350,45,45);
+				g.fillOval(200,490,45,45);
+				g.fillOval(450,490,45,45);*/
+				}
 			}
 			else
 				g.drawRect(50,200,575,220);

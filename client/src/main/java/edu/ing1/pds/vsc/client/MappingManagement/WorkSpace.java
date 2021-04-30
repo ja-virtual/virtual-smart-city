@@ -67,15 +67,18 @@ public class WorkSpace {
 	}
 	public String toString()
 	{
-		return type_workspace+" "+id_workspace;
+		if(type_workspace.equals("salle de reunion"))
+		return "SR "+id_workspace;
+		else
+		return "OS "+id_workspace;
 	}
-	static public ArrayList<Map> List_WorkSpace(ClientToServer connection,int id_building, int floor_number)
+	static public ArrayList<Map> listWorkSpace(ClientToServer connection,int id_building, int floor_number)
 	{
 		ArrayList<Map>workspaces=null;
 		try
 		{
 			Request request=new Request();
-			request.setName_request("all_workspaces");
+			request.setName_request("list_workspaces");
 			HashMap<String,Object>param=new HashMap<String,Object>();
 			param.put("id_building",id_building);
 			param.put("floor_number",floor_number);

@@ -59,52 +59,50 @@ public class Map_Full extends JFrame  {
 	JLabel floor_label=new JLabel("Etage :   Etage number 1");
 	private int building_number=1;
 	private int floor_number=1;
-	private  WorkSpace open_space1=null,open_space2=null,open_space3=null,open_space4=null,reunion1=null,reunion2=null,individual1=null,individual2=null,individual3=null,individual4=null;
+	private  WorkSpace reunion1=null,reunion2=null,reunion3=null,reunion4=null,open_space1=null,open_space2=null,individual1=null,individual2=null,individual3=null,individual4=null;
 	Canvas map;
-	
-
+	ArrayList<Map>workspaces=WorkSpace.listWorkSpace(connection,building_number, floor_number);
+	ArrayList<Map>buildings=Building.allBuildings(connection);
 	public void Map_creation()
 	{
 		try {
-			open_space1=null;
-			open_space2=null;
-			individual1=null;
-			individual2=null;
-			open_space3=null;
-			open_space4=null;
-			individual3=null;
-			individual4=null;
 			reunion1=null;
 			reunion2=null;
-	
-			ArrayList<Map>workspaces=WorkSpace.List_WorkSpace(connection,building_number, floor_number);
+			individual1=null;
+			individual2=null;
+			reunion3=null;
+			reunion4=null;
+			individual3=null;
+			individual4=null;
+			open_space1=null;
+			open_space2=null;
 			for(Map n : workspaces)
 			{
 				String workspace_type=(String) n.get("type_workspace");
-				if(workspace_type.equals("open Space"))
+				if(workspace_type.equals("salle de reunion"))
 				{	
-					if(open_space1==null)
+					if(reunion1==null)
 					{
 
-						open_space1=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_availabl"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
+						reunion1=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_available"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
 
 					}
-					else if(open_space2==null)
+					else if(reunion2==null)
 					{
 
-						open_space2=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_availabl"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
+						reunion2=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_available"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
 
 					}
-					else if(open_space3==null)
+					else if(reunion3==null)
 					{
 
-						open_space3=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_availabl"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
+						reunion3=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_available"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
 
 					}
 					else
 					{
-
-						open_space4=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_availabl"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
+						
+						reunion4=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_available"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
 
 					}
 				}
@@ -112,32 +110,32 @@ public class Map_Full extends JFrame  {
 				{
 					if(individual1==null)
 					{
-						individual1=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_availabl"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
+						individual1=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_available"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
 
 					}
 					else if(individual2==null)
 					{
-						individual2=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_availabl"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
+						individual2=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_available"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
 					}
 					else if(individual3==null)
 					{
-						individual3=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_availabl"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
+						individual3=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_available"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
 					}
 					else 
 					{
-						individual4=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_availabl"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
+						individual4=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_available"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
 					}
 				}
 				else
 				{
-					if(reunion1==null)
+					if(open_space1==null)
 					{
-						reunion1=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_availabl"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
+						open_space1=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_available"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
 
 					}
 					else
 					{
-						reunion2=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_availabl"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
+						open_space2=new WorkSpace((String)n.get("id_workspace"),workspace_type,(Integer)n.get("floor_number"),(Boolean)n.get("is_available"),(Integer)n.get("id_building"),(Integer)n.get("id_gs"));
 					}
 				}
 			}
@@ -156,8 +154,6 @@ public class Map_Full extends JFrame  {
 			critere.add(building);
 			critere.add(floor);
 			critere.add(work_space);
-			
-			ArrayList<Map>workspaces=WorkSpace.List_WorkSpace(connection,building_number, floor_number);
 			for(Map n : workspaces)
 			{
 
@@ -181,31 +177,26 @@ public class Map_Full extends JFrame  {
 							floor_label.setText("Etage :  "+source.getText());
 							floor_number=Integer.valueOf(source.getText().substring(13));
 							work_space.removeAll();
-							ResultSet rs1 = con.createStatement().executeQuery("SELECT * FROM work_space where id_building="+building_number+"and floor_number="+floor_number);
-							while(rs1.next()) {
+							for(Map n : workspaces)
+							{
 
-								JMenuItem workspace_number=new JMenuItem(rs1.getString("type_workspace")+" "+rs1.getString("id_workspace"));
+								JMenuItem workspace_number=new JMenuItem(n.get("type_workspace")+" "+n.get("id_workspace"));
 								workspace_number.setPreferredSize(new Dimension(150,30));
 								work_space.add(workspace_number);
 
 							}
-							rs1.close();
+					
 						} catch (Exception e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
 						}
 						Map_creation();
 					}} );
 
 			}
-			ArrayList<Map>buildings=Building.All_Buildings(connection);
 			for(Map n:buildings) {
 
 				JMenuItem build_number=new JMenuItem("Batiment numéro "+n.get("id_building"));
 				build_number.setPreferredSize(new Dimension(150,30));
 				building.add(build_number);
-
-				
 				build_number.addActionListener(new ActionListener() {
 
 					@Override
@@ -215,27 +206,20 @@ public class Map_Full extends JFrame  {
 							building_label.setText("Batiment :  "+source.getText());
 							building_number=Integer.valueOf(source.getText().substring(16));
 							work_space.removeAll();
-							ResultSet rs1 = con.createStatement().executeQuery("SELECT * FROM work_space where id_building="+building_number+"and floor_number="+floor_number);
-							while(rs1.next()) {
+							for(Map n:buildings){
 
-								JMenuItem workspace_number=new JMenuItem(rs1.getString("type_workspace")+" "+rs1.getString("id_workspace"));
+								JMenuItem workspace_number=new JMenuItem(n.get("type_workspace")+" "+n.get("id_workspace"));
 								workspace_number.setPreferredSize(new Dimension(150,30));
 								work_space.add(workspace_number);
 
 							}
-							rs1.close();
 							Map_creation();
 						} catch (Exception e1) {
-
-							e1.printStackTrace();
 						}
-
-					}} );
+}} );
 
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
@@ -522,8 +506,6 @@ public class Map_Full extends JFrame  {
 		p3.add(map,BorderLayout.CENTER);
 		Map_creation();
 		right.add(p3,BorderLayout.CENTER);
-
-
 		setVisible(true);
 	}
 	public static void main(String[] args)throws Exception {
@@ -538,23 +520,22 @@ public class Map_Full extends JFrame  {
 			super.paint(g);
 
 			g.drawRect(50,100,575,235);
-			System.out.println("you are successful!!");
-			if(open_space1!=null && open_space2!=null &&open_space3!=null && open_space4!=null && individual1!=null && individual2!=null &&individual3!=null && individual4!=null&& reunion1!=null && reunion2!=null )
+			if(reunion1!=null && reunion2!=null &&reunion3!=null && reunion4!=null && individual1!=null && individual2!=null &&individual3!=null && individual4!=null&& open_space1!=null && open_space2!=null )
 			{
 				
-				if(open_space1.getIs_available()==true)
+				if(reunion1.getIs_available()==true)
 				{
 					g.drawRect(70,120,95,95);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(open_space1.toString(), 80,165);
+					g.drawString(reunion1.toString(), 90,165);
 				}
-				else if(open_space1.getId_generalServices()==1)
+				else if(reunion1.getId_generalServices()==1)
 				{
 					g.setColor(Color.green);
 					g.fillRect(70,120,95,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(open_space1.toString(), 80,165);
+					g.drawString(reunion1.toString(), 90,165);
 					
 				}
 				else
@@ -563,23 +544,23 @@ public class Map_Full extends JFrame  {
 					g.fillRect(70,120,95,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(open_space1.toString(), 80,165);
+					g.drawString(reunion1.toString(), 90,165);
 				}
 				
-				if(open_space2.getIs_available()==true)
+				if(reunion2.getIs_available()==true)
 				{
 					g.drawRect(180,120,95,95);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(open_space2.toString(), 190,165);
+					g.drawString(reunion2.toString(), 220,165);
 				}
-				else if(open_space2.getId_generalServices()==1)
+				else if(reunion2.getId_generalServices()==1)
 				{
 				
 					g.setColor(Color.green);
 					g.fillRect(180,120,95,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(open_space2.toString(), 190,165);
+					g.drawString(reunion2.toString(), 220,165);
 				}
 				else
 				{
@@ -587,22 +568,22 @@ public class Map_Full extends JFrame  {
 					g.fillRect(180,120,95,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(open_space2.toString(), 190,165);
+					g.drawString(reunion2.toString(), 220,165);
 				}
 				
-				if(reunion1.getIs_available()==true)
+				if(open_space1.getIs_available()==true)
 				{
 					g.drawRect(290,120,200,95);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(reunion1.toString(),350,165);
+					g.drawString(open_space1.toString(),380,165);
 				}
-				else if(reunion1.getId_generalServices()==1)
+				else if(open_space1.getId_generalServices()==1)
 				{
 					g.setColor(Color.green);
 					g.fillRect(290,120,200,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(reunion1.toString(), 350,165);
+					g.drawString(open_space1.toString(), 380,165);
 				}
 				else
 				{
@@ -611,7 +592,7 @@ public class Map_Full extends JFrame  {
 					g.fillRect(290,120,200,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(reunion1.toString(), 350,165);
+					g.drawString(open_space1.toString(), 380,165);
 				}
 				
 				if(individual1.getIs_available()==true)
@@ -672,19 +653,19 @@ public class Map_Full extends JFrame  {
 					g.drawString(individual2.getId_workspace(),575,170);
 				}
 
-				if(open_space3.getIs_available()==true)
+				if(reunion3.getIs_available()==true)
 				{
 					g.drawRect(70,225,95,95);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(open_space3.toString(), 80,265);
+					g.drawString(reunion3.toString(), 90,265);
 				}
-				else if(open_space3.getId_generalServices()==1)
+				else if(reunion3.getId_generalServices()==1)
 				{
 					g.setColor(Color.green);
 					g.fillRect(70,225,95,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(open_space3.toString(), 80,265);
+					g.drawString(reunion3.toString(), 90,265);
 					
 				}
 				else
@@ -693,23 +674,23 @@ public class Map_Full extends JFrame  {
 					g.fillRect(70,225,95,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(open_space3.toString(), 80,265);
+					g.drawString(reunion3.toString(), 90,265);
 				}
 				
-				if(open_space4.getIs_available()==true)
+				if(reunion4.getIs_available()==true)
 				{
 					g.drawRect(180,225,95,95);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(open_space4.toString(), 190,265);
+					g.drawString(reunion4.toString(), 210,265);
 				}
-				else if(open_space4.getId_generalServices()==1)
+				else if(reunion4.getId_generalServices()==1)
 				{
 				
 					g.setColor(Color.green);
 					g.fillRect(180,225,95,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(open_space4.toString(), 190,265);
+					g.drawString(reunion4.toString(), 210,265);
 				}
 				else
 				{
@@ -717,22 +698,22 @@ public class Map_Full extends JFrame  {
 					g.fillRect(180,225,95,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(open_space4.toString(), 190,265);
+					g.drawString(reunion4.toString(), 210,265);
 				}
 				
-				if(reunion2.getIs_available()==true)
+				if(open_space2.getIs_available()==true)
 				{
 					g.drawRect(290,225,200,95);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(reunion2.toString(),350,265);
+					g.drawString(open_space2.toString(),380,265);
 				}
-				else if(reunion2.getId_generalServices()==1)
+				else if(open_space2.getId_generalServices()==1)
 				{
 					g.setColor(Color.green);
 					g.fillRect(290,225,200,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(reunion2.toString(), 350,265);
+					g.drawString(open_space2.toString(), 380,265);
 				}
 				else
 				{
@@ -741,7 +722,7 @@ public class Map_Full extends JFrame  {
 					g.fillRect(290,225,200,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString(reunion2.toString(), 350,265);
+					g.drawString(open_space2.toString(), 380,265);
 				}
 				
 				if(individual3.getIs_available()==true)
