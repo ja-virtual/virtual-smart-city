@@ -88,7 +88,7 @@ import javax.swing.JPanel;
 				JPanel middlePanel = new JPanel();
 				middlePanel.setLayout(new FlowLayout());
 			
-				JButton bouton1 = new JButton("Rechercher une fenetre");
+				JButton bouton1 = new JButton("Localiser un equipement");
 				bouton1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				bouton1.addActionListener(this);
 				JButton bouton2 = new JButton("Voir mes equipements");
@@ -107,7 +107,6 @@ import javax.swing.JPanel;
 				JButton bouton3 = new JButton("Quitter");
 				bouton1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				bouton3.addActionListener(this);
-				
 				
 				southPanel.add(bouton3);
 				mainPanel.add(southPanel);				

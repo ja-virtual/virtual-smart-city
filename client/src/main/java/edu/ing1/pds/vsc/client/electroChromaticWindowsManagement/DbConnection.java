@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 public class DbConnection {
 
 	public static final String DRIVER_NAME = "org.postgresql.Driver";
-	public static final String DATABASE_URL = "jdbc:postgresql://localhost:5432/episen";
+	public static final String DATABASE_URL = "jdbc:postgresql://localhost:5432/vscDB";
 
 	Connection connect = null;
 

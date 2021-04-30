@@ -150,9 +150,9 @@ import javax.swing.JTable;
 					
 					while(rs1.next()) {
 						int id = rs1.getInt(1);
-						String build = "Building avec id N�"+id; 
+						//String build = "Building avec id N"+id; 
 						
-						building.addItem(build);	
+						building.addItem(id);	
 					
 					} 
 					
@@ -193,8 +193,6 @@ import javax.swing.JTable;
 					e1.printStackTrace();
 				}
 				
-				// = new Windows("Virtual Smart City");
-				//this.dispose();
 			}
 			else if (e.getActionCommand() == "Trouver") {
 				
