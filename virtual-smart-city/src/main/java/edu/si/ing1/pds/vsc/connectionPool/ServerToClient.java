@@ -116,7 +116,13 @@ public class ServerToClient {
 		else if(request_name.equals("request_workspace"))
 		{
 			Map data_loading=(Map) request.getData();
-			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where is_available=true and where type_workspace="+(String)data_loading.get("type_workspace")+" LIMITE "+(Integer)data_loading.get("requested_number") + "and where floor_number > 2" );
+			String floor_type = (String)data_loading.get(type_floor);
+			if floor_type.equals("haut")
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where is_available=true and where type_workspace="+
+					(String)data_loading.get("type_workspace")+" LIMITE "+(Integer)data_loading.get("requested_number") + "and where floor_number > 2" );
+			if floor_type.equals("bas")
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where is_available=true and where type_workspace="+
+					(String)data_loading.get("type_workspace")+" LIMITE "+(Integer)data_loading.get("requested_number") + "and where floor_number < 3" );
 			List<Map> workSpaces=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
