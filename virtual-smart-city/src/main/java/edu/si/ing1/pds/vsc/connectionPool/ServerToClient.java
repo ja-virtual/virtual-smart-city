@@ -113,6 +113,33 @@ public class ServerToClient {
 			response.put("data",workSpaces);
 			 response_string=mapper.writeValueAsString(response);
 		}
+		else if(request_name.equals("request_workspace"))
+		{
+			Map data_loading=(Map) request.getData();
+			String floor_type = (String)data_loading.get(type_floor);
+			if floor_type.equals("haut")
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where is_available=true and where type_workspace="+
+					(String)data_loading.get("type_workspace")+" LIMITE "+(Integer)data_loading.get("requested_number") + "and where floor_number > 2" );
+			if floor_type.equals("bas")
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where is_available=true and where type_workspace="+
+					(String)data_loading.get("type_workspace")+" LIMITE "+(Integer)data_loading.get("requested_number") + "and where floor_number < 3" );
+			List<Map> workSpaces=new ArrayList<Map>();
+			while(rs1.next()) {
+				Map<String,Object> hm=new HashMap<String,Object>();
+				hm.put("id_sensor",rs1.getInt("id_sensor"));
+				hm.put("type_sensor",rs1.getString("type_sensor"));
+				hm.put("is_available",rs1.getBoolean("is_available"));
+				hm.put("is_working",rs1.getBoolean("is_working"));
+				hm.put("id_gs",rs1.getInt("id_gs"));
+				hm.put("id_position",rs1.getInt("id_position"));
+				workSpaces.add(hm);
+			}
+			rs1.close();
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",workSpaces);
+			response_string=mapper.writeValueAsString(response);
+		}
 		data_source.returnCon(con);
 		return response_string;
 	}
