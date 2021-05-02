@@ -118,8 +118,6 @@ public class AccessCardStatus extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
-
-
         setVisible(true);
     }
 
