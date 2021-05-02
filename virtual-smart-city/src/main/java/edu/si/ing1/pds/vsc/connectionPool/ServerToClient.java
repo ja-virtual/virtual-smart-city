@@ -143,6 +143,158 @@ public class ServerToClient {
 			response.put("data",workSpaces);
 			response_string=mapper.writeValueAsString(response);
 		}
+		// Mohand Part about access cards management
+		// Looking for all access cards
+
+		else if (request_name.equals("list_of_access_cards")) {
+			Map data_loading = (Map) request.getData();
+			ResultSet rs2 = connection.createStatement().executeQuery("SELECT * FROM accesscard");
+			List<Map> accesscard = new ArrayList<Map>();
+			while (rs2.next()) {
+				Map<String, Object> hm = new HashMap<String, Object>();
+				hm.put("id_accessCard", rs2.getInt("id_accessCard"));
+				hm.put("type_card", rs2.getInt("type_card"));
+				hm.put("status_card", rs2.getInt("status_card"));
+				hm.put("id_matricule", rs2.getString("id_matricule"));
+				hm.put("id_empowerment", rs2.getString("id_empowerment"));
+				hm.put("id_accessLevel", rs2.getBoolean("id_accessLevel"));
+				accesscard.add(hm);
+			}
+			rs2.close();
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("name_request", request_name);
+			response.put("data", accesscard);
+			response_string = mapper.writeValueAsString(response);
+		}
+		// Looking for a specific access card
+		else if (request_name.equals("list_of_access_cards")) {
+			Map data_loading = (Map) request.getData();
+			ResultSet rs2 = connection.createStatement().executeQuery("SELECT * FROM accesscard where id_accessCard= " + (Integer) data_loading.get("id_accessCard"));
+			List<Map> accesscard = new ArrayList<Map>();
+			while (rs2.next()) {
+				Map<String, Object> hm = new HashMap<String, Object>();
+				hm.put("id_accessCard", rs2.getInt("id_accessCard"));
+				hm.put("type_card", rs2.getString("type_card"));
+				hm.put("status_card", rs2.getString("status_card"));
+				hm.put("id_matricule", rs2.getInt("id_matricule"));
+				hm.put("id_empowerment", rs2.getInt("id_empowerment"));
+				hm.put("id_accessLevel", rs2.getInt("id_accessLevel"));
+				accesscard.add(hm);
+			}
+			rs2.close();
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("name_request", request_name);
+			response.put("data", accesscard);
+			response_string = mapper.writeValueAsString(response);
+
+		}
+		// Create a badge
+		else if (request_name.equals("list_of_access_cards")) {
+			Map data_loading = (Map) request.getData();
+			ResultSet rs2 = connection.createStatement().executeQuery("insert into AccessCard (id_accesscard, type_card, status_card, id_matricule, id_generalservices, id_empowerment, id_token, id_accesslevel) values ("
+					+ (Integer) data_loading.get("id_accessCard") + ","
+					+(String) data_loading.get("type_card")+ ","
+					+ (String) data_loading.get("status_card") + ","
+					+ (Integer) data_loading.get("id_matricule")+ ","
+					+ (Integer) data_loading.get("id_generalservices") + ","
+					+ (Integer) data_loading.get("id_empowerment") + ","
+					+ (Integer) data_loading.get("id_token") + ","
+					+ (Integer) data_loading.get("id_accesslevel"));
+			List<Map> accesscard = new ArrayList<Map>();
+			while (rs2.next()) {
+				Map<String, Object> hm = new HashMap<String, Object>();
+				hm.put("id_accessCard", rs2.getInt("id_accessCard"));
+				hm.put("type_card", rs2.getInt("type_card"));
+				hm.put("status_card", rs2.getInt("status_card"));
+				hm.put("id_matricule", rs2.getString("id_matricule"));
+				hm.put("id_empowerment", rs2.getString("id_empowerment"));
+				hm.put("id_accessLevel", rs2.getBoolean("id_accessLevel"));
+				accesscard.add(hm);
+			}
+			rs2.close();
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("name_request", request_name);
+			response.put("data", accesscard);
+			response_string = mapper.writeValueAsString(response);
+		}
+		// Delete Badge
+		else if (request_name.equals("list_of_access_cards")) {
+			Map data_loading = (Map) request.getData();
+			ResultSet rs2 = connection.createStatement().executeQuery("DELETE FROM accesscard where id_accessCard" + (Integer) data_loading.get("id_accessCard"));
+			List<Map> accesscard = new ArrayList<Map>();
+			while (rs2.next()) {
+				Map<String, Object> hm = new HashMap<String, Object>();
+				hm.put("id_accessCard", rs2.getInt("id_accessCard"));
+				hm.put("type_card", rs2.getInt("type_card"));
+				hm.put("status_card", rs2.getInt("status_card"));
+				hm.put("id_matricule", rs2.getString("id_matricule"));
+				hm.put("id_empowerment", rs2.getString("id_empowerment"));
+				hm.put("id_accessLevel", rs2.getBoolean("id_accessLevel"));
+				accesscard.remove(hm);
+			}
+			rs2.close();
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("name_request", request_name);
+			response.put("data", accesscard);
+			response_string = mapper.writeValueAsString(response);
+		}
+
+		// Update badge
+		else if (request_name.equals("list_of_access_cards")) {
+			Map data_loading = (Map) request.getData();
+			ResultSet rs2 = connection.createStatement().executeQuery("UPDATE Employee " +
+					" SET id_accessLevel =" + (Integer) data_loading.get("id_accessLevel") +
+					"where id_matricule " + (Integer) data_loading.get("id_matricule"));
+			List<Map> accesscard = new ArrayList<Map>();
+			while (rs2.next()) {
+				Map<String, Object> hm = new HashMap<String, Object>();
+				hm.put("id_accessCard", rs2.getInt("id_accessCard"));
+				hm.put("type_card", rs2.getInt("type_card"));
+				hm.put("status_card", rs2.getInt("status_card"));
+				hm.put("id_matricule", rs2.getString("id_matricule"));
+				hm.put("id_empowerment", rs2.getString("id_empowerment"));
+				hm.put("id_accessLevel", rs2.getBoolean("id_accessLevel"));
+				accesscard.add(hm);
+			}
+			rs2.close();
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("name_request", request_name);
+			response.put("data", accesscard);
+			response_string = mapper.writeValueAsString(response);
+		}
+		// Badge status
+		else if (request_name.equals("list_of_access_cards")) {
+			Map data_loading = (Map) request.getData();
+			String status_card = (String) data_loading.get("status_card");
+			ResultSet rs2 = null;
+			if (status_card.equals("KO")) {
+				rs2 = connection.createStatement().executeQuery("SELECT * FROM accesscard where id_accessCard="+ (Integer) data_loading.get("id_accessCard") + "and where status_card =" +"KO " );
+			}
+			if (status_card.equals("OK")) {
+				rs2 = connection.createStatement().executeQuery("SELECT * FROM accesscard where id_accessCard=" + (Integer) data_loading.get("id_accessCard") + "and where status_card ="+ "OK ");
+			}
+			if (status_card.equals("Warning")) {
+				rs2 = connection.createStatement().executeQuery("SELECT * FROM accesscard where id_accessCard=" + (Integer) data_loading.get("id_accessCard") + "and where status_card ="+ "Warning");
+			}
+			List<Map> workSpaces = new ArrayList<Map>();
+			while (rs2.next()) {
+				Map<String, Object> hm = new HashMap<String, Object>();
+				hm.put("id_accessCard", rs2.getInt("id_accessCard"));
+				hm.put("type_card", rs2.getInt("type_card"));
+				hm.put("status_card", rs2.getInt("status_card"));
+				hm.put("id_matricule", rs2.getString("id_matricule"));
+				hm.put("id_empowerment", rs2.getString("id_empowerment"));
+				hm.put("id_accessLevel", rs2.getBoolean("id_accessLevel"));
+				workSpaces.add(hm);
+			}
+			rs2.close();
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("name_request", request_name);
+			response.put("data", workSpaces);
+			response_string = mapper.writeValueAsString(response);
+		}
+
+		// End Mohand's part
 		data_source.returnCon(con);
 		return response_string;
 	}
