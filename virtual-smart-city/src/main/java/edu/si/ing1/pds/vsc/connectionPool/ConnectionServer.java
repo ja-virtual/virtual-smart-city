@@ -1,4 +1,4 @@
-package edu.ing1.pds.vsc.client;
+/*package edu.ing1.pds.vsc.client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class ConnectionServer {
         }
     }
 
-    public String update_person(int id)
+    public update_person(int id)
     {
         try {
             out = new PrintWriter(client.getOutputStream(),true);
@@ -44,7 +44,7 @@ public class ConnectionServer {
         } catch (Exception e) {
             System.out.println("Server is maybe occupied!");
         }
-        return b;
+        //return b;
         return null;
     }
 
@@ -67,4 +67,4 @@ public class ConnectionServer {
     {
         return null;
     }
-}
+}*/
