@@ -1,4 +1,4 @@
-package edu.ing1.pds.vsc.client;
+/*package edu.ing1.pds.vsc.client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -67,4 +67,4 @@ public class ConnectionServer {
     {
         return null;
     }
-}
+}*/
