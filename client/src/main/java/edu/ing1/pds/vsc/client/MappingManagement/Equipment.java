@@ -10,12 +10,12 @@ import org.slf4j.LoggerFactory;
 import edu.ing1.pds.vsc.client.ClientToServer;
 import edu.ing1.pds.vsc.client.Request;
 
-public class Sensor {
+public class Equipment {
 	
 	private final static Logger logger = LoggerFactory.getLogger(Sensor.class.getName());
 	//attributs
  private int id_sensor;
- private String type_sensor;
+ private String type_equipment;
  private boolean is_available;
  private boolean is_working;
  private int id_gs;
@@ -23,10 +23,10 @@ public class Sensor {
  
  
  //constructor
- public Sensor(int id_sensor, String type_sensor, boolean is_available, boolean is_working, int id_gs, int id_position) {
+ public Equipment(int id_sensor, String type_equip, boolean is_available, boolean is_working, int id_gs, int id_position) {
 		super();
 		this.id_sensor = id_sensor;
-		this.type_sensor = type_sensor;
+		this.type_equipment = type_equip;
 		this.is_available = is_available;
 		this.is_working = is_working;
 		this.id_gs = id_gs;
@@ -41,10 +41,10 @@ public void setId_sensor(int id_sensor) {
 	this.id_sensor = id_sensor;
 }
 public String getType_sensor() {
-	return type_sensor;
+	return type_equipment;
 }
 public void setType_sensor(String type_sensor) {
-	this.type_sensor = type_sensor;
+	this.type_equipment = type_sensor;
 }
 public boolean isIs_available() {
 	return is_available;
@@ -71,13 +71,13 @@ public void setId_position(int id_position) {
 	this.id_position = id_position;
 }
 
-public static ArrayList<Map> listSensors(ClientToServer connection, int id_workspace)
+public static ArrayList<Map> listEquipments(ClientToServer connection, int id_workspace)
 {
 	ArrayList<Map>sensors=null;
 	try
 	{
 		Request request=new Request();
-		request.setName_request("list_sensors");
+		request.setName_request("list_equipments");
 		HashMap<String,Object>param=new HashMap<String,Object>();
 		param.put("is_available",true);
 		param.put("id_workspace",id_workspace);
@@ -91,15 +91,16 @@ public static ArrayList<Map> listSensors(ClientToServer connection, int id_works
 	return sensors;
 }
 
-public static boolean mapSensor(ClientToServer connection, int id_gs,int id_position2, String type_sensor) {
+public static boolean mapEquipment(ClientToServer connection,int id_gs,int id_position2, String type_equipment) {
+	
 	ArrayList<Map>update=null;
 	try
 	{
 		Request request=new Request();
-		request.setName_request("map_sensor");
+		request.setName_request("map_equipment");
 		HashMap<String,Object>param=new HashMap<String,Object>();
 		param.put("id_position",id_position2);
-		param.put("type_sensor",type_sensor);
+		param.put("type_equipment",type_equipment);
 		param.put("id_gs",id_gs);
 		request.setData(param);
 		Request response=connection.SendRequest(request);
@@ -109,24 +110,23 @@ public static boolean mapSensor(ClientToServer connection, int id_gs,int id_posi
 		logger.info("Server is maybe occupied");
 	}
 	return (boolean) update.get(0).get("update_done");
-	
-}
-public static Map getSensor(ClientToServer connection, int id_position)
+	}
+public static Map getEquipment(ClientToServer connection, int id_position)
 {
-	ArrayList<Map>sensors=null;
+	ArrayList<Map>equipment=null;
 	try
 	{
 		Request request=new Request();
-		request.setName_request("my_sensor");
+		request.setName_request("my_equipment");
 		HashMap<String,Object>param=new HashMap<String,Object>();
 		param.put("id_position",id_position);
 		request.setData(param);
 		Request response=connection.SendRequest(request);
-		sensors=(ArrayList<Map>)response.getData();
+		equipment=(ArrayList<Map>)response.getData();
 	}catch(Exception e)
 	{
 		logger.info("Server is maybe occupied");
 	}
-	return sensors.get(0);
+	return equipment.get(0);
 }
 }
