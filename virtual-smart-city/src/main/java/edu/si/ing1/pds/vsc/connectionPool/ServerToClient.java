@@ -120,7 +120,7 @@ public class ServerToClient {
 			ResultSet rs1 = null;
 			if (floor_type.equals("haut")) {
 			rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where is_available=true and type_workspace="+
-					(String)data_loading.get("type_workspace") + "and floor_number > 2" );
+					(String)data_loading.get("type_workspace") + " and floor_number > 2" );
 			}
 			if (floor_type.equals("bas")) {
 			rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where is_available=true and type_workspace="+
