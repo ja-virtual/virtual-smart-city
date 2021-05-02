@@ -71,7 +71,7 @@ public class SmartCityAppServer extends Thread {
 				System.out.print("*********************\n ");
 			} catch (Exception e1) {
 				e1.printStackTrace();
-				 this.serve();
+				 //this.serve();
 			}
 		}
 
