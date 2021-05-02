@@ -3,6 +3,7 @@ package edu.ing1.pds.vsc.client.workspaceLocation.lolo;
 
 import java.lang.System.Logger;
 import java.time.Year;
+import java.util.Comparator;
 
 public class WorkSpace {
     String thetype;
@@ -13,6 +14,7 @@ public class WorkSpace {
     int thebuilding;
     int theplace;
     int typeprice;
+    int id_wokspace;
 
     public WorkSpace(int id_workspace, String type_workspace, int floor_number, int id_building) {
 
@@ -24,8 +26,19 @@ public class WorkSpace {
         this.theplace = id_building;
         this.themax_employee_number = MaxCapacity(type_workspace);
         this.thearea = Area(type_workspace);
+        this.id_wokspace = id_workspace;
+        
     }
+    public static Comparator<WorkSpace> IdBuildingComparator = new Comparator<WorkSpace>() {
 
+    	public int compare(WorkSpace s1, WorkSpace s2) {
+    	   int id_building1 = s1.thebuilding;
+    	   int id_building2 = s2.thebuilding;
+
+    	   
+    	   return id_building1-id_building2;
+    	}
+    };
     public int TypePrice(String type_workspace, int floor_number) {
         int price = 0;
  

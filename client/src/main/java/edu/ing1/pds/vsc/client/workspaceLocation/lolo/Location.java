@@ -5,6 +5,7 @@ import java.awt.*;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class Location extends JFrame implements ActionListener{
 
@@ -21,13 +22,13 @@ public class Location extends JFrame implements ActionListener{
 	public JTextField criteria6;
 	public JTextField criteria7;
 	public JButton check;
-	public String area;
-	public String price;
-	public String employee_nbr;
+	public int area;
+	public int price;
+	public int employee_nbr;
 	public String floor;
-	public String openspace_nbr;
-	public String individual_office_nbr;
-	public String meetingroom_nbr;
+	public int openspace_nbr;
+	public int individual_office_nbr;
+	public int meetingroom_nbr;
 
 
 
@@ -235,20 +236,27 @@ public class Location extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent event) {
 	
 		if (event.getSource() == check) {
-			area = criteria1.getText();
-			price = criteria2.getText();
-			employee_nbr = criteria3.getText();
+			area = Integer.parseInt(criteria1.getText());
+			price = Integer.parseInt(criteria2.getText());
+			employee_nbr = Integer.parseInt(criteria3.getText());
 			floor = criteria4.getSelectedItem().toString();
-			openspace_nbr = criteria5.getText();
-			individual_office_nbr = criteria6.getText();
-			meetingroom_nbr = criteria7.getText();
-			System.out.println(area);
+			openspace_nbr =Integer.parseInt(criteria5.getText());
+			individual_office_nbr=Integer.parseInt(criteria6.getText());
+			meetingroom_nbr=Integer.parseInt(criteria7.getText());
+			
+			/*System.out.println(area);
 			System.out.println(price);
 			System.out.println(employee_nbr);
 			System.out.println(floor);
 			System.out.println(openspace_nbr);
 			System.out.println(individual_office_nbr);
-			System.out.println(meetingroom_nbr);
+			System.out.println(meetingroom_nbr);*/
+			OfferCreator ofCrt = new OfferCreator(openspace_nbr,individual_office_nbr, meetingroom_nbr, floor);
+			OfferManager ofMng = new OfferManager(ofCrt.final_offers_array, price, area, employee_nbr);
+			
+			
+			for (int i = 0; i < Math.min(10, ofMng.Offers.size()); i++)
+				System.out.println(ofMng.Offers.get(i).toString());
 		}
 
 	 }	
