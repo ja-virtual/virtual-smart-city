@@ -76,9 +76,9 @@ public class SmartCityAppServer extends Thread {
 		}
 
 		try {
-			in.close();
-			out.close();
-			server.close();
+			//in.close();
+			//ut.close();
+			//server.close();
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
