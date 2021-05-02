@@ -80,7 +80,7 @@ public class SmartCityAppServer extends Thread {
 			//ut.close();
 			//server.close();
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
