@@ -20,13 +20,13 @@ public class AccessManagement extends JFrame implements ActionListener{
     public JTextField criteria6;
     public JTextField criteria7;
     public JButton validate;
-    public String registation_nbr;
-    public String department;
-    public String manager;
-    public String it_locals;
-    public String server_locals;
-    public String equipment_locals;
-    public String electrical_locals;
+    public String dep_access;
+    public String meetingroom_access;
+    public String elec_locals_access;
+    public String equipment_access;
+    public String server_locals_access;
+    public String person_name;
+    public String choice;
 
 
     public AccessManagement()
@@ -240,20 +240,20 @@ public class AccessManagement extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent event) {
 
         if (event.getSource() == validate) {
-            registation_nbr = criteria1.getSelectedItem().toString();
-            department = criteria2.getSelectedItem().toString();
-            manager = criteria3.getSelectedItem().toString();
-            it_locals = criteria4.getSelectedItem().toString();
-            server_locals = criteria5.getSelectedItem().toString();
-            equipment_locals = criteria6.getText();
-            electrical_locals = criteria7.getText();
-            System.out.println(registation_nbr);
-            System.out.println(department);
-            System.out.println(manager);
-            System.out.println(it_locals);
-            System.out.println(server_locals);
-            System.out.println(equipment_locals);
-            System.out.println(electrical_locals);
+            dep_access = criteria1.getSelectedItem().toString();
+            meetingroom_access = criteria2.getSelectedItem().toString();
+            elec_locals_access = criteria3.getSelectedItem().toString();
+            equipment_access = criteria4.getSelectedItem().toString();
+            server_locals_access = criteria5.getSelectedItem().toString();
+            person_name = criteria6.getText();
+            choice = criteria7.getText();
+            System.out.println(dep_access);
+            System.out.println(meetingroom_access);
+            System.out.println(elec_locals_access);
+            System.out.println(equipment_access);
+            System.out.println(server_locals_access);
+            System.out.println(person_name);
+            System.out.println(choice);
         }
 
     }
