@@ -1,14 +1,11 @@
 
 driver: "org.postgresql.Driver"
 password: "admin"
-url: "jdbc:postgresql://172.31.254.93:5432/prototype"
+url: "jdbc:postgresql://172.31.254.93:5432/vscdb"
 username: "postgres"
 
-create: "insert into personne (nom, age) values(?,?)"
-delete: "delete from personne where id=?"
-read: "select * from personne order by id"
-update: "update personne set nom=?,age=? where id=?"
+
 
 listenPort: 3344
 soTimeout: 2000
-ip: "172.31.254.94"
+ip: 172.31.254.94
