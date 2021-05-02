@@ -8,4 +8,4 @@ username: "postgres"
 
 listenPort: 3344
 soTimeout: 2000
-ip: "172.31.254.94"
+ip: 172.31.254.94
