@@ -25,7 +25,7 @@ public class ConnectionServer {
         }
     }
 
-    public String update_person(int id)
+    public update_person(int id)
     {
         try {
             out = new PrintWriter(client.getOutputStream(),true);
@@ -44,7 +44,7 @@ public class ConnectionServer {
         } catch (Exception e) {
             System.out.println("Server is maybe occupied!");
         }
-        return b;
+        //return b;
         return null;
     }
 
