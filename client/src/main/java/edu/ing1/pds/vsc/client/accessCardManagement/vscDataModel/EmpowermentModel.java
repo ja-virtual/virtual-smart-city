@@ -1,6 +1,18 @@
 package edu.ing1.pds.vsc.client.accessCardManagement.vscDataModel;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.ing1.pds.vsc.client.ClientToServer;
+import edu.ing1.pds.vsc.client.Request;
+
 public class EmpowermentModel {
+	
+	private final static Logger logger = LoggerFactory.getLogger(EmpowermentModel.class.getName());
 
     private int id_empowerment;
 
@@ -35,5 +47,23 @@ public class EmpowermentModel {
         this.id_equipement = id_equipement;
     }
 
+    static public ArrayList<Map> allEmpowerments(ClientToServer connection, int id_empowerment )
+    {
+        ArrayList<Map>allEmpowerments=null;
+        try
+        {
+            Request request=new Request();
+            request.setName_request("all empowerments");
+            HashMap<String,Object>param=new HashMap<String,Object>();
+            param.put("id_empowerment",id_empowerment);
+            request.setData(param);
+            Request response=connection.SendRequest(request);
+            allEmpowerments=(ArrayList<Map>)response.getData();
+        }catch(Exception e)
+        {
+            logger.info("Server is maybe occupied");
+        }
+        return allEmpowerments;
+    }
 
-}
+    }
