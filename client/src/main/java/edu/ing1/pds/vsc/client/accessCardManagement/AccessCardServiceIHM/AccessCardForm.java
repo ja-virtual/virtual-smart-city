@@ -250,7 +250,6 @@ public class AccessCardForm extends JFrame implements ActionListener{
             System.out.println(equipment_locals);
             System.out.println(electrical_locals);
         }
-
     }
 
 
