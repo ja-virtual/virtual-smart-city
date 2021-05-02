@@ -129,12 +129,12 @@ public class ServerToClient {
 			List<Map> workSpaces=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
-				hm.put("id_sensor",rs1.getInt("id_sensor"));
-				hm.put("type_sensor",rs1.getString("type_sensor"));
+				hm.put("id_workspace",rs1.getInt("id_workspace"));
+				hm.put("type_workspace",rs1.getString("type_workspace"));
+				hm.put("floor_number",rs1.getInt("floor_number"));
 				hm.put("is_available",rs1.getBoolean("is_available"));
-				hm.put("is_working",rs1.getBoolean("is_working"));
+				hm.put("id_building",rs1.getInt("id_building"));
 				hm.put("id_gs",rs1.getInt("id_gs"));
-				hm.put("id_position",rs1.getInt("id_position"));
 				workSpaces.add(hm);
 			}
 			rs1.close();
