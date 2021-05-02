@@ -120,11 +120,11 @@ public class ServerToClient {
 			ResultSet rs1 = null;
 			if (floor_type.equals("haut")) {
 			rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where is_available=true and where type_workspace="+
-					(String)data_loading.get("type_workspace")+" LIMITE "+(Integer)data_loading.get("requested_number") + "and where floor_number > 2" );
+					(String)data_loading.get("type_workspace") + "and where floor_number > 2" );
 			}
 			if (floor_type.equals("bas")) {
 			rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where is_available=true and where type_workspace="+
-					(String)data_loading.get("type_workspace")+" LIMITE "+(Integer)data_loading.get("requested_number") + "and where floor_number < 3" );
+					(String)data_loading.get("type_workspace") + "and where floor_number < 3" );
 			}
 			List<Map> workSpaces=new ArrayList<Map>();
 			while(rs1.next()) {
