@@ -38,14 +38,6 @@ public class JDBCConnectionPool
     public synchronized void feed(Collection<ConnectionDB> con)
     {
     	collection.addAll(con);
-      /*  //the estimated size of the collection after the addition of the new connections
-        int size = used_connection+available_connection+con.size();
-
-        if(size <= max_connection)
-    	    collection.addAll(con);
-        else
-            System.out.println("Maximal number of connection reached!!!");*/
-
     }
 
     public synchronized ConnectionDB connectionEntity()
@@ -53,6 +45,7 @@ public class JDBCConnectionPool
 
         if(used_connection< max_connection  && collection.size()>0) {
             ConnectionDB con = collection.get(collection.size()-1);
+            used_connection++;
             collection.remove(con);
             return con;
         }
@@ -62,6 +55,7 @@ public class JDBCConnectionPool
     public synchronized void returnCon(ConnectionDB con)
     {
     	collection.add(con);
+    	used_connection--;
     }
     public synchronized void Close()
     {
