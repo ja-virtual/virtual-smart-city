@@ -696,7 +696,7 @@ catch(Exception ex)
 					g.setFont(new Font("Serif", Font.BOLD, 13));
 					g.drawString(reunion1.toString(), 90,165);
 				}
-				else if(reunion1.getId_generalServices()==1)
+				else if(reunion1.getId_generalServices()==company.getId_generalservices())
 				{
 					g.setColor(Color.green);
 					g.fillRect(70,120,95,95);
@@ -720,7 +720,7 @@ catch(Exception ex)
 					g.setFont(new Font("Serif", Font.BOLD, 13));
 					g.drawString(reunion2.toString(), 220,165);
 				}
-				else if(reunion2.getId_generalServices()==1)
+				else if(reunion2.getId_generalServices()==company.getId_generalservices())
 				{
 
 					g.setColor(Color.green);
@@ -744,7 +744,7 @@ catch(Exception ex)
 					g.setFont(new Font("Serif", Font.BOLD, 13));
 					g.drawString(open_space1.toString(),380,165);
 				}
-				else if(open_space1.getId_generalServices()==1)
+				else if(open_space1.getId_generalServices()==company.getId_generalservices())
 				{
 					g.setColor(Color.green);
 					g.fillRect(290,120,200,95);
@@ -771,7 +771,7 @@ catch(Exception ex)
 					g.drawString(individual1.getId_workspace()+"",520,170);
 
 				}
-				else if(individual1.getId_generalServices()==1)
+				else if(individual1.getId_generalServices()==company.getId_generalservices())
 				{
 					g.setColor(Color.green);
 					g.fillRect(510,120,35,95);
@@ -801,7 +801,7 @@ catch(Exception ex)
 					g.drawString(individual2.getId_workspace()+"",575,170);
 
 				}
-				else if(individual2.getId_generalServices()==1)
+				else if(individual2.getId_generalServices()==company.getId_generalservices())
 				{
 					g.setColor(Color.green);
 					g.drawRect(565,120,35,95);
@@ -826,7 +826,7 @@ catch(Exception ex)
 					g.setFont(new Font("Serif", Font.BOLD, 13));
 					g.drawString(reunion3.toString(), 90,265);
 				}
-				else if(reunion3.getId_generalServices()==1)
+				else if(reunion3.getId_generalServices()==company.getId_generalservices())
 				{
 					g.setColor(Color.green);
 					g.fillRect(70,225,95,95);
@@ -850,7 +850,7 @@ catch(Exception ex)
 					g.setFont(new Font("Serif", Font.BOLD, 13));
 					g.drawString(reunion4.toString(), 210,265);
 				}
-				else if(reunion4.getId_generalServices()==1)
+				else if(reunion4.getId_generalServices()==company.getId_generalservices())
 				{
 
 					g.setColor(Color.green);
@@ -874,7 +874,7 @@ catch(Exception ex)
 					g.setFont(new Font("Serif", Font.BOLD, 13));
 					g.drawString(open_space2.toString(),380,265);
 				}
-				else if(open_space2.getId_generalServices()==1)
+				else if(open_space2.getId_generalServices()==company.getId_generalservices())
 				{
 					g.setColor(Color.green);
 					g.fillRect(290,225,200,95);
@@ -901,7 +901,7 @@ catch(Exception ex)
 					g.drawString(individual3.getId_workspace()+"",520,270);
 
 				}
-				else if(individual3.getId_generalServices()==1)
+				else if(individual3.getId_generalServices()==company.getId_generalservices())
 				{
 					g.setColor(Color.green);
 					g.fillRect(510,225,35,95);
@@ -931,7 +931,7 @@ catch(Exception ex)
 					g.drawString(individual4.getId_workspace()+"",575,270);
 
 				}
-				else if(individual4.getId_generalServices()==1)
+				else if(individual4.getId_generalServices()==company.getId_generalservices())
 				{
 					g.setColor(Color.green);
 					g.drawRect(565,225,35,95);

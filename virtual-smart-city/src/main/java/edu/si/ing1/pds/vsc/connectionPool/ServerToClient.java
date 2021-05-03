@@ -118,7 +118,7 @@ public class ServerToClient {
 		else if(request_name.equals("list_sensors"))
 		{
 			Map data_loading=(Map) request.getData();
-			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM sensor where id_position="+(Integer)data_loading.get("id_position"));
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM sensor where id_position in (select id_position from positions where id_workspace="+(Integer)data_loading.get("id_workspace")+")");
 			List<Map> workSpaces=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
@@ -173,7 +173,7 @@ public class ServerToClient {
 			if((Integer)data_loading.get("id_workspace")!=0)
 			rs1=connection.createStatement().executeQuery("SELECT * FROM positions where id_workspace="+(Integer)data_loading.get("id_workspace"));
 			else
-				rs1=connection.createStatement().executeQuery("SELECT * FROM positions where is_available="+(Boolean)data_loading.get("is_available"));
+				rs1=connection.createStatement().executeQuery("SELECT * FROM positions where id_workspace in (SELECT id_workspace from workspace where id_gs="+(Integer)data_loading.get("id_gs")+") and is_available="+(Boolean)data_loading.get("is_available"));
 		
 			List<Map> positions=new ArrayList<Map>();
 			while(rs1.next()) {
@@ -197,16 +197,17 @@ public class ServerToClient {
 			Map data_loading=(Map) request.getData();
 			int op1,op2;
 			connection.setAutoCommit(false);
-			op1 = connection.createStatement().executeUpdate("update equipment set is_available=false, id_gs="+(Integer)data_loading.get("id_gs")+", id_position="+(Integer)data_loading.get("id_position")+" where is_available=true and type_equipment='"+(String)data_loading.get("type_equipment")+"'");
+			op1 = connection.createStatement().executeUpdate("WITH equipment_pick AS ( SELECT id_equipment FROM  equipment WHERE  type_equipment='"+(String)data_loading.get("type_equipment")+"' LIMIT  1) UPDATE equipment e SET is_available = false, id_gs="+(Integer)data_loading.get("id_gs")+", id_position="+(Integer)data_loading.get("id_position")+"FROM equipment_pick WHERE  e.id_equipment = equipment_pick.id_equipment");
 			op2= connection.createStatement().executeUpdate("update positions set is_available=false where id_position="+(Integer)data_loading.get("id_position"));
 			List<Map> update=new ArrayList<Map>();
 				Map<String,Object> hm=new HashMap<String,Object>();
+				logger.info(op1+" "+op2);
 				if(op1>0 && op2>0)
 				{
-					logger.info(op1+" "+op2);
+					
 					connection.commit();
 					connection.setAutoCommit(true);
-				hm.put("update_done",true);
+				    hm.put("update_done",true);
 				}
 				else
 				{
@@ -226,15 +227,16 @@ public class ServerToClient {
 		else if(request_name.equals("map_sensor"))
 		{
 			Map data_loading=(Map) request.getData();
-			boolean op1=false;
-			int op2;
+			
+			int op2=0,op1=0;
 			connection.setAutoCommit(false);
 		
-			op1 = connection.createStatement().execute("WITH sensor_pick AS ( SELECT id_sensor FROM  sensor WHERE  type_sensor='"+(String)data_loading.get("type_sensor")+"' LIMIT  1) UPDATE sensor s SET is_available = false, id_gs="+(Integer)data_loading.get("id_gs")+", id_position="+(Integer)data_loading.get("id_position")+"FROM sensor_pick WHERE  s.id_sensor = sensor_pick.id_sensor	RETURNING s.id_sensor");
+			op1 = connection.createStatement().executeUpdate("WITH sensor_pick AS ( SELECT id_sensor FROM  sensor WHERE  type_sensor='"+(String)data_loading.get("type_sensor")+"' LIMIT  1) UPDATE sensor s SET is_available = false, id_gs="+(Integer)data_loading.get("id_gs")+", id_position="+(Integer)data_loading.get("id_position")+"FROM sensor_pick WHERE  s.id_sensor = sensor_pick.id_sensor");
 			op2= connection.createStatement().executeUpdate("update positions set is_available=false where id_position="+(Integer)data_loading.get("id_position"));
 			List<Map> update=new ArrayList<Map>();
+			logger.info(op1+" "+op2);
 				Map<String,Object> hm=new HashMap<String,Object>();
-				if(op1==true && op2>0)
+				if(op1>0 && op2>0)
 				{
 					logger.info(op1+" "+op2);
 					connection.commit();
@@ -306,14 +308,10 @@ else if(request_name.equals("my_sensor"))
 		Map<String,Object> hm=new HashMap<String,Object>();
 		hm.put("id_sensor",rs1.getInt("id_sensor"));
 		hm.put("type_sensor",rs1.getString("type_sensor"));
-
-		hm.put("id_workspace",rs1.getInt("id_workspace"));
-		hm.put("type_workspace",rs1.getString("type_workspace"));
-		hm.put("floor_number",rs1.getInt("floor_number"));
-
 		hm.put("is_available",rs1.getBoolean("is_available"));
-		hm.put("id_building",rs1.getInt("id_building"));
+		hm.put("is_working",rs1.getBoolean("is_working"));
 		hm.put("id_gs",rs1.getInt("id_gs"));
+		hm.put("id_position",rs1.getInt("id_position"));
 		workSpaces.add(hm);
 	}
 	rs1.close();

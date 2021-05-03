@@ -4,23 +4,31 @@ package edu.ing1.pds.vsc.client;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.*;
+import edu.ing1.pds.vsc.client.General_Services;
+import edu.ing1.pds.vsc.client.MappingManagement.InfoMapping;
+import edu.ing1.pds.vsc.client.MappingManagement.Map_Full;
+import edu.ing1.pds.vsc.client.MappingManagement.MappingUC;
+import edu.ing1.pds.vsc.client.MappingManagement.Positions;
 
 
 public class HomePage extends JFrame implements ActionListener  {
 	//private Mairie fen;
+	ClientToServer connection=new ClientToServer();
+	ArrayList<Map> company_names=General_Services.All_GeneralServices(connection);
 	public HomePage()
 	{
-
+       setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setTitle("Ja-Virtual app");
 		setSize(new Dimension(450,450));
 		setLocationRelativeTo(null);
 		setLayout(new GridBagLayout());
-
-		//  JPanel panel = new JPanel(new GridBagLayout());
-
-		//cr�er un frame
 
 		JLabel image = new JLabel();
 		ImageIcon  img= new ImageIcon(("logo-ja-virtual.png"));
@@ -32,14 +40,35 @@ public class HomePage extends JFrame implements ActionListener  {
 
 		JLabel phrase_acceuil = new JLabel("Bienvenue sur Ja-Virtual");
 		phrase_acceuil.setFont(new Font("Serif", Font.BOLD, 25));
-		JComboBox nom_entreprise=new JComboBox();
+		JComboBox myCompany=new JComboBox();
 
-		nom_entreprise.addItem(" Saisir le nom de votre entreprise....." );
-		nom_entreprise.addItem("Entreprise 1" );
-		nom_entreprise.addItem("Entreprise 2" );
-		nom_entreprise.addItem("Entreprise 3" );
-		nom_entreprise.addItem("Entreprise 4" );
-		//	JButton annuler = new JButton("Annuler");
+		myCompany.addItem(" Saisir le nom de votre entreprise....." );
+		System.out.println(company_names.toString());
+		for(Map n:company_names)
+		{
+			myCompany.addItem(n.get("company_name"));
+		}
+       myCompany.addActionListener (new ActionListener () {
+    	    public void actionPerformed(ActionEvent e) {
+    	    	JComboBox cn = (JComboBox)e.getSource();
+    	        String company_name= (String)cn.getSelectedItem();
+    			for(Map n:company_names)
+    			{
+    				if(n.containsValue(company_name))
+    				{
+    					   try
+    		        	   {
+    		        		   connection.client.close();
+    		        	   }catch(Exception ex)
+    		        	   {
+    		        		   ex.printStackTrace();
+    		        	   }
+    				MappingUC next_view=new MappingUC(new General_Services((Integer)n.get("id_generalservices"),company_name));
+    					dispose();
+    				}	
+    			}
+    	    }
+    	});	
 		JButton valider= new JButton("Valider");
 		JButton municipalite = new JButton("Mairie");
 
@@ -68,7 +97,7 @@ public class HomePage extends JFrame implements ActionListener  {
 		c.ipadx=5;
 		c.ipady=5;
 
-		this.getContentPane().add(nom_entreprise,c);
+		this.getContentPane().add(myCompany,c);
 
 		c.gridy = 6;//change the y location
 
@@ -87,9 +116,9 @@ public class HomePage extends JFrame implements ActionListener  {
 		this.getContentPane().add(municipalite,c);
 
 
-		nom_entreprise.getEditor().getEditorComponent().setBackground(Color.white);
-		nom_entreprise.setFont(new Font("Serif", Font.ITALIC, 16));
-		nom_entreprise.setBackground(Color.white);
+		myCompany.getEditor().getEditorComponent().setBackground(Color.white);
+		myCompany.setFont(new Font("Serif", Font.ITALIC, 16));
+		myCompany.setBackground(Color.white);
 		//      this.getContentPane().add(panel);
 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -12,9 +12,9 @@ import edu.ing1.pds.vsc.client.Request;
 
 public class Equipment {
 	
-	private final static Logger logger = LoggerFactory.getLogger(Sensor.class.getName());
+	private final static Logger logger = LoggerFactory.getLogger(Equipment.class.getName());
 	//attributs
- private int id_sensor;
+ private int id_equipment;
  private String type_equipment;
  private boolean is_available;
  private boolean is_working;
@@ -23,9 +23,9 @@ public class Equipment {
  
  
  //constructor
- public Equipment(int id_sensor, String type_equip, boolean is_available, boolean is_working, int id_gs, int id_position) {
+ public Equipment(int id_equipment, String type_equip, boolean is_available, boolean is_working, int id_gs, int id_position) {
 		super();
-		this.id_sensor = id_sensor;
+		this.id_equipment = id_equipment;
 		this.type_equipment = type_equip;
 		this.is_available = is_available;
 		this.is_working = is_working;
@@ -34,17 +34,17 @@ public class Equipment {
 	}
  
  //getters and setters
- public int getId_sensor() {
-	return id_sensor;
+ public int getId_equipment() {
+	return id_equipment;
 }
-public void setId_sensor(int id_sensor) {
-	this.id_sensor = id_sensor;
+public void setId_equipment(int id_equipment) {
+	this.id_equipment = id_equipment;
 }
-public String getType_sensor() {
+public String getType_equipment() {
 	return type_equipment;
 }
-public void setType_sensor(String type_sensor) {
-	this.type_equipment = type_sensor;
+public void setType_equipment(String type_equipment) {
+	this.type_equipment = type_equipment;
 }
 public boolean isIs_available() {
 	return is_available;
@@ -73,7 +73,7 @@ public void setId_position(int id_position) {
 
 public static ArrayList<Map> listEquipments(ClientToServer connection, int id_workspace)
 {
-	ArrayList<Map>sensors=null;
+	ArrayList<Map>equipments=null;
 	try
 	{
 		Request request=new Request();
@@ -83,12 +83,12 @@ public static ArrayList<Map> listEquipments(ClientToServer connection, int id_wo
 		param.put("id_workspace",id_workspace);
 		request.setData(param);
 		Request response=connection.SendRequest(request);
-		sensors=(ArrayList<Map>)response.getData();
+		equipments=(ArrayList<Map>)response.getData();
 	}catch(Exception e)
 	{
 		logger.info("Server is maybe occupied");
 	}
-	return sensors;
+	return equipments;
 }
 
 public static boolean mapEquipment(ClientToServer connection,int id_gs,int id_position2, String type_equipment) {
@@ -127,6 +127,9 @@ public static Map getEquipment(ClientToServer connection, int id_position)
 	{
 		logger.info("Server is maybe occupied");
 	}
+	if(equipment.isEmpty())
+		return null;
+		else
 	return equipment.get(0);
 }
 }

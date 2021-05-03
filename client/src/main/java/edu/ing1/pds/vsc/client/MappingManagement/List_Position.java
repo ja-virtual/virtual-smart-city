@@ -31,7 +31,7 @@ public class List_Position extends JFrame {
     private JPanel right=new JPanel(new BorderLayout());
     JPanel left = new JPanel(new GridLayout(5,1));
     Color color=new Color(190,245,116);
-	ArrayList<Map>available_positions=Positions.availablePositions(connection,0);
+	ArrayList<Map>available_positions;
 	private void Interface()
 	{
 		setLayout(new BorderLayout());
@@ -376,6 +376,7 @@ catch(Exception ex)
     public List_Position(General_Services GS)
     {
     	company=GS;
+    	available_positions=Positions.availablePositions(connection,0,company.getId_generalservices());
         Interface();
         JLabel Title=new JLabel("Liste d'emplacement");
         Title.setFont(new Font("Serif", Font.BOLD, 45));
@@ -454,8 +455,8 @@ catch(Exception ex)
          
                 try {
 
-                    columns[0]="ID Position";
-                    columns[1]="type de position";
+                    columns[0]="ID Emplacement";
+                    columns[1]="type d'emplacement";
                     columns[2]="";
                 for(Map n:available_positions) {
 

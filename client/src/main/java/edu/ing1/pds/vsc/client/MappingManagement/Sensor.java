@@ -127,6 +127,9 @@ public static Map getSensor(ClientToServer connection, int id_position)
 	{
 		logger.info("Server is maybe occupied");
 	}
+	if(sensors.isEmpty())
+		return null;
+		else
 	return sensors.get(0);
 }
 }

@@ -123,8 +123,8 @@ public class Positions {
 			
 			break;
 		case "type2":
-			listOfObjects.add("capteur régulateur energie");
-			listOfObjects.add("detecteur de presence infra rouge");
+			listOfObjects.add("capteur regulateur energie");
+			listOfObjects.add("detecteur de presence");
 			break;
 		case "type3":
 			listOfObjects.add("detecteur de reconaissance de forme");
@@ -136,14 +136,14 @@ public class Positions {
 			switch(type_position)
 			{
 			case "type1":
-				listOfObjects.add("lignes");
+				listOfObjects.add("ligne");
 				break;
 			case "type2":
-				listOfObjects.add("tuyaux");
+				listOfObjects.add("tuyau");
 				break;
 			case "type3":
-				listOfObjects.add("câbles");
-				listOfObjects.add("Fenetre electro-chromatique");
+				listOfObjects.add("cable");
+				listOfObjects.add("fenetre electro-chromatique");
 				break;
 			}
 		}
@@ -151,7 +151,7 @@ public class Positions {
 	}
 	
 	//return the list of the positions which are available for mapping
-public static ArrayList<Map >availablePositions(ClientToServer connection,int id_workspace)
+public static ArrayList<Map >availablePositions(ClientToServer connection,int id_workspace,int id_gs)
 {
 
 	ArrayList<Map>positions=null;
@@ -162,6 +162,7 @@ public static ArrayList<Map >availablePositions(ClientToServer connection,int id
 		HashMap<String,Object>param=new HashMap<String,Object>();
 		param.put("is_available",true);
 		param.put("id_workspace",id_workspace);
+		param.put("id_gs",id_gs);
 		request.setData(param);
 		Request response=connection.SendRequest(request);
 		positions=(ArrayList<Map>)response.getData();

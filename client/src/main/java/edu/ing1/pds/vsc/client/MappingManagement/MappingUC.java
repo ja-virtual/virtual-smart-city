@@ -379,7 +379,7 @@ catch(Exception ex)
 	}
 	public MappingUC(General_Services GS)
 	{
-		//connection=sc;
+
 		company=GS;
 		Interface();
 		JPanel p3=new JPanel();

@@ -57,7 +57,10 @@ public class Map_WorkSpace extends JFrame {
 	ArrayList<Map> equipments, sensors,positions;
 	JComboBox sensors_box=new JComboBox();
 	JComboBox equipments_box=new JComboBox();
-
+	JButton sensor_move=new JButton("Déplacer capteur");
+	JButton equipment_move=new JButton("Déplacer equipement");
+	JButton position_map=new JButton("Mapper ");
+	
 	JCheckBox sensor=new JCheckBox("Capteur");
 	JCheckBox equipment=new JCheckBox("Equipement");
 	Boolean available_positions=false;
@@ -66,7 +69,37 @@ public class Map_WorkSpace extends JFrame {
 	{
 		switch(choice)
 		{
+		case "sensor_equipment":
+			if(!sensors.isEmpty())
+			{
+				String msg="\"Cet espace de travail ne contient aucun ";
+				sensor.setSelected(true);
+				sensors_box.removeAllItems();
+				sensors_box.show();
+				for(Map n:sensors)
+				{
+					sensors_box.addItem(n.get("type_sensor")+" "+n.get("id_sensor"));
+				}
+			}
+			else
+				sensors_box.hide();
+
+			if(!equipments.isEmpty())
+			{
+				equipments_box.removeAllItems();
+				equipment.setSelected(true);
+				equipments_box.show();
+				for(Map n:equipments)
+				{
+					equipments_box.addItem(n.get("type_equipment")+" "+n.get("id_equipment"));
+				}
+			}
+			else
+				equipments_box.hide();
+
+			break;
 		case "sensor":
+			sensor_move.setEnabled(true);
 			if(!sensors.isEmpty())
 			{
 				String msg="\"Cet espace de travail ne contient aucun ";
@@ -81,7 +114,6 @@ public class Map_WorkSpace extends JFrame {
 			else
 			{
 				sensors_box.hide();
-				sensor.setEnabled(false);
 				sensor.setSelected(false);
 				JOptionPane.showMessageDialog(new JFrame(),
 						"Cet espace de travail ne contient aucun capteur pour le moment",
@@ -91,8 +123,10 @@ public class Map_WorkSpace extends JFrame {
 
 			break;
 		case "equipment":
+			equipment_move.setEnabled(true);
 			if(!equipments.isEmpty())
 			{
+				equipment.setSelected(true);
 				equipments_box.removeAllItems();
 				equipment.setSelected(true);
 				equipments_box.show();
@@ -103,9 +137,9 @@ public class Map_WorkSpace extends JFrame {
 			}
 			else
 			{
-				equipment.setSelected(false);
-				equipment.setEnabled(false);
+
 				equipments_box.hide();
+				equipment.setSelected(false);
 				JOptionPane.showMessageDialog(new JFrame(),
 						"Cet espace de travail ne contient aucun equipement pour le moment",
 						"Pas d'equipement",
@@ -113,12 +147,15 @@ public class Map_WorkSpace extends JFrame {
 			}
 			break;
 		case "no_sensor":
+			sensor_move.setEnabled(false);
 			sensors_box.hide();
 			break;
 		case "no_equipment":
+			equipment_move.setEnabled(false);
 			equipments_box.hide();
 			break;
 		}
+		map.repaint();
 	}
 	private void Interface()
 	{
@@ -485,26 +522,66 @@ public class Map_WorkSpace extends JFrame {
 		equipment.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(sensor.isSelected())
-					sensorOrEquipment("equipment");
+				if(equipment.isSelected())
+					{sensorOrEquipment("equipment");
+					}
 				else
+				{
 					sensorOrEquipment("no_equipment");
+				}
 
 
 			}});
 		JPanel space=new JPanel();
-		JButton sensor_move=new JButton("Déplacer capteur");
+		sensor_move.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(my_workspace.getId_generalServices()==0)
+				{
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Cet espace de travail n'est pas encore loué",
+							"Déplacement Interdit",
+							JOptionPane.PLAIN_MESSAGE);
+				}
+				else if(company.getId_generalservices()!=my_workspace.getId_generalServices())
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Cet espace de travail appartient à autre service général",
+							"Deplacement Interdit",
+							JOptionPane.PLAIN_MESSAGE);
+				else
+					sensorOrEquipment("no_sensor");
+
+
+			}});
 		sensor_move.setBackground(color);
-		JButton equipment_move=new JButton("Déplacer equipement");
 		equipment_move.setBackground(color);
-		JButton position_map=new JButton("Mapper ");
+		equipment_move.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(my_workspace.getId_generalServices()==0)
+				{
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Cet espace de travail n'est pas encore loué",
+							"Déplacement Interdit",
+							JOptionPane.PLAIN_MESSAGE);
+				}
+				else if(company.getId_generalservices()!=my_workspace.getId_generalServices())
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Cet espace de travail appartient à autre service général",
+							"Deplacement Interdit",
+							JOptionPane.PLAIN_MESSAGE);
+				else
+					sensorOrEquipment("no_sensor");
+
+
+			}});
 		position_map.setBackground(color);
 		JComboBox positions_box=new JComboBox();
 		for(Map n:positions)
 		{
 			if((Boolean)n.get("is_available")==true)
 			{available_positions=true;
-			positions_box.addItem("Position "+n.get("id_position"));
+			positions_box.addItem("Emplacement "+n.get("id_position"));
 			}
 		}
 		positions_box.addActionListener(new ActionListener() {
@@ -516,11 +593,27 @@ public class Map_WorkSpace extends JFrame {
 		position_map.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!available_positions)
+				if(my_workspace.getId_generalServices()==0)
+				{
 					JOptionPane.showMessageDialog(new JFrame(),
-							"Cet espace de travail ne contient aucun  libre pour le moment",
-							"Pas d' libre",
+							"Cet espace de travail n'est pas encore loué",
+							"Mappage Interdit",
 							JOptionPane.PLAIN_MESSAGE);
+				}
+				else if(company.getId_generalservices()!=my_workspace.getId_generalServices())
+				{
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Cet espace de travail appartient à autre service général",
+							"Mappage Interdit",
+							JOptionPane.PLAIN_MESSAGE);
+			}
+			else if(!available_positions)
+			{
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Cet espace de travail ne contient aucun emplacement libre pour le moment",
+							"Pas d'emplacement libre",
+							JOptionPane.PLAIN_MESSAGE);
+			}
 				else
 				{
 					try
@@ -553,9 +646,7 @@ public class Map_WorkSpace extends JFrame {
 		p3.add(map,BorderLayout.CENTER);
 		right.add(p3,BorderLayout.CENTER);
 		setVisible(true);
-		sensorOrEquipment("sensor");
-
-		sensorOrEquipment("equipment");
+		sensorOrEquipment("sensor_equipment");
 	}
 	public static void main(String[] args) {
 		new Map_WorkSpace(new WorkSpace(2,"individuel",1,true, 1,1),new General_Services(1,"SnapShat"));
@@ -570,182 +661,130 @@ public class Map_WorkSpace extends JFrame {
 			{ 
 
 				g.drawRect(120,140,450,450);
-				for(Map position: positions)
+
+			}
+			else if(my_workspace.getType_workspace().equals("open Space"))
+			{ 
+				g.drawRect(70,140,550,350);
+			}
+			else
+			{
+				g.drawRect(130,80,350,500);
+			}
+
+			for(Map position: positions)
+			{
+				if(!sensor.isSelected() && !equipment.isSelected())
 				{
-					if(!sensor.isSelected() && !equipment.isSelected())
+					if((Boolean)position.get("is_available")==true)
 					{
-						if((Boolean)position.get("is_available")==true)
 						g.drawOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
-						else
-						g.fillOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
-						
 						g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")-11),((Integer)position.get("longitude")+60));
 					}
 					else
 					{
-					if(sensor.isSelected())
-					{
-						if((Boolean)position.get("is_available")==true)
-						{
+						g.fillOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
+						g.drawString("emplacement occupé",((Integer)position.get("latitude")-11),((Integer)position.get("longitude")+60));
 
-							g.drawOval((Integer)position.get("latitude"),(Integer)position.get("latitude"),45,45);
-							g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")-5),((Integer)position.get("longitude")+60));
-						}
-						else
-						{ 
-							
-							Map s=Sensor.getSensor(connection,(Integer)position.get("id_position"));
-					        Sensor my_sensor=new Sensor((Integer)s.get("id_sensor"),(String)s.get("type_sensor"),(Boolean)s.get("is_available"),(Boolean)s.get("is_working"),(Integer)s.get("id_gs"),(Integer)s.get("id_position"));
-						    g.drawOval((Integer)position.get("latitude"),(Integer)position.get("latitude"),45,45);
-							g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")-5),((Integer)position.get("longitude")+60));
-						}
-					}
-					if(equipment.isSelected())
-					{
-						if((Boolean)position.get("is_available")==true)
-						{
-
-							g.drawOval((Integer)position.get("latitude"),(Integer)position.get("latitude"),45,45);
-							g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")+10),((Integer)position.get("longitude")+10));
-						}
-						else
-						{ 
-							
-							Map s=Equipment.getEquipment(connection,(Integer)position.get("id_position"));
-					        Sensor my_equipment=new Sensor((Integer)s.get("id_equipment"),(String)s.get("type_equipment"),(Boolean)s.get("is_available"),(Boolean)s.get("is_working"),(Integer)s.get("id_gs"),(Integer)s.get("id_position"));
-						    g.drawOval((Integer)position.get("latitude"),(Integer)position.get("latitude"),45,45);
-							g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")+10),((Integer)position.get("longitude")+10));
-						}
 					}
 				}
-			}
-			}		else if(my_workspace.getType_workspace().equals("open Space"))
-					{ 
-				g.drawRect(70,140,550,350);
-				for(Map position: positions)
+				else
 				{
-					if(!sensor.isSelected() && !equipment.isSelected())
-					{
-						g.drawOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
-						g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")-5),((Integer)position.get("longitude")+60));
-					}
-					else
-					{
-					if(sensor.isSelected())
+					if(sensor.isSelected() && !equipment.isSelected())
 					{
 						if((Boolean)position.get("is_available")==true)
 						{
 
-							g.drawOval((Integer)position.get("latitude"),(Integer)position.get("latitude"),45,45);
-							g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")-5),((Integer)position.get("longitude")+60));
+							g.drawOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
+							g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")-11),((Integer)position.get("longitude")+60));
 						}
 						else
 						{ 
-							Map e=Sensor.getSensor(connection,(Integer)position.get("id_position"));
-							Map s=Equipment.getEquipment(connection,(Integer)position.get("id_position"));
+
+							Map s=Sensor.getSensor(connection,(Integer)position.get("id_position"));
+							System.out.println("s= "+s);
 							if(s!=null)
 							{
-								 Sensor my_sensor=new Sensor((Integer)s.get("id_sensor"),(String)s.get("type_sensor"),(Boolean)s.get("is_available"),(Boolean)s.get("is_working"),(Integer)s.get("id_gs"),(Integer)s.get("id_position"));
-								    g.drawOval((Integer)position.get("latitude"),(Integer)position.get("latitude"),45,45);
-									g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")-5),((Integer)position.get("longitude")+60));
-							}
-					        Equipment my_equipment=new Equipment((Integer)s.get("id_equipment"),(String)s.get("type_equipment"),(Boolean)s.get("is_available"),(Boolean)s.get("is_working"),(Integer)s.get("id_gs"),(Integer)s.get("id_position"));
-						    g.drawOval((Integer)position.get("latitude"),(Integer)position.get("latitude"),45,45);
-							g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")+10),((Integer)position.get("longitude")+10));
-					       
-						}
-					}
-					if(equipment.isSelected())
-					{
-						if((Boolean)position.get("is_available")==true)
-						{
-
-							g.drawOval((Integer)position.get("latitude"),(Integer)position.get("latitude"),45,45);
-							g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")+10),((Integer)position.get("longitude")+10));
-						}
-						else
-						{ 
-							
-							Map s=Equipment.getEquipment(connection,(Integer)position.get("id_position"));
-					        Sensor my_equipment=new Sensor((Integer)s.get("id_equipment"),(String)s.get("type_equipment"),(Boolean)s.get("is_available"),(Boolean)s.get("is_working"),(Integer)s.get("id_gs"),(Integer)s.get("id_position"));
-						    g.drawOval((Integer)position.get("latitude"),(Integer)position.get("latitude"),45,45);
-							g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")+10),((Integer)position.get("longitude")+10));
-						}
-					}
-				}
-			}
-				/*g.drawRect(70,140,550,350);
-
-					g.drawOval(120,155,45,45);
-					g.drawString("emplacement "+(Integer)position.get("id_position"),116,220);
-					g.drawOval(320,155,45,45);
-					g.drawString("emplacement "+(Integer)position.get("id_position"),316,220);
-					g.drawOval(520,155,45,45);
-					g.drawString("emplacement "+(Integer)position.get("id_position"),516,220);
-
-					g.drawOval(120,380,45,45);
-					g.drawString("emplacement "+(Integer)position.get("id_position"),116,445);
-					g.drawOval(320,380,45,45);
-					g.drawString("emplacement "+(Integer)position.get("id_position"),316,445);
-					g.drawOval(520,380,45,45);
-					g.drawString("emplacement "+(Integer)position.get("id_position"),516,445);*/
-					}
-
-					else
-					{g.drawRect(130,80,350,500);
-						for(Map position: positions)
-						{
-							if(!sensor.isSelected() && !equipment.isSelected())
-							{
+								Sensor my_sensor=new Sensor((Integer)s.get("id_sensor"),(String)s.get("type_sensor"),(Boolean)s.get("is_available"),(Boolean)s.get("is_working"),(Integer)s.get("id_gs"),(Integer)s.get("id_position"));
 								g.drawOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
-								g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")-5),((Integer)position.get("longitude")+60));
+								g.drawString(my_sensor.getType_sensor()+" "+my_sensor.getId_sensor(),((Integer)position.get("latitude")-16),((Integer)position.get("longitude")+60));
 							}
 							else
 							{
-							if(sensor.isSelected())
-							{
-								if((Boolean)position.get("is_available")==true)
-								{
-
-									g.drawOval((Integer)position.get("latitude"),(Integer)position.get("latitude"),45,45);
-									g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")-5),((Integer)position.get("longitude")+60));
-								}
-								else
-								{ 
-									
-									Map s=Sensor.getSensor(connection,(Integer)position.get("id_position"));
-							        Sensor my_sensor=new Sensor((Integer)s.get("id_sensor"),(String)s.get("type_sensor"),(Boolean)s.get("is_available"),(Boolean)s.get("is_working"),(Integer)s.get("id_gs"),(Integer)s.get("id_position"));
-								    g.drawOval((Integer)position.get("latitude"),(Integer)position.get("latitude"),45,45);
-									g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")-5),((Integer)position.get("longitude")+60));
-								}
-							}
-							if(equipment.isSelected())
-							{
-								if((Boolean)position.get("is_available")==true)
-								{
-
-									g.drawOval((Integer)position.get("latitude"),(Integer)position.get("latitude"),45,45);
-									g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")+10),((Integer)position.get("longitude")+10));
-								}
-								else
-								{ 
-									
-									Map s=Equipment.getEquipment(connection,(Integer)position.get("id_position"));
-							        Sensor my_equipment=new Sensor((Integer)s.get("id_equipment"),(String)s.get("type_equipment"),(Boolean)s.get("is_available"),(Boolean)s.get("is_working"),(Integer)s.get("id_gs"),(Integer)s.get("id_position"));
-								    g.drawOval((Integer)position.get("latitude"),(Integer)position.get("latitude"),45,45);
-									g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")+10),((Integer)position.get("longitude")+10));
-								}
+								g.fillOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
+								g.drawString("emplacement occupé",((Integer)position.get("latitude")-11),((Integer)position.get("longitude")+60));
 							}
 						}
 					}
-						/*g.drawRect(130,80,350,500);
+					else if(equipment.isSelected() && !sensor.isSelected())
+					{
+						if((Boolean)position.get("is_available")==true)
+						{
+
+							g.drawOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
+							g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")-6),((Integer)position.get("longitude")+60));
+						}
+						else
+						{ 
+
+							Map p=Equipment.getEquipment(connection,(Integer)position.get("id_position"));
+							System.out.println("p= "+p);
+							if(p!=null)
+							{
+								Equipment my_equipment=new Equipment((Integer)p.get("id_equipment"),(String)p.get("type_equipment"),(Boolean)p.get("is_available"),(Boolean)p.get("is_working"),(Integer)p.get("id_gs"),(Integer)p.get("id_position"));
+								g.drawOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
+								g.drawString(my_equipment.getType_equipment()+" "+my_equipment.getId_equipment(),((Integer)position.get("latitude")-16),((Integer)position.get("longitude")+60));
+							}
+							else
+							{
+								g.fillOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
+								g.drawString("emplacement occupé",((Integer)position.get("latitude")-11),((Integer)position.get("longitude")+60));
+							}
+						}
+					}
+				   else if(equipment.isSelected() && sensor.isSelected())
+				   {
+					   if((Boolean)position.get("is_available")==true)
+						{
+
+							g.drawOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
+							g.drawString("emplacement "+(Integer)position.get("id_position"),((Integer)position.get("latitude")-6),((Integer)position.get("longitude")+60));
+						}
+						else
+						{ Map s=Sensor.getSensor(connection,(Integer)position.get("id_position"));
+						Map p=Equipment.getEquipment(connection,(Integer)position.get("id_position"));
+						System.out.println("s= "+s);
+						System.out.println("p= "+p);
+						if(s!=null)
+						{
+							Sensor my_sensor=new Sensor((Integer)s.get("id_sensor"),(String)s.get("type_sensor"),(Boolean)s.get("is_available"),(Boolean)s.get("is_working"),(Integer)s.get("id_gs"),(Integer)s.get("id_position"));
+							g.drawOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
+							g.drawString(my_sensor.getType_sensor()+" "+my_sensor.getId_sensor(),((Integer)position.get("latitude")-16),((Integer)position.get("longitude")+60));
+						}
+						else if(p!=null)
+						{
+							Equipment my_equipment=new Equipment((Integer)p.get("id_equipment"),(String)p.get("type_equipment"),(Boolean)p.get("is_available"),(Boolean)p.get("is_working"),(Integer)p.get("id_gs"),(Integer)p.get("id_position"));
+							g.drawOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
+							g.drawString(my_equipment.getType_equipment()+" "+my_equipment.getId_equipment(),((Integer)position.get("latitude")-16),((Integer)position.get("longitude")+60));
+						
+						}
+						}
+				   }
+						
+				}
+			}
+
+		}
+
+
+		/*g.drawRect(130,80,350,500);
 
 						g.drawOval(270,100,45,45);
 						g.drawString("emplacement "+(Integer)position.get("id_position"),264,160);
 
 						g.drawOval(270,490,45,45);
 						g.drawString("emplacement "+(Integer)position.get("id_position"),264,550);*/
-					}
+	}
 
-				}
-			}}
+
+}
