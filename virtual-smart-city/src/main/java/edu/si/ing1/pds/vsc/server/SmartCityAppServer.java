@@ -78,9 +78,9 @@ public class SmartCityAppServer extends Thread {
 		}
 
 		try {
-			in.close();
-			out.close();
-			server.close();
+			//in.close();
+			//out.close();
+			//server.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
