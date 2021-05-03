@@ -45,7 +45,9 @@ public class SmartCityAppServer extends Thread {
 			server = new ServerSocket(3344);
 
 		} catch (IOException e) {
+
 			e.printStackTrace();
+
 		}
 
 	}
@@ -56,32 +58,31 @@ public class SmartCityAppServer extends Thread {
 		this.serve();
 		while(ds.getUsedConnection()<max_connection_i )
 		{
-
 			try {
 				in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 				String operation=in.readLine();
 				ObjectMapper mapper=new ObjectMapper();
 				logger.info(operation);
 				Request request=mapper.readValue(operation,Request.class);
-				logger.info(request.getName_request());
 				ServerToClient connection=new ServerToClient(ds);
 				String response=connection.SendResponse(request);
 				out=new PrintWriter(client.getOutputStream(),true);
 				out.println(response);
 				System.out.print("*********************\n ");
+				//this.serve();
 			} catch (Exception e1) {
-
-				 this.serve();
+				 e1.printStackTrace();
+				 System.out.print("I am seing you\n ");
+				this.serve();
 			}
 		}
 
 		try {
 			//in.close();
-			//ut.close();
+			//out.close();
 			//server.close();
 
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -93,7 +94,6 @@ public class SmartCityAppServer extends Thread {
 			//    final ClientRequestManager clientRequestManager = new ClientRequestManager(client);
 
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			logger.info("no service available!!");
 		}
 	}

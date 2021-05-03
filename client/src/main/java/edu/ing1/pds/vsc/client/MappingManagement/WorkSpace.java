@@ -13,16 +13,16 @@ import edu.ing1.pds.vsc.client.Request;
 public class WorkSpace {
 
 	private final static Logger logger = LoggerFactory.getLogger(WorkSpace.class.getName());
-	private String  id_workspace;
+	private int  id_workspace;
 	private String  type_workspace;
 	private int floor_number;
 	private boolean is_available;
 	private int id_building;
 	private int id_general_services;
-	public String getId_workspace() {
+	public int getId_workspace() {
 		return id_workspace;
 	}
-	public void setId_workspace(String id_workspace) {
+	public void setId_workspace(int id_workspace) {
 		this.id_workspace = id_workspace;
 	}
 	public String getType_workspace() {
@@ -55,7 +55,7 @@ public class WorkSpace {
 	public void setId_general_services(int id_general_services) {
 		this.id_general_services = id_general_services;
 	}
-	public WorkSpace(String id_workspace, String workSpace_type ,int floor_number, boolean is_available, int id_building,
+	public WorkSpace(int id_workspace, String workSpace_type ,int floor_number, boolean is_available, int id_building,
 			int id_general_services) {
 		super();
 		this.id_workspace = id_workspace;
@@ -91,5 +91,23 @@ public class WorkSpace {
 		}
 		return workspaces;
 	}
-
+	static public Map theWorkSpace(ClientToServer connection,int id_workspace)
+	{
+		ArrayList<Map>theworkspace=null;
+		try
+		{
+			Request request=new Request();
+			request.setName_request("the_workspace");
+			HashMap<String,Object>param=new HashMap<String,Object>();
+			param.put("id_workspace",id_workspace);
+			request.setData(param);
+			Request response=connection.SendRequest(request);
+			theworkspace=(ArrayList<Map>)response.getData();
+			System.out.println(theworkspace.get(0).get("id_workspace"));
+		}catch(Exception e)
+		{
+			logger.info("Server is maybe occupied");
+		}
+		return theworkspace.get(0);
+	}
 }

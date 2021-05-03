@@ -8,3 +8,4 @@ virtual-smart-city/virtual-smart-city.iml
 client/.settings
 client/target
 client/client.imi
+/virtual-smart-city/

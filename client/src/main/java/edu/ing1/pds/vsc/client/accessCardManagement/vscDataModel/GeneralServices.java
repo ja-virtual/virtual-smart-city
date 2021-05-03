@@ -47,4 +47,9 @@ public class GeneralServices {
         return generalServices;
     }
 
+	public String getCompany_name() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

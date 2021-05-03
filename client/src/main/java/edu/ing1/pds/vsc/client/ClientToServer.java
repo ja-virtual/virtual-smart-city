@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ClientToServer {
 
-	private Socket client;
+	public Socket client;
 	private PrintWriter out;
 	private BufferedReader in;
 	private ObjectMapper mapper=new ObjectMapper();

@@ -1,0 +1,10 @@
+.project
+.classpath
+.idea
+.metadata
+client/.settings
+client/target
+client/client.imi
+.class
+target/
+.lst
