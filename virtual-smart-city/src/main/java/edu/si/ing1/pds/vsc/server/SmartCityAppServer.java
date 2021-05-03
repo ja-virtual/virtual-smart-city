@@ -71,11 +71,12 @@ public class SmartCityAppServer extends Thread {
 				System.out.print("*********************\n ");
 				//this.serve();
 			} catch (Exception e1) {
-				 //e1.printStackTrace();
-				 //System.out.print("I am seing you\n ");
+				 //e1.printStackTrace()
 				this.serve();
+
 			}
 		}
+
 
 		try {
 			//in.close();
