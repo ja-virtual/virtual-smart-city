@@ -359,10 +359,11 @@ else if(request_name.equals("my_sensor"))
 		else if(request_name.equals("set_workspace_unavailable"))
 		{
 			Map data_loading=(Map) request.getData();
-			ResultSet rs1 = connection.createStatement().executeQuery("UPDATE workspace SET is_available = false where id_workspace="+(Integer)data_loading.get("id_workspace"));
+			ResultSet rs1 = connection.createStatement().executeQuery("UPDATE workspace SET is_available = false where id_workspace="+(Integer)data_loading.get("id_workspace")+" and id_gs="+(Integer)data_loading.get("id_gs"));
 			rs1.close();
 			Map<String,Object> response=new HashMap<String,Object>();
-			response.put("name_request",request_name);
+			response.put("name_request", request_name);
+			response.put("data", null);
 			response_string=mapper.writeValueAsString(response);
 		}
 		

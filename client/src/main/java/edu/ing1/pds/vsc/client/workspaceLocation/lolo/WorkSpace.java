@@ -12,7 +12,7 @@ public class WorkSpace {
     int theprice;
     int thefloor;
     int thebuilding;
-    int theplace;
+    //int theplace;
     int typeprice;
     int id_wokspace;
 
@@ -23,7 +23,7 @@ public class WorkSpace {
         this.theprice = BuildingPrice(id_building, typeprice, type_workspace);
         this.thetype = type_workspace;
         this.thefloor = floor_number;
-        this.theplace = id_building;
+        this.thebuilding = id_building;
         this.themax_employee_number = MaxCapacity(type_workspace);
         this.thearea = Area(type_workspace);
         this.id_wokspace = id_workspace;
@@ -39,31 +39,32 @@ public class WorkSpace {
     	   return id_building1-id_building2;
     	}
     };
+    
     public int TypePrice(String type_workspace, int floor_number) {
         int price = 0;
- 
-         if(type_workspace == "open Space") {
-             price = 2750 + 250*floor_number;
-         }
-         else if(type_workspace == "individuel") {
-             price = 375 + 25*floor_number; 
-         }
-         else if(type_workspace == "salle de reunion") {
-             price = 475 + 25*floor_number;
-            
-         } 
+        
+        if(type_workspace.equalsIgnoreCase("open Space")) {
+            price = 2750 + 250*floor_number;
+        }
+        else if(type_workspace.equalsIgnoreCase("individuel") ) {
+            price = 375 + 25*floor_number; 
+        }
+        else if(type_workspace.equalsIgnoreCase("salle de reunion")) {
+            price = 475 + 25*floor_number;
+           
+        } 
         return(price);
     }
 
     public int BuildingPrice(int id_building, int price, String type_workspace) {
         
-        if(type_workspace == "open Space") {
+        if(type_workspace.equalsIgnoreCase("open Space")){
             price = price + 500*id_building;
         }
-        else if(type_workspace == "individuel") {
+        else if(type_workspace.equalsIgnoreCase("individuel")) {
             price = price + 50*id_building; 
         }
-        else if(type_workspace == "salle de reunion") {
+        else if(type_workspace.equalsIgnoreCase("salle de reunion")) {
             price = price + 50*id_building;
            
         }
@@ -73,34 +74,44 @@ public class WorkSpace {
     public int MaxCapacity(String type_workspace) {
         int max_employee_number = 0;
 
-         if(type_workspace == "open Space") {
+         if(type_workspace.equalsIgnoreCase("open Space")) {
             max_employee_number = 30;
          }
-         else if(type_workspace == "individuel") {
+         else if(type_workspace.equalsIgnoreCase("individuel")) {
             max_employee_number = 1; 
          }
-         else if(type_workspace == "salle de reunion") {
+         else if(type_workspace.equalsIgnoreCase("salle de reunion")) {
             max_employee_number = 20; 
         } 
         return(max_employee_number);
     }
+    
     public int Area(String type_workspace) {
         int area = 0;
 
-         if(type_workspace == "open Space") {
+         if(type_workspace.equalsIgnoreCase("open Space")) {
             area = 200;
          }
-         else if(type_workspace == "individuel") {
+         else if(type_workspace.equalsIgnoreCase("individuel")) {
             area = 25; 
          }
-         else if(type_workspace == "salle de reunion") {
+         else if(type_workspace.equalsIgnoreCase("salle de reunion")) {
             area = 50; 
         } 
         return(area);
     }
+    
+    
 
 
-    public static void main(String[] args) {
+    @Override
+	public String toString() {
+		return "WorkSpace [thetype=" + thetype + ", themax_employee_number=" + themax_employee_number + ", thearea="
+				+ thearea + ", theprice=" + theprice + ", thefloor=" + thefloor + ", thebuilding=" + thebuilding
+				+ ", theplace=" + ", typeprice=" + typeprice + ", id_wokspace=" + id_wokspace + "]";
+	}
+
+	public static void main(String[] args) {
             WorkSpace wks = new WorkSpace(1, "salle de reunion", 4, 3);
             System.out.println(wks.theprice);
             System.out.println(wks.typeprice);
