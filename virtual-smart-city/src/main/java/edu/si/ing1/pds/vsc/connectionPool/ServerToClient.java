@@ -521,6 +521,7 @@ public class ServerToClient {
 			response.put("data", null);
 			response_string=mapper.writeValueAsString(response);
 		}
+
 		// Mohand Part about access cards management
 		// Looking for all access cards
 
