@@ -1,4 +1,5 @@
-package edu.ing1.pds.vsc.client.MappingManagement;
+package edu.ing1.pds.vsc.client;
+
 
 
 import java.awt.*;
@@ -27,8 +28,12 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 import edu.ing1.pds.vsc.client.General_Services;
 import edu.ing1.pds.vsc.client.HomePage;
 import edu.ing1.pds.vsc.client.Request;
+import edu.ing1.pds.vsc.client.MappingManagement.List_Position;
+import edu.ing1.pds.vsc.client.MappingManagement.Map_Full;
+import edu.ing1.pds.vsc.client.MappingManagement.MappingUC;
+import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
 
-public class MappingUC extends JFrame {
+public class WelcomePage extends JFrame {
 
 	private ClientToServer connection=new ClientToServer();
 	General_Services company=null;
@@ -39,7 +44,7 @@ public class MappingUC extends JFrame {
 	private void myInterface()
 	{
 		setLayout(new BorderLayout());
-this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		//Left menu creation
 
 		left.setMinimumSize(new Dimension(250, 480));
@@ -67,11 +72,11 @@ this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				try
 				{
 					connection.client.close();
-					
+
 				}
 				catch(Exception e1)
 				{
-					
+
 				}
 				HomePage t = new HomePage();
 				t.setVisible(true);
@@ -101,11 +106,11 @@ this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				try
 				{
 					connection.client.close();
-					
+
 				}
 				catch(Exception e1)
 				{
-					
+
 				}
 				HomePage t = new HomePage();
 				t.setVisible(true);
@@ -117,12 +122,10 @@ this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			public void mouseEntered(MouseEvent e)
 			{
 				e.getComponent().setBackground(Color.white);
-				use_case1.setForeground(color);
 			}
 			public void mouseExited(MouseEvent e)
 			{
 				e.getComponent().setBackground(color);
-				use_case1.setForeground(Color.black);
 			}
 		});
 
@@ -138,20 +141,37 @@ this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		{
 			public void mouseClicked(MouseEvent e)
 			{
-				try
+				ArrayList<Map>ws=WorkSpace.allRentedWorkSpace(connection, company.getId_generalservices());
+				if(ws==null )
 				{
-					connection.client.close();
-					
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Pas d'espace loué pour pouvoir utiliser cette fonctionnalité","Mappage impossible pour le moment",
+							JOptionPane.ERROR_MESSAGE);
 				}
-				catch(Exception e1)
+				else if(ws.isEmpty())
 				{
-					
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Pas d'espace loué pour pouvoir utiliser cette fonctionnalité","Mappage impossible pour le moment",
+							JOptionPane.ERROR_MESSAGE);
 				}
-				MappingUC t = new MappingUC(company);
-				t.setVisible(true);
-				dispose();
-			}
-		});
+				else
+				{
+					try
+					{
+						connection.client.close();
+
+					}
+					catch(Exception e1)
+					{
+
+					}
+					MappingUC t = new MappingUC(company);
+					t.setVisible(true);
+					dispose();
+				}
+
+
+			}});
 		p.addMouseListener(new MouseAdapter()
 		{
 			public void mouseEntered(MouseEvent e)
@@ -181,11 +201,11 @@ this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				try
 				{
 					connection.client.close();
-					
+
 				}
 				catch(Exception e1)
 				{
-					
+
 				}
 				HomePage t = new HomePage();
 				t.setVisible(true);
@@ -197,12 +217,10 @@ this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			public void mouseEntered(MouseEvent e)
 			{
 				e.getComponent().setBackground(Color.white);
-				use_case3.setForeground(color);
 			}
 			public void mouseExited(MouseEvent e)
 			{
 				e.getComponent().setBackground(color);
-				use_case3.setForeground(Color.black);
 			}
 		});
 
@@ -225,11 +243,11 @@ this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				try
 				{
 					connection.client.close();
-					
+
 				}
 				catch(Exception e1)
 				{
-					
+
 				}
 				HomePage t = new HomePage();
 				t.setVisible(true);
@@ -241,12 +259,10 @@ this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			public void mouseEntered(MouseEvent e)
 			{
 				e.getComponent().setBackground(Color.white);
-				use_case4.setForeground(color);
 			}
 			public void mouseExited(MouseEvent e)
 			{
 				e.getComponent().setBackground(color);
-				use_case4.setForeground(Color.black);
 			}
 		});
 
@@ -258,119 +274,33 @@ this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 		menuBar.setBorderPainted(isDoubleBuffered());
 		menuBar.setSize(750,45);
-		JMenu list=new JMenu("Liste des emplacements ");
-		list.setSize(750,45);
-		list.addMenuListener(new MenuListener() {
-	          
-			 
-	           @Override
-	           public void menuSelected(MenuEvent e) {
-try
-{
-	connection.client.close();
-	
-}
-catch(Exception ex)
-{
-  ex.printStackTrace();	
-}
-	             List_Position lp=new List_Position(company);
-	        	   
-	            	dispose();
-	           }
-	 
-	           @Override
-	           public void menuDeselected(MenuEvent e) {
-	           }
-	 
-	           @Override
-	           public void menuCanceled(MenuEvent e) {
-	             
-	           }
-	       });
-		JMenu map=new JMenu("Plan");
-		map.addMenuListener(new MenuListener() {
-	          
-			 
-	           @Override
-	           public void menuSelected(MenuEvent e) {
-	        	   try
-	        	   {
-	        		   connection.client.close();
-	        	   }catch(Exception ex)
-	        	   {
-	        		   ex.printStackTrace();
-	        	   }
-					Map_Full hp=new Map_Full(company);
-	            	dispose();
 
-	           }
-	 
-	           @Override
-	           public void menuDeselected(MenuEvent e) {
-	           }
-	 
-	           @Override
-	           public void menuCanceled(MenuEvent e) {
-	             
-	           }
-	       });
-		map.setSize(150,45);
-		menuBar.add(list);
-		menuBar.add(map);
 		menuBar.add(Box.createHorizontalGlue());
-		JMenu homePage=new JMenu("Acceuil");
-		homePage.addMenuListener(new MenuListener() {
-	          
-			 
-	           @Override
-	           public void menuSelected(MenuEvent e) {
-	        	   try
-	        	   {
-	        		   connection.client.close();
-	        	   }catch(Exception ex)
-	        	   {
-	        		   ex.printStackTrace();
-	        	   }
-	              HomePage hp=new HomePage();
-	              dispose();
-	           }
-	 
-	           @Override
-	           public void menuDeselected(MenuEvent e) {
-	           }
-	 
-	           @Override
-	           public void menuCanceled(MenuEvent e) {
-	             
-	           }
-	       });
-		menuBar.add(homePage);
 		JMenu leave=new JMenu("Quitter");
 		leave.addMenuListener(new MenuListener() {
- 	          
-  			 
-	           @Override
-	           public void menuSelected(MenuEvent e) {
-	        	   try
-	        	   {
-	        		   connection.client.close();
-	        	   }catch(Exception ex)
-	        	   {
-	        		   ex.printStackTrace();
-	        	   }
-	              dispose();
-	           }
-	 
-	           @Override
-	           public void menuDeselected(MenuEvent e) {
-	           }
-	 
-	           @Override
-	           public void menuCanceled(MenuEvent e) {
-	             
-	           }
-	       });
+
+
+			@Override
+			public void menuSelected(MenuEvent e) {
+				try
+				{
+					connection.client.close();
+				}catch(Exception ex)
+				{
+					ex.printStackTrace();
+				}
+				dispose();
+			}
+
+			@Override
+			public void menuDeselected(MenuEvent e) {
+			}
+
+			@Override
+			public void menuCanceled(MenuEvent e) {
+
+			}
+		});
 		menuBar.add(leave);
 		right.add(menuBar, BorderLayout.NORTH);
 
@@ -383,7 +313,7 @@ catch(Exception ex)
 		setResizable(false);
 
 	}
-	public MappingUC(General_Services GS)
+	public WelcomePage(General_Services GS)
 	{
 
 		company=GS;
@@ -393,9 +323,6 @@ catch(Exception ex)
 		right.add(p3,BorderLayout.CENTER);
 		setVisible(true);
 	}
-	public static void main(String[] args) {
-		new MappingUC(new General_Services(1,"SnapShat"));
 
-	}
 
 }

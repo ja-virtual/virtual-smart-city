@@ -69,7 +69,7 @@ public class Map_Full extends JFrame  {
 	Canvas myFloor_map;
 	ArrayList<Map>workspaces=WorkSpace.listWorkSpace(connection,building_number, floor_number);
 	ArrayList<Map>buildings=Building.allBuildings(connection);
-	public void Map_creation()
+	public void mapCreation()
 	{
 		try {
 			reunion1=null;
@@ -153,15 +153,15 @@ public class Map_Full extends JFrame  {
 		}
 	}
 
-	public void Critere(JMenuBar critere)
+	public void myCriterion(JMenuBar myCriterion)
 	{
 		try {
 			JMenu building=new JMenu("numéro de batiment");
 			JMenu floor=new JMenu(" numéro d'étage");
 			JMenu work_space=new JMenu("espace de travail");
-			critere.add(building);
-			critere.add(floor);
-			critere.add(work_space);
+			myCriterion.add(building);
+			myCriterion.add(floor);
+			myCriterion.add(work_space);
 			workspaces=WorkSpace.listWorkSpace(connection,building_number, floor_number);
 			buildings=Building.allBuildings(connection);
 			for(Map n : workspaces)
@@ -242,7 +242,7 @@ public class Map_Full extends JFrame  {
 
 						} catch (Exception e1) {
 						}
-						Map_creation();
+						mapCreation();
 					}} );
 
 			}
@@ -291,7 +291,7 @@ public class Map_Full extends JFrame  {
 								work_space.add(workspace_number);
 							}
 
-							Map_creation();
+							mapCreation();
 						} catch (Exception e1) {
 						}
 					}} );
@@ -301,7 +301,7 @@ public class Map_Full extends JFrame  {
 		}
 	}
 
-	private void Interface()
+	private void myInterface()
 	{
 		setLayout(new BorderLayout());
 this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -382,10 +382,12 @@ this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			public void mouseEntered(MouseEvent e)
 			{
 				e.getComponent().setBackground(Color.white);
+				use_case1.setForeground(color);
 			}
 			public void mouseExited(MouseEvent e)
 			{
 				e.getComponent().setBackground(color);
+				use_case1.setForeground(Color.black);
 			}
 		});
 
@@ -460,10 +462,12 @@ this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			public void mouseEntered(MouseEvent e)
 			{
 				e.getComponent().setBackground(Color.white);
+				use_case3.setForeground(color);
 			}
 			public void mouseExited(MouseEvent e)
 			{
 				e.getComponent().setBackground(color);
+				use_case3.setForeground(Color.black);
 			}
 		});
 
@@ -502,10 +506,12 @@ this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			public void mouseEntered(MouseEvent e)
 			{
 				e.getComponent().setBackground(Color.white);
+				use_case4.setForeground(color);
 			}
 			public void mouseExited(MouseEvent e)
 			{
 				e.getComponent().setBackground(color);
+				use_case4.setForeground(Color.black);
 			}
 		});
 
@@ -646,10 +652,10 @@ catch(Exception ex)
 	{
 		company=GS;
 
-		Interface();
+		myInterface();
 		// frame = new JFrame("My Drawing");
 		JMenuBar criterion=new JMenuBar();
-		Critere(criterion);
+		myCriterion(criterion);
 
 		JPanel p4=new JPanel(new BorderLayout());
 		JPanel p_inter=new JPanel(new GridLayout(3,1));
@@ -669,7 +675,7 @@ catch(Exception ex)
 		myFloor_map=new Floor_Map();
 		myFloor_map.setSize(750, 750);
 		p3.add(myFloor_map,BorderLayout.CENTER);
-		Map_creation();
+		mapCreation();
 		right.add(p3,BorderLayout.CENTER);
 
 

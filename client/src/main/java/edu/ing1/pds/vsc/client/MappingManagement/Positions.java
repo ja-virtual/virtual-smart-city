@@ -173,4 +173,52 @@ public static ArrayList<Map >availablePositions(ClientToServer connection,int id
 	return positions;
 	}
 
+//return the specified position with  the id
+public static ArrayList<Map >thePosition(ClientToServer connection,int id_position)
+{
+
+	ArrayList<Map>positions=null;
+	try
+	{
+		Request request=new Request();
+		request.setName_request("the_position");
+		HashMap<String,Object>param=new HashMap<String,Object>();
+		param.put("id_workspace",id_position);
+		request.setData(param);
+		Request response=connection.SendRequest(request);
+		positions=(ArrayList<Map>)response.getData();
+	}catch(Exception e)
+	{
+		logger.info("Server is maybe occupied");
+	}
+	if(positions.isEmpty())
+		return null;
+	else
+	return positions;
+	}
+
+
+static public Map infoPosition(ClientToServer connection,int id_position)
+{
+	ArrayList<Map>theworkspace=null;
+	try
+	{
+		Request request=new Request();
+		request.setName_request("Info_position");
+		HashMap<String,Object>param=new HashMap<String,Object>();
+		param.put("id_position",id_position);
+		request.setData(param);
+		Request response=connection.SendRequest(request);
+		theworkspace=(ArrayList<Map>)response.getData();
+		System.out.println(theworkspace);
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+		logger.info("Server is maybe occupied");
+	}
+	if(!theworkspace.isEmpty())
+	return theworkspace.get(0);
+	else
+		return null;
+}
 }
