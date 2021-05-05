@@ -22,9 +22,10 @@ public class HomePage extends JFrame implements ActionListener  {
 	//private Mairie fen;
 	ClientToServer connection=new ClientToServer();
 	ArrayList<Map> company_names=General_Services.All_GeneralServices(connection);
+	General_Services my_company=new General_Services(1," Saisir le nom de votre entreprise.....");
 	public HomePage()
 	{
-       setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setTitle("Ja-Virtual app");
 		setSize(new Dimension(450,450));
 		setLocationRelativeTo(null);
@@ -33,7 +34,7 @@ public class HomePage extends JFrame implements ActionListener  {
 		JLabel image = new JLabel();
 		ImageIcon  img= new ImageIcon(("logo-ja-virtual.png"));
 
-//		getClass().getClassLoader().getResource
+		//		getClass().getClassLoader().getResource
 
 
 		image.setIcon( new ImageIcon(img.getImage().getScaledInstance(75,75, Image.SCALE_SMOOTH)));
@@ -48,28 +49,49 @@ public class HomePage extends JFrame implements ActionListener  {
 		{
 			myCompany.addItem(n.get("company_name"));
 		}
-       myCompany.addActionListener (new ActionListener () {
-    	    public void actionPerformed(ActionEvent e) {
-    	    	JComboBox cn = (JComboBox)e.getSource();
-    	        String company_name= (String)cn.getSelectedItem();
-    			for(Map n:company_names)
-    			{
-    				if(n.containsValue(company_name))
-    				{
-    					   try
-    		        	   {
-    		        		   connection.client.close();
-    		        	   }catch(Exception ex)
-    		        	   {
-    		        		   ex.printStackTrace();
-    		        	   }
-    				MappingUC next_view=new MappingUC(new General_Services((Integer)n.get("id_generalservices"),company_name));
-    					dispose();
-    				}	
-    			}
-    	    }
-    	});	
+		myCompany.addActionListener (new ActionListener () {
+			public void actionPerformed(ActionEvent e) {
+				JComboBox cn = (JComboBox)e.getSource();
+				String company_name= (String)cn.getSelectedItem();
+				Boolean contains=false;
+				for(Map n:company_names)
+				{
+					if(n.containsValue(company_name))
+					{
+						contains=true;
+						my_company=new General_Services((Integer)n.get("id_generalservices"),company_name);
+
+					}
+				}
+				if(!contains)
+				{
+					my_company=new General_Services(1," Saisir le nom de votre entreprise.....");	
+				}
+			}
+		});	
 		JButton valider= new JButton("Valider");
+		valider.addActionListener (new ActionListener () {
+			public void actionPerformed(ActionEvent e) {
+				if(my_company.getCompany_name()!=" Saisir le nom de votre entreprise.....")
+				{
+
+					try
+					{
+						connection.client.close();
+					}catch(Exception ex)
+					{
+						ex.printStackTrace();
+					}
+					WelcomePage next_view=new WelcomePage(my_company);
+					dispose();
+				}
+				else
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Veuillez préciser le nom de votre entreprise!","Nom de l'entreprise non précisé",
+							JOptionPane.PLAIN_MESSAGE);
+			}	
+
+		});
 		JButton municipalite = new JButton("Mairie");
 
 		municipalite.addActionListener((ActionListener) this);
@@ -134,7 +156,7 @@ public class HomePage extends JFrame implements ActionListener  {
 
 	public void actionPerformed(ActionEvent e){
 
-	//	fen = new Mairie();
+		//	fen = new Mairie();
 		this.dispose();
 
 

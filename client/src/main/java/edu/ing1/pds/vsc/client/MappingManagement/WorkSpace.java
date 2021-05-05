@@ -69,8 +69,10 @@ public class WorkSpace {
 	{
 		if(type_workspace.equals("salle de reunion"))
 		return "SR "+id_workspace;
-		else
+		else if(type_workspace.equals("open Space"))
 		return "OS "+id_workspace;
+		else
+			return "Indv  "+id_workspace;	
 	}
 	static public ArrayList<Map> listWorkSpace(ClientToServer connection,int id_building, int floor_number)
 	{
@@ -91,6 +93,47 @@ public class WorkSpace {
 		}
 		return workspaces;
 	}
+	static public ArrayList<Map> allRentedWorkSpace(ClientToServer connection, int id_gs)
+	{
+		ArrayList<Map>myworkspaces=null;
+		try
+		{
+			Request request=new Request();
+			request.setName_request("all_rented_workspaces");
+			HashMap<String,Object>param=new HashMap<String,Object>();
+			param.put("id_gs",id_gs);
+			request.setData(param);
+			Request response=connection.SendRequest(request);
+			myworkspaces=(ArrayList<Map>)response.getData();
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+			logger.info("Server is maybe occupied");
+		}
+		return myworkspaces;
+	}
+	static public Map workspace_Position(ClientToServer connection,int id_position,int id_gs)
+	{
+		ArrayList<Map>theworkspace=null;
+		try
+		{
+			Request request=new Request();
+			request.setName_request("workspace_and_positions");
+			HashMap<String,Object>param=new HashMap<String,Object>();
+			param.put("id_position",id_position);
+			param.put("id_gs",id_gs);
+			request.setData(param);
+			Request response=connection.SendRequest(request);
+			theworkspace=(ArrayList<Map>)response.getData();
+			return theworkspace.get(0);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+			logger.info("Server is maybe occupied");
+			return null;
+		}
+
+	}
 	static public Map theWorkSpace(ClientToServer connection,int id_workspace)
 	{
 		ArrayList<Map>theworkspace=null;
@@ -103,11 +146,12 @@ public class WorkSpace {
 			request.setData(param);
 			Request response=connection.SendRequest(request);
 			theworkspace=(ArrayList<Map>)response.getData();
-			System.out.println(theworkspace.get(0).get("id_workspace"));
 		}catch(Exception e)
 		{
 			logger.info("Server is maybe occupied");
 		}
 		return theworkspace.get(0);
 	}
+	
+
 }
