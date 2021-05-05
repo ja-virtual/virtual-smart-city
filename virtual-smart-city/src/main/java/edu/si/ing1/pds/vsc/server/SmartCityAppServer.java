@@ -44,6 +44,7 @@ public class SmartCityAppServer extends Thread {
 		try {
 			server = new ServerSocket(3344);
 
+
 		} catch (IOException e) {
 
 			e.printStackTrace();
