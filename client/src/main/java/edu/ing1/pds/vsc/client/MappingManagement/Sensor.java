@@ -46,13 +46,13 @@ public String getType_sensor() {
 public void setType_sensor(String type_sensor) {
 	this.type_sensor = type_sensor;
 }
-public boolean isIs_available() {
+public boolean getIs_available() {
 	return is_available;
 }
 public void setIs_available(boolean is_available) {
 	this.is_available = is_available;
 }
-public boolean isIs_working() {
+public boolean getIs_working() {
 	return is_working;
 }
 public void setIs_working(boolean is_working) {
@@ -86,6 +86,7 @@ public static ArrayList<Map> listSensors(ClientToServer connection, int id_works
 		sensors=(ArrayList<Map>)response.getData();
 	}catch(Exception e)
 	{
+		e.printStackTrace();
 		logger.info("Server is maybe occupied");
 	}
 	return sensors;
@@ -106,9 +107,37 @@ public static boolean mapSensor(ClientToServer connection, int id_gs,int id_posi
 		update=(ArrayList<Map>)response.getData();
 	}catch(Exception e)
 	{
+		e.printStackTrace();
 		logger.info("Server is maybe occupied");
 	}
-	return (boolean) update.get(0).get("update_done");
+	if(update!=null) 
+		return (boolean) update.get(0).get("update_done");
+		else
+	return false;
+	
+}
+public static boolean moveSensor(ClientToServer connection,int id_sensor,int old_position,int new_position) {
+	ArrayList<Map>update=null;
+	try
+	{
+		Request request=new Request();
+		request.setName_request("move_sensor");
+		HashMap<String,Object>param=new HashMap<String,Object>();
+		param.put("old_position",old_position);
+		param.put("new_position",new_position);
+		param.put("id_sensor",id_sensor);
+		request.setData(param);
+		Request response=connection.SendRequest(request);
+		update=(ArrayList<Map>)response.getData();
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+		logger.info("Server is maybe occupied");
+	}
+	if(update!=null) 
+		return (boolean) update.get(0).get("update_done");
+		else
+	return false;
 	
 }
 public static Map getSensor(ClientToServer connection, int id_position)
@@ -119,17 +148,20 @@ public static Map getSensor(ClientToServer connection, int id_position)
 		Request request=new Request();
 		request.setName_request("my_sensor");
 		HashMap<String,Object>param=new HashMap<String,Object>();
+		logger.info("Server is maybe occupied");
 		param.put("id_position",id_position);
 		request.setData(param);
 		Request response=connection.SendRequest(request);
 		sensors=(ArrayList<Map>)response.getData();
 	}catch(Exception e)
 	{
+		e.printStackTrace();
 		logger.info("Server is maybe occupied");
 	}
-	if(sensors.isEmpty())
+	if(sensors!=null  && sensors.isEmpty())
 		return null;
 		else
 	return sensors.get(0);
 }
+
 }

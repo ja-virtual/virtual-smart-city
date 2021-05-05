@@ -64,7 +64,7 @@ public class Map_WorkSpace extends JFrame {
 	JCheckBox sensor=new JCheckBox("Capteur");
 	JCheckBox equipment=new JCheckBox("Equipement");
 	Boolean available_positions=false;
-	int selected_position;
+
 	public void sensorOrEquipment(String choice)
 	{
 		switch(choice)
@@ -157,10 +157,10 @@ public class Map_WorkSpace extends JFrame {
 		}
 		map.repaint();
 	}
-	private void Interface()
+	private void myInterface()
 	{
 		setLayout(new BorderLayout());
-		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		//Left menu creation
 
 		left.setMinimumSize(new Dimension(250, 480));
@@ -188,11 +188,11 @@ public class Map_WorkSpace extends JFrame {
 				try
 				{
 					connection.client.close();
-
+					
 				}
 				catch(Exception e1)
 				{
-
+					
 				}
 				HomePage t = new HomePage();
 				t.setVisible(true);
@@ -222,11 +222,11 @@ public class Map_WorkSpace extends JFrame {
 				try
 				{
 					connection.client.close();
-
+					
 				}
 				catch(Exception e1)
 				{
-
+					
 				}
 				HomePage t = new HomePage();
 				t.setVisible(true);
@@ -238,10 +238,12 @@ public class Map_WorkSpace extends JFrame {
 			public void mouseEntered(MouseEvent e)
 			{
 				e.getComponent().setBackground(Color.white);
+				use_case1.setForeground(color);
 			}
 			public void mouseExited(MouseEvent e)
 			{
 				e.getComponent().setBackground(color);
+				use_case1.setForeground(Color.black);
 			}
 		});
 
@@ -260,11 +262,11 @@ public class Map_WorkSpace extends JFrame {
 				try
 				{
 					connection.client.close();
-
+					
 				}
 				catch(Exception e1)
 				{
-
+					
 				}
 				MappingUC t = new MappingUC(company);
 				t.setVisible(true);
@@ -300,11 +302,11 @@ public class Map_WorkSpace extends JFrame {
 				try
 				{
 					connection.client.close();
-
+					
 				}
 				catch(Exception e1)
 				{
-
+					
 				}
 				HomePage t = new HomePage();
 				t.setVisible(true);
@@ -316,10 +318,12 @@ public class Map_WorkSpace extends JFrame {
 			public void mouseEntered(MouseEvent e)
 			{
 				e.getComponent().setBackground(Color.white);
+				use_case3.setForeground(color);
 			}
 			public void mouseExited(MouseEvent e)
 			{
 				e.getComponent().setBackground(color);
+				use_case3.setForeground(Color.black);
 			}
 		});
 
@@ -342,11 +346,11 @@ public class Map_WorkSpace extends JFrame {
 				try
 				{
 					connection.client.close();
-
+					
 				}
 				catch(Exception e1)
 				{
-
+					
 				}
 				HomePage t = new HomePage();
 				t.setVisible(true);
@@ -358,10 +362,12 @@ public class Map_WorkSpace extends JFrame {
 			public void mouseEntered(MouseEvent e)
 			{
 				e.getComponent().setBackground(Color.white);
+				use_case4.setForeground(color);
 			}
 			public void mouseExited(MouseEvent e)
 			{
 				e.getComponent().setBackground(color);
+				use_case4.setForeground(Color.black);
 			}
 		});
 
@@ -373,51 +379,77 @@ public class Map_WorkSpace extends JFrame {
 
 		menuBar.setBorderPainted(isDoubleBuffered());
 		menuBar.setSize(750,45);
-		JMenu list=new JMenu("Liste des s ");
+		JMenu list=new JMenu("Liste des emplacements ");
 		list.setSize(750,45);
 		list.addMenuListener(new MenuListener() {
-
-
-			@Override
-			public void menuSelected(MenuEvent e) {
-				try
-				{
-					connection.client.close();
-
-				}
-				catch(Exception ex)
-				{
-					ex.printStackTrace();	
-				}
-				List_Position lp=new List_Position(company);
-
-				dispose();
-			}
-
-			@Override
-			public void menuDeselected(MenuEvent e) {
-			}
-
-			@Override
-			public void menuCanceled(MenuEvent e) {
-
-			}
-		});
+	          
+			 
+	           @Override
+	           public void menuSelected(MenuEvent e) {
+try
+{
+	connection.client.close();
+	
+}
+catch(Exception ex)
+{
+  ex.printStackTrace();	
+}
+	             List_Position lp=new List_Position(company);
+	        	   
+	            	dispose();
+	           }
+	 
+	           @Override
+	           public void menuDeselected(MenuEvent e) {
+	           }
+	 
+	           @Override
+	           public void menuCanceled(MenuEvent e) {
+	             
+	           }
+	       });
 		JMenu map=new JMenu("Plan");
 		map.addMenuListener(new MenuListener() {
+	          
+			 
+	           @Override
+	           public void menuSelected(MenuEvent e) {
+	        	   try
+	        	   {
+	        		   connection.client.close();
+	        	   }catch(Exception ex)
+	        	   {
+	        		   ex.printStackTrace();
+	        	   }
+					Map_Full hp=new Map_Full(company);
+	            	dispose();
+
+	           }
+	 
+	           @Override
+	           public void menuDeselected(MenuEvent e) {
+	           }
+	 
+	           @Override
+	           public void menuCanceled(MenuEvent e) {
+	             
+	           }
+	       });
+		JMenu legend=new JMenu("Légende");
+		legend.addMenuListener(new MenuListener() {
 
 
 			@Override
 			public void menuSelected(MenuEvent e) {
-				try
-				{
-					connection.client.close();
-				}catch(Exception ex)
-				{
-					ex.printStackTrace();
-				}
-				Map_Full hp=new Map_Full(company);
-				dispose();
+				JOptionPane.showMessageDialog(new JFrame(),
+						"La légende est la suivante :\n "
+								+ "Ovale vide + Titre 'Emplacement libre' ==>  un emplacement pret à etre occupé par un objet \n"
+								+ "Ovale noire + Titre 'Emplacement occupé' ==>  un emplacement déjà occupé par un objet \n"
+								+ "Ovale vert + Titre 'type capteur/équipement id capteur/équipement' ==>  un emplacement occupé par un capteur ou équipment fonctionnel \n"
+								+ "Ovale rouge + Titre 'type capteur/équipement id capteur/équipement' ==>  un emplacement occupé par un capteur ou équipment non fonctionnel \n",
+								"À propos",
+								JOptionPane.PLAIN_MESSAGE);
 
 			}
 
@@ -433,59 +465,60 @@ public class Map_WorkSpace extends JFrame {
 		map.setSize(150,45);
 		menuBar.add(list);
 		menuBar.add(map);
+		menuBar.add(legend);
 		menuBar.add(Box.createHorizontalGlue());
 		JMenu homePage=new JMenu("Acceuil");
 		homePage.addMenuListener(new MenuListener() {
-
-
-			@Override
-			public void menuSelected(MenuEvent e) {
-				try
-				{
-					connection.client.close();
-				}catch(Exception ex)
-				{
-					ex.printStackTrace();
-				}
-				HomePage hp=new HomePage();
-				dispose();
-			}
-
-			@Override
-			public void menuDeselected(MenuEvent e) {
-			}
-
-			@Override
-			public void menuCanceled(MenuEvent e) {
-
-			}
-		});
+	          
+			 
+	           @Override
+	           public void menuSelected(MenuEvent e) {
+	        	   try
+	        	   {
+	        		   connection.client.close();
+	        	   }catch(Exception ex)
+	        	   {
+	        		   ex.printStackTrace();
+	        	   }
+	              HomePage hp=new HomePage();
+	              dispose();
+	           }
+	 
+	           @Override
+	           public void menuDeselected(MenuEvent e) {
+	           }
+	 
+	           @Override
+	           public void menuCanceled(MenuEvent e) {
+	             
+	           }
+	       });
 		menuBar.add(homePage);
 		JMenu leave=new JMenu("Quitter");
 		leave.addMenuListener(new MenuListener() {
-
-
-			@Override
-			public void menuSelected(MenuEvent e) {
-				try
-				{
-					connection.client.close();
-				}catch(Exception ex)
-				{
-					ex.printStackTrace();
-				}
-				dispose();
-			}
-
-			@Override
-			public void menuDeselected(MenuEvent e) {
-			}
-
-			@Override
-			public void menuCanceled(MenuEvent e) {
-
-			}
-		});
+ 	          
+  			 
+	           @Override
+	           public void menuSelected(MenuEvent e) {
+	        	   try
+	        	   {
+	        		   connection.client.close();
+	        	   }catch(Exception ex)
+	        	   {
+	        		   ex.printStackTrace();
+	        	   }
+	              dispose();
+	           }
+	 
+	           @Override
+	           public void menuDeselected(MenuEvent e) {
+	           }
+	 
+	           @Override
+	           public void menuCanceled(MenuEvent e) {
+	             
+	           }
+	       });
 		menuBar.add(leave);
 		right.add(menuBar, BorderLayout.NORTH);
 
@@ -501,7 +534,7 @@ public class Map_WorkSpace extends JFrame {
 	public Map_WorkSpace(WorkSpace workspace,General_Services GS)
 	{
 		company=GS;
-		Interface();
+		myInterface();
 		my_workspace=workspace;
 		positions=Positions.listPositions(connection,my_workspace.getId_workspace());
 		equipments=Equipment.listEquipments(connection,my_workspace.getId_workspace());
@@ -536,20 +569,42 @@ public class Map_WorkSpace extends JFrame {
 		sensor_move.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(my_workspace.getId_generalServices()==0)
+				 if(my_workspace.getId_generalServices()==0)
+					{
+						JOptionPane.showMessageDialog(new JFrame(),
+								"Cet espace de travail n'est pas encore loué",
+								"Déplacement Interdit",
+								JOptionPane.PLAIN_MESSAGE);
+					}
+				 else if(my_workspace.getId_generalServices()==company.getId_generalservices())
 				{
-					JOptionPane.showMessageDialog(new JFrame(),
-							"Cet espace de travail n'est pas encore loué",
-							"Déplacement Interdit",
-							JOptionPane.PLAIN_MESSAGE);
+					  if(sensors_box.isVisible() && sensors_box.getSelectedIndex()!=-1)
+					  {
+						  try
+							{
+								connection.client.close();
+							} 
+							catch (IOException e1) {
+								e1.printStackTrace();
+							}
+						Map sensor=sensors.get(sensors_box.getSelectedIndex());
+						InfoMoving last_view=new InfoMoving(new Sensor((Integer)sensor.get("id_sensor"),(String)sensor.get("type_sensor"),(Boolean)sensor.get("is_available"),(Boolean)sensor.get("is_working"),(Integer)sensor.get("id_gs"),(Integer)sensor.get("id_position")),"sensor",company);
+					  dispose();
+					  }
+					  else
+					  {
+							JOptionPane.showMessageDialog(new JFrame(),
+									"Veuillez selectionner le capteur à déplacer",
+									"Deplacement Interdit",
+									JOptionPane.PLAIN_MESSAGE);
+					  }
 				}
 				else if(company.getId_generalservices()!=my_workspace.getId_generalServices())
 					JOptionPane.showMessageDialog(new JFrame(),
 							"Cet espace de travail appartient à autre service général",
 							"Deplacement Interdit",
 							JOptionPane.PLAIN_MESSAGE);
-				else
-					sensorOrEquipment("no_sensor");
+				
 
 
 			}});
@@ -558,20 +613,42 @@ public class Map_WorkSpace extends JFrame {
 		equipment_move.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(my_workspace.getId_generalServices()==0)
+				 if(my_workspace.getId_generalServices()==0)
+					{
+						JOptionPane.showMessageDialog(new JFrame(),
+								"Cet espace de travail n'est pas encore loué",
+								"Déplacement Interdit",
+								JOptionPane.PLAIN_MESSAGE);
+					}
+				 else if(my_workspace.getId_generalServices()==company.getId_generalservices())
 				{
-					JOptionPane.showMessageDialog(new JFrame(),
-							"Cet espace de travail n'est pas encore loué",
-							"Déplacement Interdit",
-							JOptionPane.PLAIN_MESSAGE);
+						if(equipments_box.isVisible() && equipments_box.getSelectedIndex()!=-1)
+						  {
+							try
+							{
+								connection.client.close();
+							} 
+							catch (IOException e1) {
+								e1.printStackTrace();
+							}
+							Map equip=equipments.get(equipments_box.getSelectedIndex());
+							InfoMoving last_view=new InfoMoving(new Equipment((Integer)equip.get("id_equipment"),(String)equip.get("type_equipment"),(Boolean)equip.get("is_available"),(Boolean)equip.get("is_working"),(Integer)equip.get("id_gs"),(Integer)equip.get("id_position")),"equipment",company);
+						  dispose();
+						  }
+						  else
+						  {
+								JOptionPane.showMessageDialog(new JFrame(),
+										"Veuillez selectionner l'equipment à déplacer",
+										"Deplacement Interdit",
+										JOptionPane.PLAIN_MESSAGE);
+						  }	
 				}
 				else if(company.getId_generalservices()!=my_workspace.getId_generalServices())
 					JOptionPane.showMessageDialog(new JFrame(),
 							"Cet espace de travail appartient à autre service général",
 							"Deplacement Interdit",
 							JOptionPane.PLAIN_MESSAGE);
-				else
-					sensorOrEquipment("no_sensor");
+				
 
 
 			}});
@@ -584,12 +661,6 @@ public class Map_WorkSpace extends JFrame {
 			positions_box.addItem("Emplacement "+n.get("id_position"));
 			}
 		}
-		positions_box.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JComboBox source=(JComboBox)e.getSource();
-				selected_position=source.getSelectedIndex();
-			}});
 		position_map.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -616,6 +687,14 @@ public class Map_WorkSpace extends JFrame {
 			}
 				else
 				{
+					Map row=null;
+					for(Map n:positions)
+					{
+						if(n.get("id_position").toString().equals(positions_box.getSelectedItem().toString().substring(12)))
+						{
+							row=n;
+						}
+					}
 					try
 					{
 						connection.client.close();
@@ -623,8 +702,9 @@ public class Map_WorkSpace extends JFrame {
 					catch (IOException e1) {
 						e1.printStackTrace();
 					}
-					Map row=positions.get(selected_position);
+					
 					InfoMapping im=new InfoMapping(new Positions((Integer)row.get("id_position"),(Integer)row.get("longitude"),(Integer)row.get("latitude"),(Integer)row.get("id_workspace"),(String)row.get("position_type"),(Boolean)row.get("is_available")),company);
+			     	  dispose();
 				}
 
 
@@ -702,11 +782,19 @@ public class Map_WorkSpace extends JFrame {
 						{ 
 
 							Map s=Sensor.getSensor(connection,(Integer)position.get("id_position"));
-							System.out.println("s= "+s);
 							if(s!=null)
 							{
 								Sensor my_sensor=new Sensor((Integer)s.get("id_sensor"),(String)s.get("type_sensor"),(Boolean)s.get("is_available"),(Boolean)s.get("is_working"),(Integer)s.get("id_gs"),(Integer)s.get("id_position"));
-								g.drawOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
+								if(my_sensor.getIs_working()==true)
+								{
+								  g.setColor(Color.green);
+								}
+								else
+								{
+									 g.setColor(Color.red);	
+								}
+								g.fillOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
+								 g.setColor(Color.black);
 								g.drawString(my_sensor.getType_sensor()+" "+my_sensor.getId_sensor(),((Integer)position.get("latitude")-16),((Integer)position.get("longitude")+60));
 							}
 							else
@@ -728,11 +816,20 @@ public class Map_WorkSpace extends JFrame {
 						{ 
 
 							Map p=Equipment.getEquipment(connection,(Integer)position.get("id_position"));
-							System.out.println("p= "+p);
 							if(p!=null)
 							{
+
 								Equipment my_equipment=new Equipment((Integer)p.get("id_equipment"),(String)p.get("type_equipment"),(Boolean)p.get("is_available"),(Boolean)p.get("is_working"),(Integer)p.get("id_gs"),(Integer)p.get("id_position"));
-								g.drawOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
+								if(my_equipment.getIs_working()==true)
+								{
+								  g.setColor(Color.green);
+								}
+								else
+								{
+									 g.setColor(Color.red);	
+								}
+								g.fillOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
+								 g.setColor(Color.black);
 								g.drawString(my_equipment.getType_equipment()+" "+my_equipment.getId_equipment(),((Integer)position.get("latitude")-16),((Integer)position.get("longitude")+60));
 							}
 							else
@@ -753,18 +850,34 @@ public class Map_WorkSpace extends JFrame {
 						else
 						{ Map s=Sensor.getSensor(connection,(Integer)position.get("id_position"));
 						Map p=Equipment.getEquipment(connection,(Integer)position.get("id_position"));
-						System.out.println("s= "+s);
-						System.out.println("p= "+p);
 						if(s!=null)
 						{
 							Sensor my_sensor=new Sensor((Integer)s.get("id_sensor"),(String)s.get("type_sensor"),(Boolean)s.get("is_available"),(Boolean)s.get("is_working"),(Integer)s.get("id_gs"),(Integer)s.get("id_position"));
-							g.drawOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
+							if(my_sensor.getIs_working()==true)
+							{
+							  g.setColor(Color.green);
+							}
+							else
+							{
+								 g.setColor(Color.red);	
+							}
+							g.fillOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
+							 g.setColor(Color.black);
 							g.drawString(my_sensor.getType_sensor()+" "+my_sensor.getId_sensor(),((Integer)position.get("latitude")-16),((Integer)position.get("longitude")+60));
 						}
 						else if(p!=null)
 						{
 							Equipment my_equipment=new Equipment((Integer)p.get("id_equipment"),(String)p.get("type_equipment"),(Boolean)p.get("is_available"),(Boolean)p.get("is_working"),(Integer)p.get("id_gs"),(Integer)p.get("id_position"));
-							g.drawOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
+							if(my_equipment.getIs_working()==true)
+							{
+							  g.setColor(Color.green);
+							}
+							else
+							{
+								 g.setColor(Color.red);	
+							}
+							g.fillOval((Integer)position.get("latitude"),(Integer)position.get("longitude"),45,45);
+							g.setColor(Color.black);
 							g.drawString(my_equipment.getType_equipment()+" "+my_equipment.getId_equipment(),((Integer)position.get("latitude")-16),((Integer)position.get("longitude")+60));
 						
 						}
@@ -776,14 +889,6 @@ public class Map_WorkSpace extends JFrame {
 
 		}
 
-
-		/*g.drawRect(130,80,350,500);
-
-						g.drawOval(270,100,45,45);
-						g.drawString("emplacement "+(Integer)position.get("id_position"),264,160);
-
-						g.drawOval(270,490,45,45);
-						g.drawString("emplacement "+(Integer)position.get("id_position"),264,550);*/
 	}
 
 

@@ -39,6 +39,7 @@ public class InfoMapping extends JFrame {
 	ArrayList<Map> company_names=General_Services.All_GeneralServices(connection);
 	Positions position=new Positions();
 	Map my_workspace=null;
+	InfoMapping instance=this;
 	//Fields
 	JTextField building=new JTextField("Batiment concerne"),floor=new JTextField("Etage  concerne"),work_space=new JTextField("espace loue concerne"),longitude=new JTextField("longitude"),latitude=new JTextField("latitude");
 	JComboBox type_mapped_object=new JComboBox(),mapped_object=new JComboBox();;
@@ -78,10 +79,10 @@ public class InfoMapping extends JFrame {
 
 
 
-	private void Interface()
+	private void myInterface()
 	{
 		setLayout(new BorderLayout());
-		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		//Left menu creation
 
 		left.setMinimumSize(new Dimension(250, 480));
@@ -109,11 +110,11 @@ public class InfoMapping extends JFrame {
 				try
 				{
 					connection.client.close();
-
+					
 				}
 				catch(Exception e1)
 				{
-
+					
 				}
 				HomePage t = new HomePage();
 				t.setVisible(true);
@@ -143,11 +144,11 @@ public class InfoMapping extends JFrame {
 				try
 				{
 					connection.client.close();
-
+					
 				}
 				catch(Exception e1)
 				{
-
+					
 				}
 				HomePage t = new HomePage();
 				t.setVisible(true);
@@ -159,10 +160,12 @@ public class InfoMapping extends JFrame {
 			public void mouseEntered(MouseEvent e)
 			{
 				e.getComponent().setBackground(Color.white);
+				use_case1.setForeground(color);
 			}
 			public void mouseExited(MouseEvent e)
 			{
 				e.getComponent().setBackground(color);
+				use_case1.setForeground(Color.black);
 			}
 		});
 
@@ -181,11 +184,11 @@ public class InfoMapping extends JFrame {
 				try
 				{
 					connection.client.close();
-
+					
 				}
 				catch(Exception e1)
 				{
-
+					
 				}
 				MappingUC t = new MappingUC(company);
 				t.setVisible(true);
@@ -221,11 +224,11 @@ public class InfoMapping extends JFrame {
 				try
 				{
 					connection.client.close();
-
+					
 				}
 				catch(Exception e1)
 				{
-
+					
 				}
 				HomePage t = new HomePage();
 				t.setVisible(true);
@@ -237,10 +240,12 @@ public class InfoMapping extends JFrame {
 			public void mouseEntered(MouseEvent e)
 			{
 				e.getComponent().setBackground(Color.white);
+				use_case3.setForeground(color);
 			}
 			public void mouseExited(MouseEvent e)
 			{
 				e.getComponent().setBackground(color);
+				use_case3.setForeground(Color.black);
 			}
 		});
 
@@ -263,11 +268,11 @@ public class InfoMapping extends JFrame {
 				try
 				{
 					connection.client.close();
-
+					
 				}
 				catch(Exception e1)
 				{
-
+					
 				}
 				HomePage t = new HomePage();
 				t.setVisible(true);
@@ -279,10 +284,12 @@ public class InfoMapping extends JFrame {
 			public void mouseEntered(MouseEvent e)
 			{
 				e.getComponent().setBackground(Color.white);
+				use_case4.setForeground(color);
 			}
 			public void mouseExited(MouseEvent e)
 			{
 				e.getComponent().setBackground(color);
+				use_case4.setForeground(Color.black);
 			}
 		});
 
@@ -297,116 +304,116 @@ public class InfoMapping extends JFrame {
 		JMenu list=new JMenu("Liste des emplacements ");
 		list.setSize(750,45);
 		list.addMenuListener(new MenuListener() {
-
-
-			@Override
-			public void menuSelected(MenuEvent e) {
-				try
-				{
-					connection.client.close();
-
-				}
-				catch(Exception ex)
-				{
-					ex.printStackTrace();	
-				}
-				List_Position lp=new List_Position(company);
-
-				dispose();
-			}
-
-			@Override
-			public void menuDeselected(MenuEvent e) {
-			}
-
-			@Override
-			public void menuCanceled(MenuEvent e) {
-
-			}
-		});
+	          
+			 
+	           @Override
+	           public void menuSelected(MenuEvent e) {
+try
+{
+	connection.client.close();
+	
+}
+catch(Exception ex)
+{
+  ex.printStackTrace();	
+}
+	             List_Position lp=new List_Position(company);
+	        	   
+	            	dispose();
+	           }
+	 
+	           @Override
+	           public void menuDeselected(MenuEvent e) {
+	           }
+	 
+	           @Override
+	           public void menuCanceled(MenuEvent e) {
+	             
+	           }
+	       });
 		JMenu map=new JMenu("Plan");
 		map.addMenuListener(new MenuListener() {
+	          
+			 
+	           @Override
+	           public void menuSelected(MenuEvent e) {
+	        	   try
+	        	   {
+	        		   connection.client.close();
+	        	   }catch(Exception ex)
+	        	   {
+	        		   ex.printStackTrace();
+	        	   }
+					Map_Full hp=new Map_Full(company);
+	            	dispose();
 
-
-			@Override
-			public void menuSelected(MenuEvent e) {
-				try
-				{
-					connection.client.close();
-				}catch(Exception ex)
-				{
-					ex.printStackTrace();
-				}
-				Map_Full hp=new Map_Full(company);
-				dispose();
-
-			}
-
-			@Override
-			public void menuDeselected(MenuEvent e) {
-			}
-
-			@Override
-			public void menuCanceled(MenuEvent e) {
-
-			}
-		});
+	           }
+	 
+	           @Override
+	           public void menuDeselected(MenuEvent e) {
+	           }
+	 
+	           @Override
+	           public void menuCanceled(MenuEvent e) {
+	             
+	           }
+	       });
 		map.setSize(150,45);
 		menuBar.add(list);
 		menuBar.add(map);
 		menuBar.add(Box.createHorizontalGlue());
 		JMenu homePage=new JMenu("Acceuil");
 		homePage.addMenuListener(new MenuListener() {
-
-
-			@Override
-			public void menuSelected(MenuEvent e) {
-				try
-				{
-					connection.client.close();
-				}catch(Exception ex)
-				{
-					ex.printStackTrace();
-				}
-				HomePage hp=new HomePage();
-				dispose();
-			}
-
-			@Override
-			public void menuDeselected(MenuEvent e) {
-			}
-
-			@Override
-			public void menuCanceled(MenuEvent e) {
-
-			}
-		});
+	          
+			 
+	           @Override
+	           public void menuSelected(MenuEvent e) {
+	        	   try
+	        	   {
+	        		   connection.client.close();
+	        	   }catch(Exception ex)
+	        	   {
+	        		   ex.printStackTrace();
+	        	   }
+	              HomePage hp=new HomePage();
+	              dispose();
+	           }
+	 
+	           @Override
+	           public void menuDeselected(MenuEvent e) {
+	           }
+	 
+	           @Override
+	           public void menuCanceled(MenuEvent e) {
+	             
+	           }
+	       });
 		menuBar.add(homePage);
 		JMenu leave=new JMenu("Quitter");
 		leave.addMenuListener(new MenuListener() {
-
-
-			@Override
-			public void menuSelected(MenuEvent e) {
-				try
-				{
-					connection.client.close();
-				}catch(Exception ex)
-				{
-					ex.printStackTrace();
-				}
-				dispose();
-			}
-
-			@Override
-			public void menuDeselected(MenuEvent e) {
-			}
-
-			@Override
-			public void menuCanceled(MenuEvent e) {
-
-			}
-		});
+ 	          
+  			 
+	           @Override
+	           public void menuSelected(MenuEvent e) {
+	        	   try
+	        	   {
+	        		   connection.client.close();
+	        	   }catch(Exception ex)
+	        	   {
+	        		   ex.printStackTrace();
+	        	   }
+	              dispose();
+	           }
+	 
+	           @Override
+	           public void menuDeselected(MenuEvent e) {
+	           }
+	 
+	           @Override
+	           public void menuCanceled(MenuEvent e) {
+	             
+	           }
+	       });
 		menuBar.add(leave);
 		right.add(menuBar, BorderLayout.NORTH);
 
@@ -419,12 +426,11 @@ public class InfoMapping extends JFrame {
 		setResizable(false);
 
 	}
-
 	public InfoMapping(Positions pos,General_Services GS)
 	{
 		company=GS;
 		position=pos;
-		Interface();
+		myInterface();
 		JLabel info_position=new JLabel("Information Mappage");
 		info_position.setFont(new Font("Serif", Font.BOLD, 45));
 		GridLayout layout=new GridLayout(4,1,1,1);
@@ -432,12 +438,22 @@ public class InfoMapping extends JFrame {
 		JPanel p3=new JPanel(layout);
 		info_position.setHorizontalAlignment(JLabel.CENTER);
 		JPanel 	p_inter=new JPanel();
-		JButton b1=new JButton("Positionner sur le Plan");
+		JButton b1=new JButton("Voir sur Plan");
 		b1.setPreferredSize(new Dimension(250,50));
 		p_inter.setBackground(Color.white);
 		p_inter.setPreferredSize(new Dimension(250,10));
 		p_inter.add(info_position,BorderLayout.CENTER);
 		b1.setBackground(color);
+		
+		b1.addActionListener(new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			  Map_Position mp=new Map_Position(instance,connection,my_workspace,position,company);
+			}
+
+		});    
 		p_inter.add(b1);
 		p3.add(p_inter);
 
@@ -540,11 +556,11 @@ public class InfoMapping extends JFrame {
 		p3.add(p_inter);
 		JPanel space=new JPanel();
 		space.setPreferredSize(new Dimension(450,40));
-		b1=new JButton("Mapper");
-		b1.setBackground(color);
-		b1.setPreferredSize(new Dimension(250,50));
+		JButton b2=new JButton("Mapper");
+		b2.setBackground(color);
+		b2.setPreferredSize(new Dimension(250,50));
 		space.setBackground(Color.white);
-		b1.addActionListener(new ActionListener()
+		b2.addActionListener(new ActionListener()
 		{
 
 			@Override
@@ -576,7 +592,7 @@ public class InfoMapping extends JFrame {
 		infoPositions(position);
 		p_inter.setBackground(Color.white);
 		p_inter.add(space);
-		p_inter.add(b1);
+		p_inter.add(b2);
 		//  p3.add(p_inter);
 		right.add(p3,BorderLayout.CENTER);
 		p3.setBackground(Color.white);

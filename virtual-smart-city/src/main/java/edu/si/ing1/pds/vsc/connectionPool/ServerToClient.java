@@ -40,10 +40,31 @@ public class ServerToClient {
 		String request_name=request.getName_request();
 		System.out.println(request_name);
 		String response_string="";
-		if(request_name.equals("list_workspaces"))
+		if(request_name.equals("all_rented_workspaces"))
 		{
 			Map data_loading=(Map) request.getData();
-			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where id_building="+(Integer)data_loading.get("id_building")+" and floor_number="+(Integer)data_loading.get("floor_number"));
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where id_gs="+(Integer)data_loading.get("id_gs")+" Order by id_workspace");
+			List<Map> workSpaces=new ArrayList<Map>();
+			while(rs1.next()) {
+				Map<String,Object> hm=new HashMap<String,Object>();
+				hm.put("id_workspace",rs1.getInt("id_workspace"));
+				hm.put("type_workspace",rs1.getString("type_workspace"));
+				hm.put("floor_number",rs1.getInt("floor_number"));
+				hm.put("is_available",rs1.getBoolean("is_available"));
+				hm.put("id_building",rs1.getInt("id_building"));
+				hm.put("id_gs",rs1.getInt("id_gs"));
+				workSpaces.add(hm);
+			}
+			rs1.close();
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",workSpaces);
+			response_string=mapper.writeValueAsString(response);
+		}
+		else if(request_name.equals("list_workspaces"))
+		{
+			Map data_loading=(Map) request.getData();
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where id_building="+(Integer)data_loading.get("id_building")+" and floor_number="+(Integer)data_loading.get("floor_number")+" Order by id_workspace");
 			List<Map> workSpaces=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
@@ -64,7 +85,7 @@ public class ServerToClient {
 		else if(request_name.equals("all_buildings"))
 		{
 			Map data_loading=(Map) request.getData();
-			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM building");
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM building Order by id_building");
 			List<Map> workSpaces=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
@@ -80,7 +101,7 @@ public class ServerToClient {
 		else if(request_name.equals("list_positions"))
 		{
 			Map data_loading=(Map) request.getData();
-			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM positions where id_workspace="+(Integer)data_loading.get("id_workspace"));
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM positions where id_workspace="+(Integer)data_loading.get("id_workspace")+" Order by id_position");
 			List<Map> positions=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
@@ -100,7 +121,7 @@ public class ServerToClient {
 		}else if(request_name.equals("all_generalServices"))
 		{
 			Map data_loading=(Map) request.getData();
-			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM generalservices");
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM generalservices Order by id_generalservices");
 			List<Map> workSpaces=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
@@ -118,7 +139,7 @@ public class ServerToClient {
 		else if(request_name.equals("list_sensors"))
 		{
 			Map data_loading=(Map) request.getData();
-			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM sensor where id_position in (select id_position from positions where id_workspace="+(Integer)data_loading.get("id_workspace")+")");
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM sensor where id_position in (select id_position from positions where id_workspace="+(Integer)data_loading.get("id_workspace")+") Order by id_sensor");
 			List<Map> workSpaces=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
@@ -142,11 +163,11 @@ public class ServerToClient {
 			ResultSet rs1=null;
 			if((Integer)data_loading.get("id_workspace")==0)
 			{
-			rs1 = connection.createStatement().executeQuery("SELECT * FROM equipment where is_available="+(Boolean)data_loading.get("is_available"));
+				rs1 = connection.createStatement().executeQuery("SELECT * FROM equipment where is_available="+(Boolean)data_loading.get("is_available")+" Order by id_equipment");
 			}
 			else
 			{
-				rs1 = connection.createStatement().executeQuery("SELECT * FROM equipment where id_position in( select id_position from positions where id_workspace="+(Integer)data_loading.get("id_workspace")+")");
+				rs1 = connection.createStatement().executeQuery("SELECT * FROM equipment where id_position in( select id_position from positions where id_workspace="+(Integer)data_loading.get("id_workspace")+") Order by id_equipment");
 			}
 			List<Map> equipments=new ArrayList<Map>();
 			while(rs1.next()) {
@@ -163,18 +184,18 @@ public class ServerToClient {
 			Map<String,Object> response=new HashMap<String,Object>();
 			response.put("name_request",request_name);
 			response.put("data",equipments);
-			 response_string=mapper.writeValueAsString(response);
+			response_string=mapper.writeValueAsString(response);
 
-			}
+		}
 		else if(request_name.equals("available_positions"))
 		{
 			Map data_loading=(Map) request.getData();
 			ResultSet rs1 =null;
 			if((Integer)data_loading.get("id_workspace")!=0)
-			rs1=connection.createStatement().executeQuery("SELECT * FROM positions where id_workspace="+(Integer)data_loading.get("id_workspace"));
+				rs1=connection.createStatement().executeQuery("SELECT * FROM positions where id_workspace="+(Integer)data_loading.get("id_workspace")+" Order by id_position");
 			else
-				rs1=connection.createStatement().executeQuery("SELECT * FROM positions where id_workspace in (SELECT id_workspace from workspace where id_gs="+(Integer)data_loading.get("id_gs")+") and is_available="+(Boolean)data_loading.get("is_available"));
-		
+				rs1=connection.createStatement().executeQuery("SELECT * FROM positions where id_workspace in (SELECT id_workspace from workspace where id_gs="+(Integer)data_loading.get("id_gs")+") and is_available="+(Boolean)data_loading.get("is_available")+" Order by id_position");
+
 			List<Map> positions=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
@@ -190,7 +211,7 @@ public class ServerToClient {
 			Map<String,Object> response=new HashMap<String,Object>();
 			response.put("name_request",request_name);
 			response.put("data",positions);
-			 response_string=mapper.writeValueAsString(response);
+			response_string=mapper.writeValueAsString(response);
 		}
 		else if(request_name.equals("map_equipment"))
 		{
@@ -200,66 +221,151 @@ public class ServerToClient {
 			op1 = connection.createStatement().executeUpdate("WITH equipment_pick AS ( SELECT id_equipment FROM  equipment WHERE  type_equipment='"+(String)data_loading.get("type_equipment")+"' LIMIT  1) UPDATE equipment e SET is_available = false, id_gs="+(Integer)data_loading.get("id_gs")+", id_position="+(Integer)data_loading.get("id_position")+"FROM equipment_pick WHERE  e.id_equipment = equipment_pick.id_equipment");
 			op2= connection.createStatement().executeUpdate("update positions set is_available=false where id_position="+(Integer)data_loading.get("id_position"));
 			List<Map> update=new ArrayList<Map>();
-				Map<String,Object> hm=new HashMap<String,Object>();
-				logger.info(op1+" "+op2);
-				if(op1>0 && op2>0)
-				{
-					
-					connection.commit();
-					connection.setAutoCommit(true);
-				    hm.put("update_done",true);
-				}
-				else
-				{
-					connection.rollback();
-					connection.setAutoCommit(true);
-					hm.put("update_done",false);
-					
-				}
-				
-				update.add(hm);
+			Map<String,Object> hm=new HashMap<String,Object>();
+			logger.info(op1+" "+op2);
+			if(op1>0 && op2>0)
+			{
+
+				connection.commit();
+				connection.setAutoCommit(true);
+				hm.put("update_done",true);
+			}
+			else
+			{
+				connection.rollback();
+				connection.setAutoCommit(true);
+				hm.put("update_done",false);
+
+			}
+
+			update.add(hm);
 			Map<String,Object> response=new HashMap<String,Object>();
 			response.put("name_request",request_name);
 			response.put("data",update);
-			 response_string=mapper.writeValueAsString(response);
+			response_string=mapper.writeValueAsString(response);
 		}
 
 		else if(request_name.equals("map_sensor"))
 		{
 			Map data_loading=(Map) request.getData();
-			
+
 			int op2=0,op1=0;
 			connection.setAutoCommit(false);
-		
+
 			op1 = connection.createStatement().executeUpdate("WITH sensor_pick AS ( SELECT id_sensor FROM  sensor WHERE  type_sensor='"+(String)data_loading.get("type_sensor")+"' LIMIT  1) UPDATE sensor s SET is_available = false, id_gs="+(Integer)data_loading.get("id_gs")+", id_position="+(Integer)data_loading.get("id_position")+"FROM sensor_pick WHERE  s.id_sensor = sensor_pick.id_sensor");
 			op2= connection.createStatement().executeUpdate("update positions set is_available=false where id_position="+(Integer)data_loading.get("id_position"));
 			List<Map> update=new ArrayList<Map>();
 			logger.info(op1+" "+op2);
-				Map<String,Object> hm=new HashMap<String,Object>();
-				if(op1>0 && op2>0)
-				{
-					logger.info(op1+" "+op2);
-					connection.commit();
-					connection.setAutoCommit(true);
+			Map<String,Object> hm=new HashMap<String,Object>();
+			if(op1>0 && op2>0)
+			{
+				logger.info(op1+" "+op2);
+				connection.commit();
+				connection.setAutoCommit(true);
 				hm.put("update_done",true);
-				}
-				else
-				{
-					connection.rollback();
-					connection.setAutoCommit(true);
-					hm.put("update_done",false);
-					
-				}
-				update.add(hm);
+			}
+			else
+			{
+				connection.rollback();
+				connection.setAutoCommit(true);
+				hm.put("update_done",false);
+
+			}
+			update.add(hm);
 			Map<String,Object> response=new HashMap<String,Object>();
 			response.put("name_request",request_name);
 			response.put("data",update);
-			 response_string=mapper.writeValueAsString(response);
+			response_string=mapper.writeValueAsString(response);
+		}
+		else if(request_name.equals("move_sensor"))
+		{
+			Map data_loading=(Map) request.getData();
+
+			int op2=0,op1=0,op3=0;
+			connection.setAutoCommit(false);
+
+			op1 = connection.createStatement().executeUpdate("update sensor set id_position="+(Integer)data_loading.get("new_position")+" where id_sensor="+(Integer)data_loading.get("id_sensor"));
+			op2= connection.createStatement().executeUpdate("update positions set is_available=false where id_position="+(Integer)data_loading.get("new_position"));
+			op3= connection.createStatement().executeUpdate("update positions set is_available=true where id_position="+(Integer)data_loading.get("old_position"));
+			List<Map> update=new ArrayList<Map>();
+			logger.info(op1+" "+op2+" "+op3);
+			Map<String,Object> hm=new HashMap<String,Object>();
+			if(op1>0 && op2>0 && op3>0)
+			{
+				connection.commit();
+				connection.setAutoCommit(true);
+				hm.put("update_done",true);
+			}
+			else
+			{
+				connection.rollback();
+				connection.setAutoCommit(true);
+				hm.put("update_done",false);
+
+			}
+			update.add(hm);
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",update);
+			response_string=mapper.writeValueAsString(response);
+		}
+		else if(request_name.equals("move_equipment"))
+		{
+			Map data_loading=(Map) request.getData();
+
+			int op2=0,op1=0,op3=0;
+			connection.setAutoCommit(false);
+
+			op1 = connection.createStatement().executeUpdate("update equipment set id_position="+(Integer)data_loading.get("new_position")+" where id_equipment="+(Integer)data_loading.get("id_equipment"));
+			op2= connection.createStatement().executeUpdate("update positions set is_available=false where id_position="+(Integer)data_loading.get("new_position"));
+			op3= connection.createStatement().executeUpdate("update positions set is_available=true where id_position="+(Integer)data_loading.get("old_position"));
+			List<Map> update=new ArrayList<Map>();
+			logger.info(op1+" "+op2+" "+op3);
+			Map<String,Object> hm=new HashMap<String,Object>();
+			if(op1>0 && op2>0 && op3>0)
+			{
+				connection.commit();
+				connection.setAutoCommit(true);
+				hm.put("update_done",true);
+			}
+			else
+			{
+				connection.rollback();
+				connection.setAutoCommit(true);
+				hm.put("update_done",false);
+
+			}
+			update.add(hm);
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",update);
+			response_string=mapper.writeValueAsString(response);
+		}
+		else if(request_name.equals("the_position"))
+		{
+			Map data_loading=(Map) request.getData();
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM positions where id_position="+(Integer)data_loading.get("id_position")+" Order by id_position");
+			List<Map>positions=new ArrayList<Map>();
+			while(rs1.next()) {
+				Map<String,Object> hm=new HashMap<String,Object>();
+				hm.put("id_position",rs1.getInt("id_position"));
+				hm.put("longitude",rs1.getInt("longitude"));
+				hm.put("latitude",rs1.getInt("latitude"));
+				hm.put("id_workspace",rs1.getInt("id_workspace"));
+				hm.put("position_type",rs1.getString("position_type"));
+				hm.put("is_available",rs1.getBoolean("is_available"));
+				positions.add(hm);
+			}
+			rs1.close();
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",positions);
+			response_string=mapper.writeValueAsString(response);
 		}
 		else if(request_name.equals("the_workspace"))
 		{
 			Map data_loading=(Map) request.getData();
-			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where id_workspace="+(Integer)data_loading.get("id_workspace"));
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where id_workspace="+(Integer)data_loading.get("id_workspace")+" Order by id_workspace");
 			List<Map> workSpaces=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
@@ -275,13 +381,63 @@ public class ServerToClient {
 			Map<String,Object> response=new HashMap<String,Object>();
 			response.put("name_request",request_name);
 			response.put("data",workSpaces);
-			 response_string=mapper.writeValueAsString(response);
+			response_string=mapper.writeValueAsString(response);
 		}
-
-else if(request_name.equals("my_equipment"))
+		else if(request_name.equals("Info_position"))
 		{
 			Map data_loading=(Map) request.getData();
-			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM equipment where id_position="+(Integer)data_loading.get("id_position"));
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM positions where id_position="+(Integer)data_loading.get("id_position"));
+			List<Map> position=new ArrayList<Map>();
+			while(rs1.next()) {
+				Map<String,Object> hm=new HashMap<String,Object>();
+				hm.put("id_position",rs1.getInt("id_position"));
+				hm.put("longitude",rs1.getInt("longitude"));
+				hm.put("latitude",rs1.getInt("latitude"));
+				hm.put("id_workspace",rs1.getInt("id_workspace"));
+				hm.put("position_type",rs1.getString("position_type"));
+				hm.put("is_available",rs1.getBoolean("is_available"));
+				position.add(hm);
+			}
+			rs1.close();
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",position);
+			response_string=mapper.writeValueAsString(response);
+		}
+		else if(request_name.equals("workspace_and_positions"))
+		{
+			Map data_loading=(Map) request.getData();
+			ResultSet rs1 = connection.createStatement().executeQuery("select * from workspace w ,positions p where  w.id_gs="+(Integer)data_loading.get("id_gs")+" and w.id_workspace=p.id_workspace and p.id_position="+(Integer)data_loading.get("id_position"));
+			List<Map> workspace=new ArrayList<Map>();
+			while(rs1.next()) {
+				Map<String,Object> hm=new HashMap<String,Object>();
+				hm.put("id_workspace",rs1.getInt(1));
+				hm.put("type_workspace",rs1.getString(2));
+				hm.put("floor_number",rs1.getInt(5));
+				hm.put("is_available_ws",rs1.getBoolean(6));
+				hm.put("id_building",rs1.getInt("id_building"));
+				hm.put("id_gs",rs1.getInt(7));
+				//---------------------------------------------------
+				hm.put("id_position",rs1.getInt("id_position"));
+				hm.put("longitude",rs1.getInt(9));
+				hm.put("latitude",rs1.getInt(10));
+				hm.put("id_ws",rs1.getInt(11));
+				hm.put("type_position",rs1.getString(12));
+				hm.put("is_available_pos",rs1.getBoolean(13));
+				workspace.add(hm);
+			}
+			rs1.close();
+			logger.info((Integer)data_loading.get("id_position")+"");
+			logger.info(workspace.toString());
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",workspace);
+			response_string=mapper.writeValueAsString(response);  
+		}
+		else if(request_name.equals("my_equipment"))
+		{
+			Map data_loading=(Map) request.getData();
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM equipment where id_position="+(Integer)data_loading.get("id_position")+" Order by id_equipment");
 			List<Map> equipments=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
@@ -297,41 +453,44 @@ else if(request_name.equals("my_equipment"))
 			Map<String,Object> response=new HashMap<String,Object>();
 			response.put("name_request",request_name);
 			response.put("data",equipments);
-			 response_string=mapper.writeValueAsString(response);
+			response_string=mapper.writeValueAsString(response);
 		}
-else if(request_name.equals("my_sensor"))
-{
-	Map data_loading=(Map) request.getData();
-	ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM sensor where id_position="+(Integer)data_loading.get("id_position"));
-	List<Map> workSpaces=new ArrayList<Map>();
-	while(rs1.next()) {
-		Map<String,Object> hm=new HashMap<String,Object>();
-		hm.put("id_sensor",rs1.getInt("id_sensor"));
-		hm.put("type_sensor",rs1.getString("type_sensor"));
-		hm.put("is_available",rs1.getBoolean("is_available"));
-		hm.put("is_working",rs1.getBoolean("is_working"));
-		hm.put("id_gs",rs1.getInt("id_gs"));
-		hm.put("id_position",rs1.getInt("id_position"));
-		workSpaces.add(hm);
-	}
-	rs1.close();
-	Map<String,Object> response=new HashMap<String,Object>();
-	response.put("name_request",request_name);
-	response.put("data",workSpaces);
-	 response_string=mapper.writeValueAsString(response);
-}
-		
-		
+		else if(request_name.equals("my_sensor"))
+		{
+			Map data_loading=(Map) request.getData();
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM sensor where id_position="+(Integer)data_loading.get("id_position"));
+			List<Map> sensors=new ArrayList<Map>();
+			while(rs1.next()) {
+				Map<String,Object> hm=new HashMap<String,Object>();
+				hm.put("id_sensor",rs1.getInt("id_sensor"));
+				hm.put("type_sensor",rs1.getString("type_sensor"));
+				hm.put("is_available",rs1.getBoolean("is_available"));
+				hm.put("is_working",rs1.getBoolean("is_working"));
+				hm.put("id_gs",rs1.getInt("id_gs"));
+				hm.put("id_position",rs1.getInt("id_position"));
+				sensors.add(hm);
+			}
+			rs1.close();
+			logger.info(sensors.toString());
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",sensors);
+			response_string=mapper.writeValueAsString(response);
+		}
 		else if(request_name.equals("request_workspace"))
 		{
 			Map data_loading=(Map) request.getData();
 			String floor_type = (String)data_loading.get("type_floor");
 			ResultSet rs1 = null;
-			if (floor_type.equals("haut")) {
+			if (floor_type.equals("sans importance")) {
+				rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where is_available=true and type_workspace='"+
+						(String)data_loading.get("type_workspace") + "'");
+			}
+			else if (floor_type.equals("haut")) {
 				rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where is_available=true and type_workspace='"+
 						(String)data_loading.get("type_workspace") + "' and floor_number > 2" );
 			}
-			if (floor_type.equals("bas")) {
+			else if (floor_type.equals("bas")) {
 				rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where is_available=true and type_workspace='"+
 						(String)data_loading.get("type_workspace") + "' and floor_number < 3" );
 			}
@@ -350,6 +509,16 @@ else if(request_name.equals("my_sensor"))
 			Map<String,Object> response=new HashMap<String,Object>();
 			response.put("name_request",request_name);
 			response.put("data",workSpaces);
+			response_string=mapper.writeValueAsString(response);
+		}
+		else if(request_name.equals("set_workspace_unavailable"))
+		{
+			Map data_loading=(Map) request.getData();
+			ResultSet rs1 = connection.createStatement().executeQuery("UPDATE workspace SET is_available = false where id_workspace="+(Integer)data_loading.get("id_workspace")+" and id_gs="+(Integer)data_loading.get("id_gs"));
+			rs1.close();
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request", request_name);
+			response.put("data", null);
 			response_string=mapper.writeValueAsString(response);
 		}
 		// Mohand Part about access cards management

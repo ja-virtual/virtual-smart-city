@@ -46,13 +46,13 @@ public String getType_equipment() {
 public void setType_equipment(String type_equipment) {
 	this.type_equipment = type_equipment;
 }
-public boolean isIs_available() {
+public boolean getIs_available() {
 	return is_available;
 }
 public void setIs_available(boolean is_available) {
 	this.is_available = is_available;
 }
-public boolean isIs_working() {
+public boolean getIs_working() {
 	return is_working;
 }
 public void setIs_working(boolean is_working) {
@@ -109,7 +109,10 @@ public static boolean mapEquipment(ClientToServer connection,int id_gs,int id_po
 	{
 		logger.info("Server is maybe occupied");
 	}
-	return (boolean) update.get(0).get("update_done");
+	if(update!=null) 
+		return (boolean) update.get(0).get("update_done");
+		else
+	return false;
 	}
 public static Map getEquipment(ClientToServer connection, int id_position)
 {
@@ -127,9 +130,34 @@ public static Map getEquipment(ClientToServer connection, int id_position)
 	{
 		logger.info("Server is maybe occupied");
 	}
-	if(equipment.isEmpty())
-		return null;
+	if(equipment!=null)
+	{
+		if(! equipment.isEmpty()) 
+		return equipment.get(0);
+	}
+	return null;
+}
+
+public static boolean moveEquipment(ClientToServer connection,int id_equipment,int old_position,int new_position) {
+	ArrayList<Map>update=null;
+	try
+	{
+		Request request=new Request();
+		request.setName_request("move_equipment");
+		HashMap<String,Object>param=new HashMap<String,Object>();
+		param.put("old_position",old_position);
+		param.put("new_position",new_position);
+		param.put("id_equipment",id_equipment);
+		request.setData(param);
+		Request response=connection.SendRequest(request);
+		update=(ArrayList<Map>)response.getData();
+	}catch(Exception e)
+	{
+		logger.info("Server is maybe occupied");
+	}
+	if(update!=null) 
+		return (boolean) update.get(0).get("update_done");
 		else
-	return equipment.get(0);
-}
-}
+	return false;
+	
+}}
