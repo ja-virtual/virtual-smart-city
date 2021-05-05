@@ -42,7 +42,7 @@ public class SmartCityAppServer extends Thread {
 
 	public SmartCityAppServer() {
 		try {
-			server = new ServerSocket(3344);
+			server = new ServerSocket(serverConfig.getConfig().getListenPort());
 
 		} catch (IOException e) {
 
@@ -69,21 +69,20 @@ public class SmartCityAppServer extends Thread {
 				out=new PrintWriter(client.getOutputStream(),true);
 				out.println(response);
 				System.out.print("*********************\n ");
-				//this.serve();
 			} catch (Exception e1) {
-				 e1.printStackTrace();
-				 System.out.print("I am seing you\n ");
 				this.serve();
+
 			}
 		}
+
 
 		try {
 			in.close();
 			out.close();
 			server.close();
 
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+		
 		}
 	}
 
