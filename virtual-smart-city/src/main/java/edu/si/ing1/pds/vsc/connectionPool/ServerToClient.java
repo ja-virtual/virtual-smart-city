@@ -191,11 +191,19 @@ public class ServerToClient {
 		{
 			Map data_loading=(Map) request.getData();
 			ResultSet rs1 =null;
-			if((Integer)data_loading.get("id_workspace")!=0)
-				rs1=connection.createStatement().executeQuery("SELECT * FROM positions where id_workspace="+(Integer)data_loading.get("id_workspace")+" Order by id_position");
-			else
-				rs1=connection.createStatement().executeQuery("SELECT * FROM positions where id_workspace in (SELECT id_workspace from workspace where id_gs="+(Integer)data_loading.get("id_gs")+") and is_available="+(Boolean)data_loading.get("is_available")+" Order by id_position");
+			String sql="";
+			if((Integer)data_loading.get("id_workspace")!=0) {
+				sql="SELECT * FROM positions where id_workspace="+(Integer)data_loading.get("id_workspace")+" Order by id_position";
+				rs1=connection.createStatement().executeQuery(sql);
+		
+			}else {
+						sql=	"SELECT * FROM positions where is_available="+(Boolean)data_loading.get("is_available")+" and id_workspace  in (SELECT id_workspace from workspace where id_gs="+(Integer)data_loading.get("id_gs")+") Order by id_position";		
+								
+								rs1=connection.createStatement().executeQuery(sql);
 
+					}
+logger.info(sql);	
+logger.info(rs1.getFetchSize()+"");	
 			List<Map> positions=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
