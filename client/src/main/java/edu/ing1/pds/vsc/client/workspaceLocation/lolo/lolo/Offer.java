@@ -42,11 +42,12 @@ public class Offer extends JPanel implements ActionListener{
     JPanel left = new JPanel();
     JPanel right = new JPanel();
     String offer_description;
-    
+    int id_gs;
     
     
 
-    public Offer (ArrayList<WorkSpace> offer) {
+    public Offer (ArrayList<WorkSpace> offer,int gs) {
+    	id_gs=gs;
         theplacescore = PlaceScore(offer);
         thefloorscore = FloorScore(offer);
         theprice = FinalPrice(offer);
@@ -64,7 +65,7 @@ public class Offer extends JPanel implements ActionListener{
         this.setLayout(new BorderLayout());
         
         price = new JLabel("  Prix: " + String.valueOf(theprice)+",  ");
-        max_capacity = new JLabel("capacitÃ©: " + String.valueOf(themax_employee_number)+"employÃ©es, ");
+        max_capacity = new JLabel("capacité: " + String.valueOf(themax_employee_number)+"employées, ");
         area = new JLabel("  Taille: " + String.valueOf(thearea)+"m2, ");
         openspace_nbr = new JLabel(String.valueOf(theopenspace_nbr)+" openspace, ");
         meetingroom_nbr = new JLabel(String.valueOf(themeetingroom_nbr)+" salle de reunion, ");
@@ -100,10 +101,10 @@ public class Offer extends JPanel implements ActionListener{
     
     public String w_toString() {
     	StringBuilder SB = new StringBuilder();
-    	SB.append("Voulez vous louer l'offre composÃ©e des WorkSpace ci-dessous ? \n");
+    	SB.append("Voulez vous louer l'offre composée des WorkSpace ci-dessous ? \n");
     	for ( WorkSpace w : offer ) {
     		SB.append("Un.e "+ String.valueOf(w.thetype) + " avec pour id \""+ String.valueOf(w.id_wokspace) + "\"  qui coute " + String.valueOf(w.theprice) + "euros " +
-    				"qui fait " + String.valueOf(w.thearea) + "m2" + " dans le batiment nÂ°" + String.valueOf(w.thebuilding) + " au " + String.valueOf(w.thefloor) + "eme etage\n");
+    				"qui fait " + String.valueOf(w.thearea) + "m2" + " dans le batiment n°" + String.valueOf(w.thebuilding) + " au " + String.valueOf(w.thefloor) + "eme etage\n");
     	}
     	return SB.toString();
     }
@@ -256,20 +257,25 @@ public class Offer extends JPanel implements ActionListener{
 		if (event.getSource() == rent){
 			for ( WorkSpace w : offer ) {
 				try {
+					System.out.println("je suis ici1");
 		    		ClientToServer connection = new ClientToServer();
+		    		System.out.println("je suis ici2");
 		    		Request request=new Request();
 		            request.setName_request("set_workspace_unavailable");
 		            HashMap<String,Object> param=new HashMap<String,Object>();
 		            param.put("id_workspace", w.id_wokspace);
+		            param.put("id_gs", id_gs);
 		            request.setData(param);
+		            System.out.println("je suis ici3");
 		            Request response=connection.SendRequest(request);
+		            System.out.println("je suis ici4");
 		            connection.client.close();
-		            System.out.print("salut");
 		    	 }catch(Exception e){
 		             e.printStackTrace();
 		         }
 			}
-			JOptionPane.showMessageDialog(new JPanel(), "L'offre Ã  bien Ã©tÃ© louÃ©e", "Bravo", JOptionPane.INFORMATION_MESSAGE);
+			
+			JOptionPane.showMessageDialog(new JPanel(), "L'offre à bien été louée", "Bravo", JOptionPane.INFORMATION_MESSAGE);
 		}
    }
 }

@@ -36,7 +36,7 @@ public class Building {
 	//return  a list of all the buildings
 	public static ArrayList<Map> allBuildings(ClientToServer connection)
 	{
-		ArrayList<Map>workspaces=null;
+		ArrayList<Map>workspaces=new ArrayList<Map>();
 		try
 		{
 			Request request=new Request();

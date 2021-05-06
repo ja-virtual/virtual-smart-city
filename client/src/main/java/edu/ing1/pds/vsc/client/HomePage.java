@@ -19,7 +19,7 @@ import edu.ing1.pds.vsc.client.MappingManagement.Positions;
 
 
 public class HomePage extends JFrame implements ActionListener  {
-	//private Mairie fen;
+	
 	ClientToServer connection=new ClientToServer();
 	ArrayList<Map> company_names=General_Services.All_GeneralServices(connection);
 	General_Services my_company=new General_Services(1," Saisir le nom de votre entreprise.....");
@@ -125,7 +125,7 @@ public class HomePage extends JFrame implements ActionListener  {
 
 		c.ipadx=45;
 		c.ipady=5;
-		//	this.getContentPane().add(annuler,c);
+
 
 		c.gridy = 7;//change the y location
 
@@ -141,7 +141,6 @@ public class HomePage extends JFrame implements ActionListener  {
 		myCompany.getEditor().getEditorComponent().setBackground(Color.white);
 		myCompany.setFont(new Font("Serif", Font.ITALIC, 16));
 		myCompany.setBackground(Color.white);
-		//      this.getContentPane().add(panel);
 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -151,12 +150,11 @@ public class HomePage extends JFrame implements ActionListener  {
 		setVisible(true);
 
 
-		//ObjectInputStream O = new ObjectInputStream();
 	}
 
 	public void actionPerformed(ActionEvent e){
 
-		//	fen = new Mairie();
+
 		this.dispose();
 
 

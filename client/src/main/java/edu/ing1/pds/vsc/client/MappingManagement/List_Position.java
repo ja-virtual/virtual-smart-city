@@ -21,6 +21,8 @@ import javax.swing.table.TableCellRenderer;
 import edu.ing1.pds.vsc.client.ClientToServer;
 import edu.ing1.pds.vsc.client.General_Services;
 import edu.ing1.pds.vsc.client.HomePage;
+import edu.ing1.pds.vsc.client.WelcomePage;
+import edu.ing1.pds.vsc.client.workspaceLocation.lolo.lolo.Loocation;
 
 public class List_Position extends JFrame {
 
@@ -32,6 +34,7 @@ public class List_Position extends JFrame {
 	JPanel left = new JPanel(new GridLayout(5,1));
 	Color color=new Color(190,245,116);
 	ArrayList<Map>available_positions;
+	
 	private void myInterface()
 	{
 		setLayout(new BorderLayout());
@@ -69,7 +72,7 @@ public class List_Position extends JFrame {
 				{
 
 				}
-				HomePage t = new HomePage();
+				Loocation t = new Loocation(company);
 				t.setVisible(true);
 				dispose();
 			}
@@ -90,39 +93,6 @@ public class List_Position extends JFrame {
 		p.add(use_case1,BorderLayout.CENTER);
 		p.setBackground(color);
 		left.add(p);
-		p.addMouseListener(new MouseAdapter()
-		{
-			public void mouseClicked(MouseEvent e)
-			{
-				try
-				{
-					connection.client.close();
-
-				}
-				catch(Exception e1)
-				{
-
-				}
-				HomePage t = new HomePage();
-				t.setVisible(true);
-				dispose();
-			}
-		});
-		p.addMouseListener(new MouseAdapter()
-		{
-			public void mouseEntered(MouseEvent e)
-			{
-				e.getComponent().setBackground(Color.white);
-				use_case1.setForeground(color);
-			}
-			public void mouseExited(MouseEvent e)
-			{
-				e.getComponent().setBackground(color);
-				use_case1.setForeground(Color.black);
-			}
-		});
-
-
 		p=new JPanel(new GridLayout());
 		JLabel use_case2 = new JLabel("Mappage Capteur/Equipement");
 		use_case2.setHorizontalAlignment(JLabel.CENTER);
@@ -134,20 +104,37 @@ public class List_Position extends JFrame {
 		{
 			public void mouseClicked(MouseEvent e)
 			{
-				try
+				ArrayList<Map>ws=WorkSpace.allRentedWorkSpace(connection, company.getId_generalservices());
+				if(ws==null )
 				{
-					connection.client.close();
-
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Pas d'espace loué pour pouvoir utiliser cette fonctionnalité","Mappage impossible pour le moment",
+							JOptionPane.ERROR_MESSAGE);
 				}
-				catch(Exception e1)
+				else if(ws.isEmpty())
 				{
-
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Pas d'espace loué pour pouvoir utiliser cette fonctionnalité","Mappage impossible pour le moment",
+							JOptionPane.ERROR_MESSAGE);
 				}
-				MappingUC t = new MappingUC(company);
-				t.setVisible(true);
-				dispose();
-			}
-		});
+				else
+				{
+					try
+					{
+						connection.client.close();
+
+					}
+					catch(Exception e1)
+					{
+
+					}
+					MappingUC t = new MappingUC(company);
+					t.setVisible(true);
+					dispose();
+				}
+
+
+			}});
 		p.addMouseListener(new MouseAdapter()
 		{
 			public void mouseEntered(MouseEvent e)
@@ -355,7 +342,7 @@ public class List_Position extends JFrame {
 				{
 					ex.printStackTrace();
 				}
-				HomePage hp=new HomePage();
+				WelcomePage hp=new WelcomePage(company);
 				dispose();
 			}
 
@@ -382,6 +369,7 @@ public class List_Position extends JFrame {
 				{
 					ex.printStackTrace();
 				}
+				HomePage t = new HomePage();
 				dispose();
 			}
 
@@ -496,7 +484,7 @@ public class List_Position extends JFrame {
 
 		private Vector<Vector<Object>> data = new  Vector<Vector<Object>>();
 
-		private String[] columns=new String[3];
+		private String[] columns=new String[6];
 		public JTableButtonModel()
 		{
 
@@ -504,12 +492,20 @@ public class List_Position extends JFrame {
 
 				columns[0]="ID Emplacement";
 				columns[1]="type d'emplacement";
-				columns[2]="";
+				columns[2]="Num Batiment";
+				columns[3]="Num Etage";
+				columns[4]="Espace de travail";
+				columns[5]="";
+				ArrayList<Map>buildings=Building.allBuildings(connection);
+			
 				for(Map n:available_positions) {
-
+				Map	my_workspace=WorkSpace.theWorkSpace(connection,(Integer)n.get("id_position"));
 					Vector<Object> row = new Vector<Object>();
 					row.add(n.get("id_position"));
 					row.add(n.get("position_type"));
+					row.add("Batiment "+my_workspace.get("id_building"));
+					row.add("Etage "+my_workspace.get("floor_number"));
+					row.add(my_workspace.get("type_workspace")+" "+my_workspace.get("id_workspace"));
 					JButton map=new JButton("Mapper");
 					map.setBackground(color);
 					row.add(map);

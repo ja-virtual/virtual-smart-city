@@ -73,7 +73,7 @@ public void setId_position(int id_position) {
 
 public static ArrayList<Map> listEquipments(ClientToServer connection, int id_workspace)
 {
-	ArrayList<Map>equipments=null;
+	ArrayList<Map>equipments=new ArrayList<Map>();
 	try
 	{
 		Request request=new Request();
@@ -93,7 +93,7 @@ public static ArrayList<Map> listEquipments(ClientToServer connection, int id_wo
 
 public static boolean mapEquipment(ClientToServer connection,int id_gs,int id_position2, String type_equipment) {
 	
-	ArrayList<Map>update=null;
+	ArrayList<Map>update=new ArrayList<Map>();
 	try
 	{
 		Request request=new Request();
@@ -109,14 +109,14 @@ public static boolean mapEquipment(ClientToServer connection,int id_gs,int id_po
 	{
 		logger.info("Server is maybe occupied");
 	}
-	if(update!=null) 
+	if(!update.isEmpty()) 
 		return (boolean) update.get(0).get("update_done");
 		else
 	return false;
 	}
 public static Map getEquipment(ClientToServer connection, int id_position)
 {
-	ArrayList<Map>equipment=null;
+	ArrayList<Map>equipment=new ArrayList<Map>();
 	try
 	{
 		Request request=new Request();
@@ -130,16 +130,14 @@ public static Map getEquipment(ClientToServer connection, int id_position)
 	{
 		logger.info("Server is maybe occupied");
 	}
-	if(equipment!=null)
-	{
-		if(! equipment.isEmpty()) 
+if(! equipment.isEmpty()) 
 		return equipment.get(0);
-	}
+else
 	return null;
 }
 
 public static boolean moveEquipment(ClientToServer connection,int id_equipment,int old_position,int new_position) {
-	ArrayList<Map>update=null;
+	ArrayList<Map>update=new ArrayList<Map>();
 	try
 	{
 		Request request=new Request();
@@ -155,7 +153,7 @@ public static boolean moveEquipment(ClientToServer connection,int id_equipment,i
 	{
 		logger.info("Server is maybe occupied");
 	}
-	if(update!=null) 
+	if(!update.isEmpty()) 
 		return (boolean) update.get(0).get("update_done");
 		else
 	return false;

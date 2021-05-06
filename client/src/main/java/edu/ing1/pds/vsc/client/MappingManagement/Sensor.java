@@ -73,7 +73,7 @@ public void setId_position(int id_position) {
 
 public static ArrayList<Map> listSensors(ClientToServer connection, int id_workspace)
 {
-	ArrayList<Map>sensors=null;
+	ArrayList<Map>sensors=new ArrayList<Map>();
 	try
 	{
 		Request request=new Request();
@@ -93,7 +93,7 @@ public static ArrayList<Map> listSensors(ClientToServer connection, int id_works
 }
 
 public static boolean mapSensor(ClientToServer connection, int id_gs,int id_position2, String type_sensor) {
-	ArrayList<Map>update=null;
+	ArrayList<Map>update=new ArrayList<Map>();
 	try
 	{
 		Request request=new Request();
@@ -117,7 +117,7 @@ public static boolean mapSensor(ClientToServer connection, int id_gs,int id_posi
 	
 }
 public static boolean moveSensor(ClientToServer connection,int id_sensor,int old_position,int new_position) {
-	ArrayList<Map>update=null;
+	ArrayList<Map>update=new ArrayList<Map>();
 	try
 	{
 		Request request=new Request();
@@ -131,7 +131,6 @@ public static boolean moveSensor(ClientToServer connection,int id_sensor,int old
 		update=(ArrayList<Map>)response.getData();
 	}catch(Exception e)
 	{
-		e.printStackTrace();
 		logger.info("Server is maybe occupied");
 	}
 	if(update!=null) 
@@ -142,7 +141,7 @@ public static boolean moveSensor(ClientToServer connection,int id_sensor,int old
 }
 public static Map getSensor(ClientToServer connection, int id_position)
 {
-	ArrayList<Map>sensors=null;
+	ArrayList<Map>sensors=new ArrayList<Map>();
 	try
 	{
 		Request request=new Request();
@@ -158,7 +157,7 @@ public static Map getSensor(ClientToServer connection, int id_position)
 		e.printStackTrace();
 		logger.info("Server is maybe occupied");
 	}
-	if(sensors!=null  && sensors.isEmpty())
+	if(sensors.isEmpty())
 		return null;
 		else
 	return sensors.get(0);

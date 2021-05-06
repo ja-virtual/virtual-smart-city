@@ -12,6 +12,7 @@ public class ClientToServer {
 	private PrintWriter out;
 	private BufferedReader in;
 	private ObjectMapper mapper=new ObjectMapper();
+
 	
 	public Request SendRequest(Request req) throws Exception
 	{
@@ -26,7 +27,8 @@ public class ClientToServer {
 
 	public ClientToServer() {
 try {
-	client=new Socket(InetAddress.getLocalHost(),3344);
+String serverAdress="172.31.254.94"; //InetAddress.getLocalHost();
+	client=new Socket(serverAdress,3344);
 } catch (Exception e) {
 
 	e.printStackTrace();

@@ -76,7 +76,7 @@ public class WorkSpace {
 	}
 	static public ArrayList<Map> listWorkSpace(ClientToServer connection,int id_building, int floor_number)
 	{
-		ArrayList<Map>workspaces=null;
+		ArrayList<Map>workspaces=new ArrayList<Map>();
 		try
 		{
 			Request request=new Request();
@@ -95,7 +95,7 @@ public class WorkSpace {
 	}
 	static public ArrayList<Map> allRentedWorkSpace(ClientToServer connection, int id_gs)
 	{
-		ArrayList<Map>myworkspaces=null;
+		ArrayList<Map>myworkspaces=new ArrayList<Map>();
 		try
 		{
 			Request request=new Request();
@@ -114,7 +114,7 @@ public class WorkSpace {
 	}
 	static public Map workspace_Position(ClientToServer connection,int id_position,int id_gs)
 	{
-		ArrayList<Map>theworkspace=null;
+		ArrayList<Map>theworkspace=new ArrayList<Map>();
 		try
 		{
 			Request request=new Request();
@@ -128,7 +128,7 @@ public class WorkSpace {
 			return theworkspace.get(0);
 		}catch(Exception e)
 		{
-			e.printStackTrace();
+
 			logger.info("Server is maybe occupied");
 			return null;
 		}
@@ -136,7 +136,7 @@ public class WorkSpace {
 	}
 	static public Map theWorkSpace(ClientToServer connection,int id_workspace)
 	{
-		ArrayList<Map>theworkspace=null;
+		ArrayList<Map>theworkspace=new ArrayList<Map>();
 		try
 		{
 			Request request=new Request();
@@ -150,7 +150,10 @@ public class WorkSpace {
 		{
 			logger.info("Server is maybe occupied");
 		}
+		if(!theworkspace.isEmpty())
 		return theworkspace.get(0);
+		else
+			return null;
 	}
 	
 

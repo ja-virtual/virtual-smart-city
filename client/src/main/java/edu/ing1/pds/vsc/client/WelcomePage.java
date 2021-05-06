@@ -32,6 +32,7 @@ import edu.ing1.pds.vsc.client.MappingManagement.List_Position;
 import edu.ing1.pds.vsc.client.MappingManagement.Map_Full;
 import edu.ing1.pds.vsc.client.MappingManagement.MappingUC;
 import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
+import edu.ing1.pds.vsc.client.workspaceLocation.lolo.lolo.Loocation;
 
 public class WelcomePage extends JFrame {
 
@@ -78,7 +79,7 @@ public class WelcomePage extends JFrame {
 				{
 
 				}
-				HomePage t = new HomePage();
+				Loocation t = new Loocation(company);
 				t.setVisible(true);
 				dispose();
 			}
@@ -99,37 +100,6 @@ public class WelcomePage extends JFrame {
 		p.add(use_case1,BorderLayout.CENTER);
 		p.setBackground(color);
 		left.add(p);
-		p.addMouseListener(new MouseAdapter()
-		{
-			public void mouseClicked(MouseEvent e)
-			{
-				try
-				{
-					connection.client.close();
-
-				}
-				catch(Exception e1)
-				{
-
-				}
-				HomePage t = new HomePage();
-				t.setVisible(true);
-				dispose();
-			}
-		});
-		p.addMouseListener(new MouseAdapter()
-		{
-			public void mouseEntered(MouseEvent e)
-			{
-				e.getComponent().setBackground(Color.white);
-			}
-			public void mouseExited(MouseEvent e)
-			{
-				e.getComponent().setBackground(color);
-			}
-		});
-
-
 		p=new JPanel(new GridLayout());
 		JLabel use_case2 = new JLabel("Mappage Capteur/Equipement");
 		use_case2.setHorizontalAlignment(JLabel.CENTER);
@@ -304,8 +274,8 @@ public class WelcomePage extends JFrame {
 		menuBar.add(leave);
 		right.add(menuBar, BorderLayout.NORTH);
 
-		this.getContentPane().add(left,BorderLayout.WEST);
-		this.getContentPane().add(right,BorderLayout.CENTER);
+		this.getContentPane().add(left,BorderLayout.CENTER);
+
 		left.setBackground(color);
 
 		setSize(new Dimension(950,780));
@@ -318,9 +288,6 @@ public class WelcomePage extends JFrame {
 
 		company=GS;
 		myInterface();
-		JPanel p3=new JPanel();
-
-		right.add(p3,BorderLayout.CENTER);
 		setVisible(true);
 	}
 
