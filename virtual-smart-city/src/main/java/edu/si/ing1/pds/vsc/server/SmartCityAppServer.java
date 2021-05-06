@@ -35,21 +35,13 @@ public class SmartCityAppServer extends Thread {
 	private final static Logger logger = LoggerFactory.getLogger(SmartCityAppServer.class.getName());
 
 	public static DataSource ds=new DataSource(5,5);
-	ServerSocket server;
+	//ServerSocket server;
 	Socket client;
 	public static ServerConfig serverConfig;
 	public static  int max_connection_i = 0, connection_duration_i = 0;
 
 	public SmartCityAppServer() {
-		try {
-			server = new ServerSocket(1099);
 
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
-		}
 
 	}
 	public void run()
@@ -99,7 +91,7 @@ public class SmartCityAppServer extends Thread {
 
 	}
 
-	public void serve() {
+	public void serve(ServerSocket server) {
 		try {
 			client= server.accept();
 			logger.debug("a client has been detected !!");
@@ -152,13 +144,21 @@ public class SmartCityAppServer extends Thread {
 		ds = new DataSource(max_connection_i, connection_duration_i);
 
 		SmartCityAppServer service;
-		logger.info("server here");
-		while(true)
-		{
-			service=new SmartCityAppServer();
-			service.serve();
-		    service.start();
+		try {
+			ServerSocket server = new ServerSocket(1099);
+			while(true)
+			{
+				service=new SmartCityAppServer();
+				service.serve(server);
+			    service.start();
+			}
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
 		}
+		logger.info("server here");
 	}
 
 }
