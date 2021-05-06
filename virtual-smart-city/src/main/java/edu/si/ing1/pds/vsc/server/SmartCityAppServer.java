@@ -57,11 +57,8 @@ public class SmartCityAppServer extends Thread {
 	{
 		PrintWriter out=null;
 		BufferedReader in=null;
-		while(true)
-		{
+
 		this.serve();
-		if(ds.getUsedConnection()<max_connection_i )
-		{
 			try {
 				in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 				String operation=in.readLine();
@@ -79,13 +76,9 @@ public class SmartCityAppServer extends Thread {
 				this.serve();
 
 			}
-		}
-		else
-		{
-			
-			break;
-		}
-		}
+		
+
+		
 
 		try {
 			//in.close();
