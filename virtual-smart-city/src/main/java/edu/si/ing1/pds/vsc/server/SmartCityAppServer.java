@@ -108,6 +108,7 @@ public class SmartCityAppServer extends Thread {
 			//    final ClientRequestManager clientRequestManager = new ClientRequestManager(client);
 
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			logger.info("no service available!!");
 		}
 	}
