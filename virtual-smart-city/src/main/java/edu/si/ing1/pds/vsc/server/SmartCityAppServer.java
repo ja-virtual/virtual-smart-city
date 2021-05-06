@@ -57,7 +57,8 @@ public class SmartCityAppServer extends Thread {
 	{
 		PrintWriter out=null;
 		BufferedReader in=null;
-
+while(true)
+{
 		this.serve();
 			try {
 				in = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -77,9 +78,9 @@ public class SmartCityAppServer extends Thread {
 
 			}
 		
-
+}
 		
-
+/*
 		try {
 			//in.close();
 			//out.close();
@@ -87,7 +88,7 @@ public class SmartCityAppServer extends Thread {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	public void serve() {
