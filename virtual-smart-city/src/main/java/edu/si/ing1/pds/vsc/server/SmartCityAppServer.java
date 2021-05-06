@@ -49,8 +49,7 @@ public class SmartCityAppServer extends Thread {
 		PrintWriter out = null;
 		BufferedReader in = null;
 		try {
-			if(ds.getUsedConnection()<max_connection_i )
-			{
+		
 				in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 				String operation=in.readLine();
 				ObjectMapper mapper=new ObjectMapper();
@@ -63,11 +62,7 @@ public class SmartCityAppServer extends Thread {
 				out.println(response);
 				System.out.print("*******\n ");
 
-			}
-			else
-			{
-				logger.info("Server is busy");
-			}
+
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -152,7 +147,8 @@ public class SmartCityAppServer extends Thread {
 
 			// running infinite loop for getting
 			// client request
-			while (true) {
+			while (ds.getUsedConnection()<max_connection_i )
+			{ 
 
 				// socket object to receive incoming client
 				// requests
