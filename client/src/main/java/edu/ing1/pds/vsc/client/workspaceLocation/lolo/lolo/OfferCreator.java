@@ -16,12 +16,12 @@ public class OfferCreator {
     public int meetingroom_number;
     String type_floor;
     ArrayList<Offer> final_offers_array;
-
+int id_gs;
     
     
 
-    public OfferCreator (int op_nbr, int io_nbr, int mr_nbr, String floor) {
-        
+    public OfferCreator (int op_nbr, int io_nbr, int mr_nbr, String floor,int gs) {
+        id_gs=gs;
         openspace_number = op_nbr;
         individual_office_number = io_nbr;
         meetingroom_number = mr_nbr;
@@ -34,7 +34,7 @@ public class OfferCreator {
     	int i = 0;
     	ArrayList<Offer> offers = new ArrayList<Offer>();
     	while(i < ofr.size()) {
-    		Offer arlfr = new Offer(ofr.get(i));
+    		Offer arlfr = new Offer(ofr.get(i),id_gs);
     		offers.add(arlfr);
     		i++;
     	}
@@ -90,7 +90,7 @@ public class OfferCreator {
 	        
 	        connection.client.close();
     	 }catch(Exception e){
-             
+    		 e.printStackTrace();
          }
     	//System.out.println(arl_op.get(1).toString());
  		return arl_op;	
@@ -138,12 +138,10 @@ public class OfferCreator {
             connection.client.close();
 
         }catch(Exception e){
-            
+            e.printStackTrace();
         }
 		return arl_io;
     }
 
-    public static void main(String[] args) {
-    	OfferCreator Offers = new OfferCreator(2,2,1,"haut");
-    	 }
+
 }

@@ -38,6 +38,8 @@ import javax.swing.event.MenuListener;
 import edu.ing1.pds.vsc.client.ClientToServer;
 import edu.ing1.pds.vsc.client.General_Services;
 import edu.ing1.pds.vsc.client.HomePage;
+import edu.ing1.pds.vsc.client.WelcomePage;
+import edu.ing1.pds.vsc.client.workspaceLocation.lolo.lolo.Loocation;
 
 
 
@@ -194,7 +196,7 @@ this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				{
 					
 				}
-				HomePage t = new HomePage();
+				Loocation t = new Loocation(company);
 				t.setVisible(true);
 				dispose();
 			}
@@ -215,39 +217,6 @@ this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		p.add(use_case1,BorderLayout.CENTER);
 		p.setBackground(color);
 		left.add(p);
-		p.addMouseListener(new MouseAdapter()
-		{
-			public void mouseClicked(MouseEvent e)
-			{
-				try
-				{
-					connection.client.close();
-					
-				}
-				catch(Exception e1)
-				{
-					
-				}
-				HomePage t = new HomePage();
-				t.setVisible(true);
-				dispose();
-			}
-		});
-		p.addMouseListener(new MouseAdapter()
-		{
-			public void mouseEntered(MouseEvent e)
-			{
-				e.getComponent().setBackground(Color.white);
-				use_case1.setForeground(color);
-			}
-			public void mouseExited(MouseEvent e)
-			{
-				e.getComponent().setBackground(color);
-				use_case1.setForeground(Color.black);
-			}
-		});
-
-
 		p=new JPanel(new GridLayout());
 		JLabel use_case2 = new JLabel("Mappage Capteur/Equipement");
 		use_case2.setHorizontalAlignment(JLabel.CENTER);
@@ -259,20 +228,37 @@ this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		{
 			public void mouseClicked(MouseEvent e)
 			{
-				try
+				ArrayList<Map>ws=WorkSpace.allRentedWorkSpace(connection, company.getId_generalservices());
+				if(ws==null )
 				{
-					connection.client.close();
-					
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Pas d'espace loué pour pouvoir utiliser cette fonctionnalité","Mappage impossible pour le moment",
+							JOptionPane.ERROR_MESSAGE);
 				}
-				catch(Exception e1)
+				else if(ws.isEmpty())
 				{
-					
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Pas d'espace loué pour pouvoir utiliser cette fonctionnalité","Mappage impossible pour le moment",
+							JOptionPane.ERROR_MESSAGE);
 				}
-				MappingUC t = new MappingUC(company);
-				t.setVisible(true);
-				dispose();
-			}
-		});
+				else
+				{
+					try
+					{
+						connection.client.close();
+
+					}
+					catch(Exception e1)
+					{
+
+					}
+					MappingUC t = new MappingUC(company);
+					t.setVisible(true);
+					dispose();
+				}
+
+
+			}});
 		p.addMouseListener(new MouseAdapter()
 		{
 			public void mouseEntered(MouseEvent e)
@@ -480,7 +466,7 @@ catch(Exception ex)
 	        	   {
 	        		   ex.printStackTrace();
 	        	   }
-	              HomePage hp=new HomePage();
+	        	   WelcomePage hp=new WelcomePage(company);
 	              dispose();
 	           }
 	 
@@ -507,6 +493,7 @@ catch(Exception ex)
 	        	   {
 	        		   ex.printStackTrace();
 	        	   }
+	        	   HomePage t = new HomePage();
 	              dispose();
 	           }
 	 

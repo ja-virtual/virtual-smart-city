@@ -92,7 +92,7 @@ public class Positions {
 	//return the list of positions existing in the workspace with the id mentioned in the parameters
 	static public ArrayList<Map> listPositions(ClientToServer connection, int id_workspace)
 	{
-		ArrayList<Map>positions=null;
+		ArrayList<Map>positions=new ArrayList<Map>();
 		try
 		{
 			Request request=new Request();
@@ -154,7 +154,7 @@ public class Positions {
 public static ArrayList<Map >availablePositions(ClientToServer connection,int id_workspace,int id_gs)
 {
 
-	ArrayList<Map>positions=null;
+	ArrayList<Map>positions=new ArrayList<Map>();
 	try
 	{
 		Request request=new Request();
@@ -177,7 +177,7 @@ public static ArrayList<Map >availablePositions(ClientToServer connection,int id
 public static ArrayList<Map >thePosition(ClientToServer connection,int id_position)
 {
 
-	ArrayList<Map>positions=null;
+	ArrayList<Map>positions=new ArrayList<Map>();
 	try
 	{
 		Request request=new Request();
@@ -200,7 +200,7 @@ public static ArrayList<Map >thePosition(ClientToServer connection,int id_positi
 
 static public Map infoPosition(ClientToServer connection,int id_position)
 {
-	ArrayList<Map>theworkspace=null;
+	ArrayList<Map>theworkspace=new ArrayList<Map>();
 	try
 	{
 		Request request=new Request();

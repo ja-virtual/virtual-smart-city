@@ -29,6 +29,8 @@ public class OfferManager {
             }
         }
         System.out.println("offers.size() " + offers.size());
+        if(!offers.isEmpty())
+        {
         for (int i = 0; i < offers.size(); i++){
             Offer ofr_i = offers.get(i);
             double area = ofr_i.thearea*1.1;
@@ -63,16 +65,11 @@ public class OfferManager {
             }
         }
         Collections.sort(offers, Offer.OfferComparator);
-       
+        return offers;
+        }
+        else
+        	return new ArrayList<Offer>();
         
-    return offers;
+  
     }
 }
-
-
-
-
-
-
-
-

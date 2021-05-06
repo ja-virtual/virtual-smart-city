@@ -67,7 +67,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>edu.ing1.pds.vsc.client.Client</mainClass>
+							<mainClass>edu.ing1.pds.vsc.client.HomePage</mainClass>
 							<!--mainClass>edu.si.ing1.pds.vsc.connectionPool.ConnectionMain</mainClass-->
 
 
