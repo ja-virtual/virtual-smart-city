@@ -47,6 +47,7 @@ public class SmartCityAppServer extends Thread {
 
 		} catch (IOException e) {
 
+			logger.info("no luck in sockets");
 			e.printStackTrace();
 
 		}
@@ -81,12 +82,7 @@ public class SmartCityAppServer extends Thread {
 		}
 		else
 		{
-			try {
-				server.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 			break;
 		}
 		}
@@ -104,7 +100,7 @@ public class SmartCityAppServer extends Thread {
 	public void serve() {
 		try {
 			client= server.accept();
-			logger.debug("a client has been detected !!");
+			logger.debug(server.toString()+" a client has been detected !!");
 			//    final ClientRequestManager clientRequestManager = new ClientRequestManager(client);
 
 		} catch (Exception ex) {
