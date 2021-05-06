@@ -36,13 +36,13 @@ public class SmartCityAppServer extends Thread {
 
 	public static DataSource ds=new DataSource(5,5);
 	//ServerSocket server;
+	public ServerToClient connection=new ServerToClient(ds);
 	Socket client;
 	public static ServerConfig serverConfig;
 	public static  int max_connection_i = 0, connection_duration_i = 0;
 
 	public SmartCityAppServer(Socket cl) {
 		client=cl;
-
 	}
 	public void run()
 	{
@@ -54,9 +54,7 @@ public class SmartCityAppServer extends Thread {
 				String operation=in.readLine();
 				ObjectMapper mapper=new ObjectMapper();
 				logger.info(operation);
-
 				Request request=mapper.readValue(operation,Request.class);
-				ServerToClient connection=new ServerToClient(ds);
 				String response=connection.SendResponse(request);
 				out=new PrintWriter(client.getOutputStream(),true);
 				out.println(response);
