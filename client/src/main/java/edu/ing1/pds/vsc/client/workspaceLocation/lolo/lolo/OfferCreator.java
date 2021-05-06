@@ -52,100 +52,25 @@ public class OfferCreator {
     	int c = 0;
     	while(true) {
     		if((arl_op.size() <= a + openspace_number) || arl_io.size() <= b + individual_office_number || arl_mr.size() <= c + meetingroom_number) {
-    			//System.out.println("skrt");
     			break;
     		}
     		
     		List<WorkSpace> list = new ArrayList<>();
-    		//System.out.println(openspace_number);
         	for(int i = 0; i < openspace_number; i++) {
         		list.add(arl_op.get(a));
         		++a;
-        		//System.out.println(arl_op.get(a).toString());
-        		//System.out.println("arl_op is null : " + arl_op == null);
-        		
         	}
         	for(int i = 0; i < individual_office_number; i++) {
         		list.add(arl_io.get(b));
         		++b;
-        		//System.out.println(arl_io == null);
         	}
         	for(int i = 0; i< meetingroom_number; i++) {
         		list.add(arl_mr.get(c));
         		++c;
-        		//System.out.println("arl_mr is null : " + arl_mr == null);
         	}
         	
         	ArlOfr.add((ArrayList<WorkSpace>) list);
     	}
-    	//System.out.println("ArlOfr" + ArlOfr);
- 
-
-    	
-//    	int a = 0;
-//    	int b = 0;
-//    	int c = 0;
-//    	
-//    	while(true) {
-//    		if(a < arl_op.size() || b < arl_io.size() || c < arl_mr.size())
-//    			break;
-//    		ArrayList<WorkSpace> oneArl = new ArrayList<WorkSpace>();
-//    		int i = 0;
-//    		while(true) {
-//    			if(i < openspace_number)
-//    				break;
-//    			oneArl.add(arl_op.get(i));
-//    			i++;
-//    			a++;
-//    			
-//    		}
-//    		int j = 0;
-//    		while(true) {
-//    			if(j < individual_office_number)
-//    				break;
-//    			oneArl.add(arl_io.get(j));
-//    			j++;
-//    			b++;
-//    			
-//    		}
-//    		int k = 0;
-//    		while(true) {
-//    			if(k < meetingroom_number)
-//    				break;
-//    			oneArl.add(arl_mr.get(k));
-//    			k++;
-//    			c++;
-//    		}
-//    		ArlOfr.add(oneArl);
-//    	}
-    	
-    	
-    	
-    	
-    	
-    	
-    	/*while(a < arl_op.size() || b < arl_io.size() || c < arl_mr.size()) {
-    		ArrayList<WorkSpace> oneArl = new ArrayList<WorkSpace>();
-    		int i = 0;
-    		while(i < openspace_number) {
-    			oneArl.add(arl_op.get(i));
-    			i++;
-    			a++;
-    		}
-    		int j = 0;
-    		while(j < individual_office_number) {
-    			oneArl.add(arl_io.get(j));
-    			j++;
-    			b++;
-    		}
-    		int k = 0;
-    		while(k < meetingroom_number) {
-    			oneArl.add(arl_mr.get(k));
-    			k++;
-    			c++;
-    		}
-    		ArlOfr.add(oneArl);
-    	}*/
     	return ArlOfr;
     }
     public ArrayList<WorkSpace> ResultOp() {

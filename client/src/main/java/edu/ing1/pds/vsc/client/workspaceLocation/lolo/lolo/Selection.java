@@ -398,8 +398,4 @@ this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setVisible(true);
 		this.add(right);
 }
-//	public static void main(String[] args) {
-//		
-//		Selection s = new Selection();
-//	}
 } 

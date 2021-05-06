@@ -23,7 +23,6 @@ public class Loocation extends JFrame implements ActionListener{
 
 	public  JLabel image;
 	public JPanel header;
-	//public Color colorr;
 	public JLabel welcome_phrase;
 	public JPanel criterias;
 	public JTextField criteria1;
@@ -536,18 +535,18 @@ this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		if (event.getSource() == check) {
 			if(bad_input(criteria1.getText()) || bad_input(criteria2.getText()) || bad_input(criteria3.getText()) || bad_input(criteria5.getText()) 
 					|| bad_input(criteria6.getText()) || bad_input(criteria7.getText())) {
-				System.out.println(criteria1.getText());
-				System.out.println(bad_input(criteria1.getText()));
-				System.out.println(criteria2.getText());
-				System.out.println(bad_input(criteria2.getText()));
-				System.out.println(criteria3.getText());
-				System.out.println(bad_input(criteria3.getText()));
-				System.out.println(criteria5.getText());
-				System.out.println(bad_input(criteria5.getText()));
-				System.out.println(criteria6.getText());
-				System.out.println(bad_input(criteria6.getText()));
-				System.out.println(criteria7.getText());
-				System.out.println(bad_input(criteria7.getText()));
+//				System.out.println(criteria1.getText());
+//				System.out.println(bad_input(criteria1.getText()));
+//				System.out.println(criteria2.getText());
+//				System.out.println(bad_input(criteria2.getText()));
+//				System.out.println(criteria3.getText());
+//				System.out.println(bad_input(criteria3.getText()));
+//				System.out.println(criteria5.getText());
+//				System.out.println(bad_input(criteria5.getText()));
+//				System.out.println(criteria6.getText());
+//				System.out.println(bad_input(criteria6.getText()));
+//				System.out.println(criteria7.getText());
+//				System.out.println(bad_input(criteria7.getText()));
 				
 				JOptionPane.showMessageDialog(new JPanel(), "Tous les champs ne sont pas bien renseignés", "Erreur", JOptionPane.ERROR_MESSAGE);
 			}else{
@@ -560,13 +559,7 @@ this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			individual_office_nbr=Integer.parseInt(criteria6.getText());
 			meetingroom_nbr=Integer.parseInt(criteria7.getText());
 			
-			/*System.out.println(area);
-			System.out.println(price);
-			System.out.println(employee_nbr);
-			System.out.println(floor);
-			System.out.println(openspace_nbr);
-			System.out.println(individual_office_nbr);
-			System.out.println(meetingroom_nbr);*/
+
 			OfferCreator ofCrt = new OfferCreator(openspace_nbr,individual_office_nbr, meetingroom_nbr, floor);
 			OfferManager ofMng = new OfferManager(ofCrt.final_offers_array, price, area, employee_nbr);
 			General_Services gs = new General_Services();

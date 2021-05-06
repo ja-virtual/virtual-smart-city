@@ -31,7 +31,6 @@ public class Offer extends JPanel implements ActionListener{
     int themeetingroom_nbr;
     int theindividual_nbr;
     ArrayList<WorkSpace> offer;
-    //String floor_type;
     JLabel price;
     JLabel max_capacity;
     JLabel area;
@@ -163,12 +162,10 @@ public class Offer extends JPanel implements ActionListener{
        ArrayList<Double> place_score = new ArrayList<Double>();
       while(true) {
     	  if (i >= offer.size()) {
-    		  //System.out.println("break condition i" + i);
        	   break;
     	  }
     	  while(true) {
         	   if(j >= offer.size()) {
-         		  //System.out.println("break condition j" + j);
               	   break;
            	  }
         	   WorkSpace wks_i = offer.get(i);
@@ -274,30 +271,5 @@ public class Offer extends JPanel implements ActionListener{
 			}
 			JOptionPane.showMessageDialog(new JPanel(), "L'offre à bien été louée", "Bravo", JOptionPane.INFORMATION_MESSAGE);
 		}
-   }
-   
-   
-   
-
-   public static void main(String[] args) {
-       WorkSpace wks1 = new WorkSpace(1, "salle de reunion", 4, 1);
-       WorkSpace wks2 = new WorkSpace(1, "salle de reunion", 4, 1);
-       WorkSpace wks3 = new WorkSpace(1, "salle de reunion", 2, 1);
-       WorkSpace wks4 = new WorkSpace(1, "salle de reunion", 4, 1);
-       ArrayList< WorkSpace> liste = new ArrayList<WorkSpace>();
-       liste.add(wks1);
-       liste.add(wks2);
-       liste.add(wks3);
-       liste.add(wks4);
-       //System.out.println(liste);
-
-       Offer ooof = new Offer(liste);
-       System.out.println(ooof.theplacescore);
-       System.out.println(ooof.thefloorscore);
-       System.out.println(ooof.thescore);
-       System.out.println(ooof.thearea);
-       System.out.println(ooof.themax_employee_number);
-       System.out.println(ooof.theprice);
-
    }
 }

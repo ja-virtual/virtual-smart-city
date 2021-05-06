@@ -1,7 +1,7 @@
 package edu.ing1.pds.vsc.client.workspaceLocation.lolo.lolo;
 
 
-//import java.lang.System.Logger;
+import java.lang.System.Logger;
 import java.time.Year;
 import java.util.Comparator;
 
@@ -12,7 +12,6 @@ public class WorkSpace {
     int theprice;
     int thefloor;
     int thebuilding;
-    //int theplace;
     int typeprice;
     int id_wokspace;
 
