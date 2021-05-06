@@ -92,7 +92,7 @@ public class SmartCityAppServer extends Thread {
                     }
                 }
                 catch (IOException e) {
-                	this.serve();
+                	
                     e.printStackTrace();
                 }
             }
