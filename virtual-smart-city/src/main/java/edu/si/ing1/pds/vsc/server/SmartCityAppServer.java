@@ -71,9 +71,11 @@ while(true)
 				out=new PrintWriter(client.getOutputStream(),true);
 				out.println(response);
 				System.out.print("*******\n ");
+				in.close();
+				out.close();
 				//this.serve();
 			} catch (Exception e1) {
-				//e1.printStackTrace()
+				e1.printStackTrace();
 				this.serve();
 
 			}
