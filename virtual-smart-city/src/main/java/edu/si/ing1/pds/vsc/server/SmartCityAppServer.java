@@ -74,7 +74,7 @@ public class SmartCityAppServer extends Thread {
 				System.out.print("*******\n ");
 			}
 		} catch(Exception e) { 
-			e.printStackTrace(); 
+			logger.info("Serveur est en attente de sa prochaine requete");
 		} 
 		finally { 
 			try { 
@@ -83,20 +83,10 @@ public class SmartCityAppServer extends Thread {
 				client.close(); 
 				System.out.println("...Stopped"); 
 			} catch(IOException ioe) { 
-				ioe.printStackTrace(); 
 			} 
 		}
 	}
-	/*public void serve(ServerSocket server) {
-		try {
-			client= server.accept();
-			logger.debug("a client has been detected !!");
 
-
-		} catch (Exception ex) {
-			logger.info("no service available!!");
-		}
-	}*/
 
 	public static void main(String[] args) throws Exception {
 		//connection pool configuration
@@ -142,7 +132,7 @@ public class SmartCityAppServer extends Thread {
 		try {
 			myServerSocket = new ServerSocket(1099);
 		} catch(IOException ioe) { 
-			System.out.println("Could not create server socket on port 8888. Quitting.");
+			System.out.println("Could not create server socket on port 1099. Quitting.");
 			System.exit(-1);
 		} 
 
@@ -151,9 +141,10 @@ public class SmartCityAppServer extends Thread {
 				Socket clientSocket = myServerSocket.accept();
 				SmartCityAppServer cliThread = new SmartCityAppServer(clientSocket);
 				cliThread.start(); 
+				System.out.println("Serveur est en ecoute"); 
 			} catch(IOException ioe) { 
 				System.out.println("Exception found on accept. Ignoring. Stack Trace :"); 
-				ioe.printStackTrace(); 
+			
 			}  
 		} 
 		try { 
