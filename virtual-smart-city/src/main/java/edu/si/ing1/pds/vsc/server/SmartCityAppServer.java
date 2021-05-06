@@ -66,23 +66,9 @@ public class SmartCityAppServer extends Thread {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		finally {
-			try {
-				if (out != null) {
-					out.close();
-				}
-				if (in != null) {
-					in.close();
-					client.close();
-				}
-			}
-			catch (IOException e) {
-
-				e.printStackTrace();
-			}
+		
 		}
 
-	}
 
 	/*public void serve(ServerSocket server) {
 		try {
@@ -165,6 +151,7 @@ public class SmartCityAppServer extends Thread {
 				// This thread will handle the client
 				// separately
 				service.start();
+				client.close();
 			}
 		}
 		catch (IOException e) {
