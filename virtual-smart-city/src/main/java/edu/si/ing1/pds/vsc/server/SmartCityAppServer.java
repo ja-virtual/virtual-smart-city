@@ -42,7 +42,7 @@ public class SmartCityAppServer extends Thread {
 
 	public SmartCityAppServer() {
 		try {
-			server = new ServerSocket(3344);
+			server = new ServerSocket(1099);
 
 
 		} catch (IOException e) {
