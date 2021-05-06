@@ -151,10 +151,11 @@ public class SmartCityAppServer extends Thread {
 		//connection pool created
 		ds = new DataSource(max_connection_i, connection_duration_i);
 
-		SmartCityAppServer service=new SmartCityAppServer();
+		SmartCityAppServer service;
 		logger.info("server here");
 		while(true)
 		{
+			service=new SmartCityAppServer();
 			service.serve();
 		    service.start();
 		}
