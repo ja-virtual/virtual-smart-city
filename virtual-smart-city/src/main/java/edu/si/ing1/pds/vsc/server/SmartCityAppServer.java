@@ -151,7 +151,7 @@ public class SmartCityAppServer extends Thread {
 				// This thread will handle the client
 				// separately
 				service.start();
-				client.close();
+				
 			}
 		}
 		catch (IOException e) {
