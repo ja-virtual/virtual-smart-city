@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import edu.si.ing1.pds.vsc.connectionPool.DataSource;
 
 
 
@@ -514,14 +514,19 @@ public class ServerToClient {
 		else if(request_name.equals("set_workspace_unavailable"))
 		{
 			Map data_loading=(Map) request.getData();
-			ResultSet rs1 = connection.createStatement().executeQuery("UPDATE workspace SET is_available = false where id_workspace="+(Integer)data_loading.get("id_workspace")+" and id_gs="+(Integer)data_loading.get("id_gs"));
-			rs1.close();
+			System.out.println("ws "+(Integer)data_loading.get("id_workspace"));
+			System.out.println("gs "+(Integer)data_loading.get("id_gs"));
+			int op1 = connection.createStatement().executeUpdate("UPDATE workspace SET is_available = false,id_gs=+"+(Integer)data_loading.get("id_gs")+" where id_workspace="+(Integer)data_loading.get("id_workspace"));
 			Map<String,Object> response=new HashMap<String,Object>();
+			List<Map> update=new ArrayList<Map>();
+			Map<String,Object> hm=new HashMap<String,Object>();
+			System.out.println("op1 "+op1);
+			hm.put("updated",op1);
+			update.add(hm);
 			response.put("name_request", request_name);
-			response.put("data", null);
+			response.put("data",update);
 			response_string=mapper.writeValueAsString(response);
 		}
-
 		// Mohand Part about access cards management
 		// Looking for all access cards
 
