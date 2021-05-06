@@ -42,12 +42,11 @@ public class SmartCityAppServer extends Thread {
 
 	public SmartCityAppServer() {
 		try {
-			server = new ServerSocket(1099);
+			server = new ServerSocket(3344);
 
 
 		} catch (IOException e) {
 
-			logger.info("no luck in sockets");
 			e.printStackTrace();
 
 		}
@@ -55,63 +54,58 @@ public class SmartCityAppServer extends Thread {
 	}
 	public void run()
 	{
-		PrintWriter out=null;
-		BufferedReader in=null;
-		this.serve();
-		try {
-			in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+		PrintWriter out = null;
+        BufferedReader in = null;
+	 try {
+		 if(ds.getUsedConnection()<max_connection_i )
+		{
+		 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+			String operation=in.readLine();
+			ObjectMapper mapper=new ObjectMapper();
+			logger.info(operation);
+
+			Request request=mapper.readValue(operation,Request.class);
+			ServerToClient connection=new ServerToClient(ds);
+			String response=connection.SendResponse(request);
 			out=new PrintWriter(client.getOutputStream(),true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-while(true)
-{
-		this.serve();
-			try {
-				
-				String operation=in.readLine();
-				if(operation!=null)
-				{
-				ObjectMapper mapper=new ObjectMapper();
-				logger.info(operation);
-				Request request=mapper.readValue(operation,Request.class);
-				ServerToClient connection=new ServerToClient(ds);
-				String response=connection.SendResponse(request);
-				out.println(response);
-				System.out.print("*******\n ");
-				}
-				else
-				{
-					logger.info("Serveur est en attente d'une requete ");
-				}
-				//this.serve();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				this.serve();
+			out.println(response);
+			System.out.print("*******\n ");
+			//this.serve();
+                    
+                }
+		 else
+		 {
+			 logger.info("Server is busy");
+		 }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            finally {
+                try {
+                    if (out != null) {
+                        out.close();
+                    }
+                    if (in != null) {
+                        in.close();
+                        client.close();
+                    }
+                }
+                catch (IOException e) {
+                	this.serve();
+                    e.printStackTrace();
+                }
+            }
 
-			}
-		
-}
-		
-/*
-		try {
-			//in.close();
-			//out.close();
-			//server.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
 	}
 
 	public void serve() {
 		try {
 			client= server.accept();
-			logger.debug(server.toString()+" a client has been detected !!");
+			logger.debug("a client has been detected !!");
 			//    final ClientRequestManager clientRequestManager = new ClientRequestManager(client);
 
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			logger.info("no service available!!");
 		}
 	}
@@ -159,8 +153,11 @@ while(true)
 
 		SmartCityAppServer service=new SmartCityAppServer();
 		logger.info("server here");
-		service.start();
-
+		while(true)
+		{
+			service.serve();
+		    service.start();
+		}
 	}
 
 }
