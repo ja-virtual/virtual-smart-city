@@ -151,6 +151,7 @@ public class SmartCityAppServer extends Thread {
 				service=new SmartCityAppServer();
 				service.serve(server);
 			    service.start();
+				logger.info("server here");
 			}
 
 		} catch (IOException e) {
@@ -158,7 +159,6 @@ public class SmartCityAppServer extends Thread {
 			e.printStackTrace();
 
 		}
-		logger.info("server here");
 	}
 
 }
