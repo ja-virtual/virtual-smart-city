@@ -71,12 +71,11 @@ public class SmartCityAppServer extends Thread {
 				String response=connection.SendResponse(request);
 				out=new PrintWriter(client.getOutputStream(),true);
 				out.println(response);
-				System.out.print("*********************\n ");
-				in.close();
-				out.close();
+				System.out.print("*******\n ");
+				//this.serve();
 			} catch (Exception e1) {
-				e1.printStackTrace();
-				this.serve();
+				//e1.printStackTrace()
+			//	this.serve();
 
 			}
 		}
@@ -91,14 +90,15 @@ public class SmartCityAppServer extends Thread {
 			break;
 		}
 		}
-    /*    try {
+
+		try {
 			//in.close();
 			//out.close();
 			//server.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}*/
+		}
 	}
 
 	public void serve() {
