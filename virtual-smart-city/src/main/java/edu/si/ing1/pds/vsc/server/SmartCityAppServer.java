@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -39,37 +40,53 @@ public class SmartCityAppServer extends Thread {
 	public ServerToClient connection=new ServerToClient(ds);
 	Socket client;
 	public static ServerConfig serverConfig;
+	boolean m_bRunThread = true; 
 	public static  int max_connection_i = 0, connection_duration_i = 0;
 
-	public SmartCityAppServer(Socket cl) {
-		client=cl;
+
+	static ServerSocket myServerSocket;
+	static boolean ServerOn = true;
+	public SmartCityAppServer(Socket clientSocket) { 
+
+		client=clientSocket;
 	}
 	public void run()
 	{
-		PrintWriter out = null;
-		BufferedReader in = null;
-		try {
-		
+		BufferedReader in = null; 
+		PrintWriter out = null; 
+		System.out.println(
+				"Accepted Client Address - " +client.getInetAddress().getHostName());
+		try { 
+			in = new BufferedReader(
+					new InputStreamReader(client.getInputStream()));
+			out = new PrintWriter( new OutputStreamWriter(client.getOutputStream()));
+
+			while(ds.getUsedConnection()<max_connection_i ) { 
 				in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 				String operation=in.readLine();
 				ObjectMapper mapper=new ObjectMapper();
 				logger.info(operation);
 				Request request=mapper.readValue(operation,Request.class);
+				ServerToClient connection=new ServerToClient(ds);
 				String response=connection.SendResponse(request);
-				logger.info("response :"+response);
 				out=new PrintWriter(client.getOutputStream(),true);
 				out.println(response);
 				System.out.print("*******\n ");
-
-
+			}
+		} catch(Exception e) { 
+			e.printStackTrace(); 
+		} 
+		finally { 
+			try { 
+				in.close(); 
+				out.close(); 
+				client.close(); 
+				System.out.println("...Stopped"); 
+			} catch(IOException ioe) { 
+				ioe.printStackTrace(); 
+			} 
 		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		}
-
-
+	}
 	/*public void serve(ServerSocket server) {
 		try {
 			client= server.accept();
@@ -122,51 +139,30 @@ public class SmartCityAppServer extends Thread {
 		//connection pool created
 		ds = new DataSource(max_connection_i, connection_duration_i);
 
-		ServerSocket server = null;
-
 		try {
+			myServerSocket = new ServerSocket(1099);
+		} catch(IOException ioe) { 
+			System.out.println("Could not create server socket on port 8888. Quitting.");
+			System.exit(-1);
+		} 
 
-			// server is listening on port 1099
-			server = new ServerSocket(1099);
-			server.setReuseAddress(true);
-
-			// running infinite loop for getting
-			// client request
-			while (ds.getUsedConnection()<max_connection_i )
-			{ 
-
-				// socket object to receive incoming client
-				// requests
-				Socket client = server.accept();
-
-				// Displaying that new client is connected
-				// to server
-				System.out.println("New client connected"
-						+ client.getInetAddress()
-						.getHostAddress());
-
-				// create a new thread object
-				SmartCityAppServer service=new SmartCityAppServer(client);
-
-				// This thread will handle the client
-				// separately
-				service.start();
-				
-			}
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-		finally {
-			if (server != null) {
-				try {
-					server.close();
-				}
-				catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		while(ServerOn) { 
+			try { 
+				Socket clientSocket = myServerSocket.accept();
+				SmartCityAppServer cliThread = new SmartCityAppServer(clientSocket);
+				cliThread.start(); 
+			} catch(IOException ioe) { 
+				System.out.println("Exception found on accept. Ignoring. Stack Trace :"); 
+				ioe.printStackTrace(); 
+			}  
+		} 
+		try { 
+			myServerSocket.close(); 
+			System.out.println("Server Stopped"); 
+		} catch(Exception ioe) { 
+			System.out.println("Error Found stopping server socket"); 
+			System.exit(-1); 
+		} 	
 	}
-
 }
+
