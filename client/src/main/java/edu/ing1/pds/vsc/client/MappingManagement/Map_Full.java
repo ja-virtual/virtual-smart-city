@@ -758,6 +758,7 @@ catch(Exception ex)
 				if(individual1.getIs_available()==true)
 				{
 
+
 					g.drawRect(510,120,35,95);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
 					g.drawString("Idv\n",520,160);
@@ -766,6 +767,7 @@ catch(Exception ex)
 				}
 				else if(individual1.getId_generalServices()==company.getId_generalservices())
 				{
+			
 					g.setColor(Color.green);
 					g.fillRect(510,120,35,95);
 					g.setColor(Color.black);
@@ -896,6 +898,7 @@ catch(Exception ex)
 				}
 				else if(individual3.getId_generalServices()==company.getId_generalservices())
 				{
+
 					g.setColor(Color.green);
 					g.fillRect(510,225,35,95);
 					g.setColor(Color.black);
@@ -906,12 +909,14 @@ catch(Exception ex)
 				else
 				{
 
+
+
 					g.setColor(Color.red);
-					g.fillRect(510,120,35,95);
+					g.fillRect(510,225,35,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString("Idv\n",520,160);
-					g.drawString(individual3.getId_workspace()+"",520,170);
+					g.drawString("Idv\n",520,260);
+					g.drawString(individual3.getId_workspace()+"",520,270);
 
 
 				}

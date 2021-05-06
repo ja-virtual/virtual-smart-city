@@ -940,7 +940,10 @@ catch(Exception ex)
 				}
 					else
 					{
-						JOptionPane.showMessageDialog(new JFrame(),my_new_position,"Déplacement Impossible",JOptionPane.PLAIN_MESSAGE);
+						JOptionPane.showMessageDialog(new JFrame(),
+								"veuillez précisez un emplacement d'abbord",
+								"Nouveau emplacement non précisé",
+								JOptionPane.ERROR_MESSAGE);
 					}	
 				}
 				

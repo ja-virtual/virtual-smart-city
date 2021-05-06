@@ -907,11 +907,11 @@ catch(Exception ex)
 				{
 
 					g.setColor(Color.red);
-					g.fillRect(510,120,35,95);
+					g.fillRect(510,225,35,95);
 					g.setColor(Color.black);
 					g.setFont(new Font("Serif", Font.BOLD, 13));
-					g.drawString("Idv\n",520,160);
-					g.drawString(individual3.getId_workspace()+"",520,170);
+					g.drawString("Idv\n",520,260);
+					g.drawString(individual3.getId_workspace()+"",520,270);
 
 
 				}
