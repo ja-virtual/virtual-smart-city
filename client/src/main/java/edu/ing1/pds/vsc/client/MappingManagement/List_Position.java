@@ -484,7 +484,7 @@ public class List_Position extends JFrame {
 
 		private Vector<Vector<Object>> data = new  Vector<Vector<Object>>();
 
-		private String[] columns=new String[6];
+		private String[] columns=new String[3];
 		public JTableButtonModel()
 		{
 
@@ -492,24 +492,20 @@ public class List_Position extends JFrame {
 
 				columns[0]="ID Emplacement";
 				columns[1]="type d'emplacement";
-				columns[2]="Num Batiment";
-				columns[3]="Num Etage";
-				columns[4]="Espace de travail";
-				columns[5]="";
-				ArrayList<Map>buildings=Building.allBuildings(connection);
-			
+				columns[2]="";
+			JButton map;
 				for(Map n:available_positions) {
-				Map	my_workspace=WorkSpace.theWorkSpace(connection,(Integer)n.get("id_position"));
 					Vector<Object> row = new Vector<Object>();
-					row.add(n.get("id_position"));
-					row.add(n.get("position_type"));
-					row.add("Batiment "+my_workspace.get("id_building"));
-					row.add("Etage "+my_workspace.get("floor_number"));
-					row.add(my_workspace.get("type_workspace")+" "+my_workspace.get("id_workspace"));
-					JButton map=new JButton("Mapper");
-					map.setBackground(color);
-					row.add(map);
-					data.add(row);
+						row.add(n.get("id_position"));
+						row.add(n.get("position_type"));
+						map=new JButton("Mapper");
+						row.add(map);
+						map.setBackground(color);
+						row.add(map);
+						data.add(row);	
+						
+					
+		
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

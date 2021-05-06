@@ -56,8 +56,10 @@ public class SmartCityAppServer extends Thread {
 	{
 		PrintWriter out=null;
 		BufferedReader in=null;
+		while(true)
+		{
 		this.serve();
-		while(ds.getUsedConnection()<max_connection_i )
+		if(ds.getUsedConnection()<max_connection_i )
 		{
 			try {
 				in = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -70,23 +72,33 @@ public class SmartCityAppServer extends Thread {
 				out=new PrintWriter(client.getOutputStream(),true);
 				out.println(response);
 				System.out.print("*********************\n ");
-				//this.serve();
+				in.close();
+				out.close();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 				this.serve();
 
 			}
 		}
-
-
-		try {
+		else
+		{
+			try {
+				server.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		}
+		}
+    /*    try {
 			//in.close();
 			//out.close();
 			//server.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	public void serve() {
