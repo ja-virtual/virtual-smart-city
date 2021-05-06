@@ -40,67 +40,66 @@ public class SmartCityAppServer extends Thread {
 	public static ServerConfig serverConfig;
 	public static  int max_connection_i = 0, connection_duration_i = 0;
 
-	public SmartCityAppServer() {
-
+	public SmartCityAppServer(Socket cl) {
+		client=cl;
 
 	}
 	public void run()
 	{
 		PrintWriter out = null;
-        BufferedReader in = null;
-	 try {
-		 if(ds.getUsedConnection()<max_connection_i )
-		{
-		 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-			String operation=in.readLine();
-			ObjectMapper mapper=new ObjectMapper();
-			logger.info(operation);
+		BufferedReader in = null;
+		try {
+			if(ds.getUsedConnection()<max_connection_i )
+			{
+				in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+				String operation=in.readLine();
+				ObjectMapper mapper=new ObjectMapper();
+				logger.info(operation);
 
-			Request request=mapper.readValue(operation,Request.class);
-			ServerToClient connection=new ServerToClient(ds);
-			String response=connection.SendResponse(request);
-			out=new PrintWriter(client.getOutputStream(),true);
-			out.println(response);
-			System.out.print("*******\n ");
-			//this.serve();
-                    
-                }
-		 else
-		 {
-			 logger.info("Server is busy");
-		 }
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-            finally {
-                try {
-                    if (out != null) {
-                        out.close();
-                    }
-                    if (in != null) {
-                        in.close();
-                        client.close();
-                    }
-                }
-                catch (IOException e) {
-                	
-                    e.printStackTrace();
-                }
-            }
+				Request request=mapper.readValue(operation,Request.class);
+				ServerToClient connection=new ServerToClient(ds);
+				String response=connection.SendResponse(request);
+				out=new PrintWriter(client.getOutputStream(),true);
+				out.println(response);
+				System.out.print("*******\n ");
+
+			}
+			else
+			{
+				logger.info("Server is busy");
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (out != null) {
+					out.close();
+				}
+				if (in != null) {
+					in.close();
+					client.close();
+				}
+			}
+			catch (IOException e) {
+
+				e.printStackTrace();
+			}
+		}
 
 	}
 
-	public void serve(ServerSocket server) {
+	/*public void serve(ServerSocket server) {
 		try {
 			client= server.accept();
 			logger.debug("a client has been detected !!");
-			//    final ClientRequestManager clientRequestManager = new ClientRequestManager(client);
+
 
 		} catch (Exception ex) {
 			logger.info("no service available!!");
 		}
-	}
+	}*/
 
 	public static void main(String[] args) throws Exception {
 		//connection pool configuration
@@ -143,21 +142,48 @@ public class SmartCityAppServer extends Thread {
 		//connection pool created
 		ds = new DataSource(max_connection_i, connection_duration_i);
 
-		SmartCityAppServer service;
+		ServerSocket server = null;
+
 		try {
-			ServerSocket server = new ServerSocket(1099);
-			while(true)
-			{
-				service=new SmartCityAppServer();
-				service.serve(server);
-			    service.start();
-				logger.info("server here");
+
+			// server is listening on port 1099
+			server = new ServerSocket(1099);
+			server.setReuseAddress(true);
+
+			// running infinite loop for getting
+			// client request
+			while (true) {
+
+				// socket object to receive incoming client
+				// requests
+				Socket client = server.accept();
+
+				// Displaying that new client is connected
+				// to server
+				System.out.println("New client connected"
+						+ client.getInetAddress()
+						.getHostAddress());
+
+				// create a new thread object
+				SmartCityAppServer service=new SmartCityAppServer(client);
+
+				// This thread will handle the client
+				// separately
+				service.start();
 			}
-
-		} catch (IOException e) {
-
+		}
+		catch (IOException e) {
 			e.printStackTrace();
-
+		}
+		finally {
+			if (server != null) {
+				try {
+					server.close();
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
