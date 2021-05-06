@@ -56,6 +56,7 @@ public class SmartCityAppServer extends Thread {
 				logger.info(operation);
 				Request request=mapper.readValue(operation,Request.class);
 				String response=connection.SendResponse(request);
+				logger.info("response :"+response);
 				out=new PrintWriter(client.getOutputStream(),true);
 				out.println(response);
 				System.out.print("*******\n ");
