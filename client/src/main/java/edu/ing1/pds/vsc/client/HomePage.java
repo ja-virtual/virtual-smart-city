@@ -44,7 +44,6 @@ public class HomePage extends JFrame implements ActionListener  {
 		JComboBox myCompany=new JComboBox();
 
 		myCompany.addItem(" Saisir le nom de votre entreprise....." );
-		System.out.println(company_names.toString());
 		for(Map n:company_names)
 		{
 			myCompany.addItem(n.get("company_name"));

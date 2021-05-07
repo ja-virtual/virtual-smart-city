@@ -120,6 +120,7 @@ public class WelcomePage extends JFrame {
 				}
 				else if(ws.isEmpty())
 				{
+					
 					JOptionPane.showMessageDialog(new JFrame(),
 							"Pas d'espace loué pour pouvoir utiliser cette fonctionnalité","Mappage impossible pour le moment",
 							JOptionPane.ERROR_MESSAGE);
@@ -133,6 +134,7 @@ public class WelcomePage extends JFrame {
 					}
 					catch(Exception e1)
 					{
+						
 
 					}
 					MappingUC t = new MappingUC(company);

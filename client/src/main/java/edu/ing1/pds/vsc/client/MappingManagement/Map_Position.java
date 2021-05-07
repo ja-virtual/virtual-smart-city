@@ -444,7 +444,7 @@ catch(Exception ex)
 								e1.printStackTrace();
 							}
 							Sensor my_sensor=new Sensor((Integer)is_sensor.get("id_sensor"),(String)is_sensor.get("type_sensor"),(Boolean)is_sensor.get("is_available"),(Boolean)is_sensor.get("is_working"),(Integer)is_sensor.get("id_gs"),(Integer)is_sensor.get("id_position"));
-							System.out.println("Sensor : "+my_sensor.getId_position());
+		
 							previous_view=new InfoMoving(my_sensor,"sensor",company);
 							dispose();
 
@@ -458,7 +458,7 @@ catch(Exception ex)
 								e1.printStackTrace();
 							}
 							Equipment my_equipment=new Equipment((Integer)is_equipment.get("id_equipment"),(String)is_equipment.get("type_equipment"),(Boolean)is_equipment.get("is_available"),(Boolean)is_equipment.get("is_working"),(Integer)is_equipment.get("id_gs"),(Integer)is_equipment.get("id_position"));
-							System.out.println("Equipment : "+my_equipment.getId_position());
+							
 							previous_view=new InfoMoving(my_equipment,"equipment",company);
 							dispose();
 						}
