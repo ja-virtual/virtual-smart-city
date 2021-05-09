@@ -12,26 +12,25 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
-import net.proteanit.sql.DbUtils;
+import edu.ing1.pds.vsc.client.ClientToServer;
 
 	public class Config extends JFrame implements ActionListener {
 		Welcome welcome;
 		Windows window;
-		
-		Connection connect = null;
+		ClientToServer connection=new ClientToServer();
 		JTable table1 = new JTable();
-		//JTable sptab1 = new JTable();
-		//JTable sptab2 = new JTable();
-	
+			
 		JTable table2 = new JTable();
 		
 		int selection;
@@ -45,7 +44,6 @@ import net.proteanit.sql.DbUtils;
 
 			public Config(String title) { 
 				super();
-				connect=DbConnection.dbConnector();
 				this.setSize(900,600);
 				this.setLocationRelativeTo(null);
 				this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -98,11 +96,16 @@ import net.proteanit.sql.DbUtils;
 				bouton1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				bouton1.addActionListener(this);
 				
-				JScrollPane pane1 = new JScrollPane(table1);
-				pane1.setPreferredSize(new Dimension(500,100));
-			
+				table1.setModel(new DefaultTableModel(
+						new Object[][] {
+						},
+						new String[] {
+							"id_windows", "status", "temperature", "light", "blind", "opacity", "id_equipment"
+						}
+					));
 				pan1.add(bouton1);
-				pan1.add(pane1);
+				pan1.add(table1.getTableHeader());
+				pan1.add(table1);
 				mainPanel.add(pan1);
 				
 				JPanel pan2 = new JPanel();
@@ -127,10 +130,17 @@ import net.proteanit.sql.DbUtils;
 				bouton4.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				bouton4.addActionListener(this);
 								
-				JScrollPane pane3 = new JScrollPane(table2);
-				pane3.setPreferredSize(new Dimension(500,100));
+				table2.setModel(new DefaultTableModel(
+						new Object[][] {
+						},
+						new String[] {
+							"id_windows", "status", "temperature", "light", "blind", "opacity", "id_equipment"
+						}
+					));
+				
 				pan3.add(bouton4);
-				pan3.add(pane3);
+				pan3.add(table2.getTableHeader());
+				pan3.add(table2);
 				
 				mainPanel.add(pan3);
 				
@@ -145,145 +155,149 @@ import net.proteanit.sql.DbUtils;
 				System.exit(0);
 			}
 			else if (e.getActionCommand() == "Statut par defaut") {
-
-				try {
-					
-					selection =  (int) Windows.box.getSelectedItem();
-					Statement stmt1 = connect.createStatement ();
-					
-					String sql1 = " select * from Windows where id_equipment = "+selection+" ";
-					ResultSet rs1 = stmt1.executeQuery(sql1);
-					table1.setShowGrid(true);
-				    table1.setShowVerticalLines(true);
-				    table1.setModel(DbUtils.resultSetToTableModel(rs1));
-				    
-				    
-				    
-			rs1.close();
-			stmt1.close();
-			
-			}
 				
-				catch (Exception e1) {
-					e1.printStackTrace();
+				try
+				{
+					connection.client.close();
+					
 				}
-
+				catch(Exception e1)
+				{
+					
+				}
+				
+				ArrayList<Map> rs1 = WindowsTable.windowsDefaultStatus(connection, selection);
+				for(Map n:rs1)
+					
+				{
+					
+					String id_windows = (String) n.get("id_windows");
+					String status = (String) n.get("status");
+					String temperature = (String) n.get("temperature");
+					String light = (String) n.get("light");
+					String blind = (String) n.get("blind");
+					String opacity = (String) n.get("opacity");
+					String id_equipment = (String) n.get("id_equipment");
+					
+					String [] data = {id_windows, status, temperature, light, blind, opacity, id_equipment};
+					DefaultTableModel tblModel = (DefaultTableModel) table1.getModel();
+					
+					tblModel.addRow(data);
+				}
+				
 			}
 			
 			else if (e.getActionCommand() == "Configurer eclairage") {
 				
-				try {
+				try
+				{
+					connection.client.close();
 					
-					Statement statement1 = connect.createStatement ();
-					String req1 = " select level from Lighting where id_windows = "+selection+" ";
-					ResultSet result1 = statement1.executeQuery(req1);
+				}
+				catch(Exception e1)
+				{
 					
-					while(result1.next()) { 
-						
-						String level = result1.getString(1);
+				}
+				
+				ArrayList<Map> rs2 = LightingTable.levelFromLighting(connection, selection);
+				for(Map n:rs2)
+					
+				{
+					String id_light = (String) n.get("id_light");
+					String level = (String) n.get("level");
+					String id_windows = (String) n.get("id_windows");
+					
+				
 					
 					switch (level) {
 					
 					  case "Aucun":
-						  String update1 = "update Windows set blind = 'Niveau 0', opacity = 'Aucun' where id_windows = "+selection+" "; 
-						  int n1=statement1.executeUpdate(update1);
-					   break;
+						  ArrayList<Map> update1 = WindowsTable.windowsUpdateForLightLevelAucun(connection, selection);
+						  break;
 					  case "Faible":
-						  String update2 = "update Windows set blind = 'Niveau 1', opacity = 'Faible' where id_windows = "+selection+" "; 
-						  int n2=statement1.executeUpdate(update2);
-					   break;
+						  ArrayList<Map> update2 = WindowsTable.windowsUpdateForLightLevelFaible(connection, selection);
+						  break;
 					  case "Moyen":
-						  String update3 = "update Windows set blind = 'Niveau 2', opacity = 'Moyen' where id_windows = "+selection+" "; 
-						  int n3=statement1.executeUpdate(update3);
-						   break;
+						  ArrayList<Map> update3 = WindowsTable.windowsUpdateForLightLevelMoyen(connection, selection);
+						  break;
 					  case "Fort":
-						  String update4 = "update Windows set blind = 'Niveau 3', opacity = 'Fort' where id_windows = "+selection+" "; 
-						  int n4=statement1.executeUpdate(update4);
-						   break;
+						  ArrayList<Map> update4 = WindowsTable.windowsUpdateForLightLevelFort(connection, selection);
+						  break;
 						
 					  default:
-						  String update5 = "update Windows set blind = 'Niveau 4' and opacity = 'Fort' where id_windows = "+selection+" "; 
-						  int n5=statement1.executeUpdate(update5);
+						  ArrayList<Map> update5 = WindowsTable.windowsUpdateForLightLevelAutre(connection, selection);
 						  	  
 					} 
 					}
-					
-					result1.close();
-					statement1.close();
-					
-					
-				}
-					
-					catch (Exception e2) {
-						e2.printStackTrace();
-					}
-			
+				
 			}		
 			
 			else if (e.getActionCommand() == "Configurer temperature") {
 				
-				try {
+				try
+				{
+					connection.client.close();
 					
-					Statement statement2 = connect.createStatement ();
-					String req2 = " select degree from Temperature where id_windows = "+selection+" ";
-					ResultSet result2 = statement2.executeQuery(req2);
+				}
+				catch(Exception e1)
+				{
 					
-					while(result2.next()) {
-						int degree = result2.getInt(1);
-					switch (degree) {
+				}
+				
+				ArrayList<Map> rs3 = TemperatureTable.degreeFromTemperature(connection, selection);
+				
+				for(Map n:rs3)
 					
-					  case 20:
-						  String update6 = "update Windows set blind = 'Niveau 0', opacity = 'Aucun' where id_windows = "+selection+" "; 
-						  int n6=statement2.executeUpdate(update6);
-					   break;
-					  case 21:
-						  String update7 = "update Windows set blind = 'Niveau 1', opacity = 'Faible' where id_windows = "+selection+" "; 
-						  int n7=statement2.executeUpdate(update7);
-					   break;
-					  case 22:
-						  String update8 = "update Windows set blind = 'Niveau 2', opacity = 'Moyen' where id_windows = "+selection+" "; 
-						  int n8=statement2.executeUpdate(update8);
-						   break;
-					  case 23:
-						  String update9 = "update Windows set blind = 'Niveau 3', opacity = 'Fort' where id_windows = "+selection+" "; 
-						  int n9=statement2.executeUpdate(update9);
-						   break;
-						
-					  default:
-						  String update10 = "update Windows set blind = 'Niveau 4', opacity = 'Fort' where id_windows = "+selection+" "; 
-						  int n10=statement2.executeUpdate(update10);
+				{
+					
+					String id_temperature = (String) n.get("id_temperature");
+					int degree = (int) n.get("degree");
+					String id_windows = (String) n.get("id_windows");	
+					
+					if ( degree < 18 ) {
+						ArrayList<Map> update6 = WindowsTable.windowsUpdateForTemperatureDegreeLessThan18(connection, selection);
 					}
-					}  
-						  result2.close();
-							statement2.close();
-							
-									}
-								
-								catch (Exception e3) {
-									e3.printStackTrace();
-								}
-						}
+					else if (degree>=18 || degree<22 ) {
+						ArrayList<Map> update6 = WindowsTable.windowsUpdateForTemperatureDegree18_22(connection, selection);
+					}
+					else if (degree>=22) {
+						ArrayList<Map> update6 = WindowsTable.windowsUpdateForTemperatureDegree22(connection, selection);
+					}
+				
+				}
+		}
 			
 			else if (e.getActionCommand() == "Actualiser statut") {
 				
-				try {
+				try
+				{
+					connection.client.close();
 					
-					Statement stmt2 = connect.createStatement ();
-					String sql2 = " select * from Windows where id_equipment = "+selection+" ";
-					ResultSet rs2 = stmt2.executeQuery(sql2);
-					table2.setShowGrid(true);
-				    table2.setShowVerticalLines(true);
-				    table2.setModel(DbUtils.resultSetToTableModel(rs2));
+				}
+				catch(Exception e1)
+				{
+					
+				}
 				
-				
-				rs2.close();
-				stmt2.close();
-				
+				ArrayList<Map> rs4 = WindowsTable.windowsUpdatedStatus(connection, selection);
+				for(Map n:rs4)
+					
+				{
+					
+					String id_windows = (String) n.get("id_windows");
+					String status = (String) n.get("status");
+					String temperature = (String) n.get("temperature");
+					String light = (String) n.get("light");
+					String blind = (String) n.get("blind");
+					String opacity = (String) n.get("opacity");
+					String id_equipment = (String) n.get("id_equipment");
+					
+					String [] data = {id_windows, status, temperature, light, blind, opacity, id_equipment};
+					DefaultTableModel tblModel = (DefaultTableModel) table2.getModel();
+					
+					tblModel.addRow(data);
 				}
 					
-					catch (Exception e4) {
-						e4.printStackTrace();
-					}
 			}
 			else if (e.getActionCommand() == "Fenetres electro-chromatiques") {
 				

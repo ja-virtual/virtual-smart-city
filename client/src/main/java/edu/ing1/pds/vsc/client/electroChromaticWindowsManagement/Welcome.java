@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 	public class Welcome extends JFrame implements ActionListener{
 		Init init ;
 		Welcome welcome;
-		Wanted wanted;
+		//Wanted wanted;
 		
 		/**
 		 * 
@@ -88,15 +88,10 @@ import javax.swing.JPanel;
 				JPanel middlePanel = new JPanel();
 				middlePanel.setLayout(new FlowLayout());
 			
-				JButton bouton1 = new JButton("Localiser un equipement");
-				bouton1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-				bouton1.addActionListener(this);
 				JButton bouton2 = new JButton("Voir mes equipements");
 				bouton2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				bouton2.addActionListener(this);
 				
-				
-				middlePanel.add(bouton1);
 				middlePanel.add(bouton2);
 				
 				mainPanel.add(middlePanel);
@@ -105,7 +100,7 @@ import javax.swing.JPanel;
 				JPanel southPanel = new JPanel();
 				northPanel.setLayout(new FlowLayout());
 				JButton bouton3 = new JButton("Quitter");
-				bouton1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+				bouton3.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				bouton3.addActionListener(this);
 				
 				southPanel.add(bouton3);
@@ -126,11 +121,6 @@ import javax.swing.JPanel;
 				init = new Init("Virtual Smart City");
 				this.dispose();
 				
-			}
-			else if (e.getActionCommand() == "Rechercher une fenetre") {
-				
-				wanted = new Wanted("Virtual Smart City");
-				this.dispose();
 			}
 		
 		}

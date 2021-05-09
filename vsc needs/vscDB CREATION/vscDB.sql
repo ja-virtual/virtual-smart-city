@@ -97,6 +97,7 @@ CREATE TABLE Map(
 
 CREATE TABLE Windows(
    id_windows INT,
+   status VARCHAR,
    temperature INT,
    light VARCHAR(50),
    blind VARCHAR(50),

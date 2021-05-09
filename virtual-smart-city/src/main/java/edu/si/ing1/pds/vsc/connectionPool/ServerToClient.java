@@ -1,15 +1,8 @@
 package edu.si.ing1.pds.vsc.connectionPool;
 
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,10 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.si.ing1.pds.vsc.connectionPool.DataSource;
-
-
-
 
 public class ServerToClient {
 
@@ -678,6 +667,281 @@ logger.info(rs1.getFetchSize()+"");
 		}
 
 		// End Mohand's part
+		
+		//Coumba's part
+		
+		else if(request_name.equals("own_equipment"))
+		{
+			Map data_loading=(Map) request.getData();
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM Equipment");
+			List<Map> equipments=new ArrayList<Map>();
+			while(rs1.next()) {
+				Map<String,Object> hm=new HashMap<String,Object>();
+				hm.put("id_equipment",rs1.getInt("id_equipment"));
+				hm.put("type_equipment",rs1.getString("type_equipment"));
+				hm.put("is_available",rs1.getBoolean("is_available"));
+				hm.put("is_working",rs1.getBoolean("is_working"));
+				hm.put("id_gs",rs1.getInt("id_gs"));
+				hm.put("id_position",rs1.getInt("id_position"));
+				equipments.add(hm);
+			}
+			rs1.close();
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",equipments);
+			response_string=mapper.writeValueAsString(response);
+		}
+		
+		else if(request_name.equals("own_windows"))
+		{
+			Map data_loading=(Map) request.getData();
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM Equipment where type_equipment = 'fenetre electro-chromatique'");
+			List<Map> windows=new ArrayList<Map>();
+			while(rs1.next()) {
+				Map<String,Object> hm=new HashMap<String,Object>();
+				hm.put("id_equipment",rs1.getInt("id_equipment"));
+				hm.put("type_equipment",rs1.getString("type_equipment"));
+				hm.put("is_available",rs1.getBoolean("is_available"));
+				hm.put("is_working",rs1.getBoolean("is_working"));
+				hm.put("id_gs",rs1.getInt("id_gs"));
+				hm.put("id_position",rs1.getInt("id_position"));
+				windows.add(hm);
+			}
+			rs1.close();
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",windows);
+			response_string=mapper.writeValueAsString(response);
+		}
+		
+		else if(request_name.equals("box_selection"))
+		{
+			Map data_loading=(Map) request.getData();
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT id FROM Equipment where type_equipment = 'fenetre electro-chromatique'");
+			List<Map> box_selection=new ArrayList<Map>();
+			while(rs1.next()) {
+				Map<String,Object> hm=new HashMap<String,Object>();
+				hm.put("id_equipment",rs1.getInt("id_equipment"));
+				hm.put("type_equipment",rs1.getString("type_equipment"));
+				hm.put("is_available",rs1.getBoolean("is_available"));
+				hm.put("is_working",rs1.getBoolean("is_working"));
+				hm.put("id_gs",rs1.getInt("id_gs"));
+				hm.put("id_position",rs1.getInt("id_position"));
+				box_selection.add(hm);
+			}
+			rs1.close();
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",box_selection);
+			response_string=mapper.writeValueAsString(response);
+		}
+		
+		else if(request_name.equals("win_default_insert"))
+		{
+			Map data_loading=(Map) request.getData();
+
+			int insert = connection.createStatement().executeUpdate(" INSERT INTO Windows (id_windows, status, temperature, light, blind, opacity, id_equipment) VALUES ("+(Integer)data_loading.get("id_equipment")+", 'Ferme', 20, 'Aucun', 'Niveau 0', 'Aucun', "+(Integer)data_loading.get("equipment")+" ");
+			List<Map> insertion=new ArrayList<Map>();
+			logger.info(String.valueOf(insert));
+			Map<String,Object> hm=new HashMap<String,Object>();
+			hm.put("insertion_done",true);
+			insertion.add(hm);
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",insertion);
+			response_string=mapper.writeValueAsString(response);
+		}
+		
+		else if(request_name.equals("temp_default_insert"))
+		{
+			Map data_loading=(Map) request.getData();
+
+			int insert1 = connection.createStatement().executeUpdate(" INSERT INTO Temperature (id_temperature, degree, id_windows) VALUES ("+(Integer)data_loading.get("id_windows")+", 20, "+(Integer)data_loading.get("id_windows")+" ");
+			List<Map> insertion1=new ArrayList<Map>();
+			logger.info(String.valueOf(insert1));
+			Map<String,Object> hm=new HashMap<String,Object>();
+			hm.put("insertion_done",true);
+			insertion1.add(hm);
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",insertion1);
+			response_string=mapper.writeValueAsString(response);
+		}
+		
+		else if(request_name.equals("light_default_insert"))
+		{
+			Map data_loading=(Map) request.getData();
+
+			int insert2 = connection.createStatement().executeUpdate(" INSERT INTO Lighting (id_light, level, id_windows) VALUES ("+(Integer)data_loading.get("id_windows")+", Aucun, "+(Integer)data_loading.get("id_windows")+" ");
+			List<Map> insertion2=new ArrayList<Map>();
+			logger.info(String.valueOf(insert2));
+			Map<String,Object> hm=new HashMap<String,Object>();
+			hm.put("insertion_done",true);
+			insertion2.add(hm);
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",insertion2);
+			response_string=mapper.writeValueAsString(response);
+		}
+		
+		else if(request_name.equals("default_status"))
+		{
+			Map data_loading=(Map) request.getData();
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM Windows where id_windows = "+(Integer)data_loading.get("id_equipment")+" ");
+			List<Map> windowStatus=new ArrayList<Map>();
+			while(rs1.next()) {
+				Map<String,Object> hm=new HashMap<String,Object>();
+				hm.put("id_windows",rs1.getInt("id_windows"));
+				hm.put("status",rs1.getInt("status"));
+				hm.put("temperature",rs1.getInt("temperature"));
+				hm.put("light",rs1.getString("light"));
+				hm.put("blind",rs1.getString("blind"));
+				hm.put("opacity",rs1.getString("opacity"));
+				hm.put("id_equipment",rs1.getInt("id_equipment"));
+				windowStatus.add(hm);
+			}
+			rs1.close();
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",windowStatus);
+			response_string=mapper.writeValueAsString(response);
+		}
+		
+		else if(request_name.equals("got_light"))
+		{
+			Map data_loading=(Map) request.getData();
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT level FROM Light where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			List<Map> windowStatus=new ArrayList<Map>();
+			while(rs1.next()) {
+				Map<String,Object> hm=new HashMap<String,Object>();
+				hm.put("id_light",rs1.getInt("id_light"));
+				hm.put("level",rs1.getInt("level"));
+				hm.put("id_windows",rs1.getString("id_windows"));
+				windowStatus.add(hm);
+			}
+			rs1.close();
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",windowStatus);
+			response_string=mapper.writeValueAsString(response);
+		}
+		
+		else if(request_name.equals("light_aucun"))
+		{
+			Map data_loading=(Map) request.getData();
+
+			int insert = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 0', opacity = 'Aucun' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			List<Map> insertion=new ArrayList<Map>();
+			logger.info(String.valueOf(insert));
+			Map<String,Object> hm=new HashMap<String,Object>();
+			hm.put("insertion_done",true);
+			insertion.add(hm);
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",insertion);
+			response_string=mapper.writeValueAsString(response);
+		}
+		
+		else if(request_name.equals("light_faible"))
+		{
+			Map data_loading=(Map) request.getData();
+
+			int insert = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 1', opacity = 'Faible' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			List<Map> insertion=new ArrayList<Map>();
+			logger.info(String.valueOf(insert));
+			Map<String,Object> hm=new HashMap<String,Object>();
+			hm.put("insertion_done",true);
+			insertion.add(hm);
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",insertion);
+			response_string=mapper.writeValueAsString(response);
+		}
+		
+		else if(request_name.equals("light_moyen"))
+		{
+			Map data_loading=(Map) request.getData();
+
+			int insert = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 2', opacity = 'Moyen' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			List<Map> insertion=new ArrayList<Map>();
+			logger.info(String.valueOf(insert));
+			Map<String,Object> hm=new HashMap<String,Object>();
+			hm.put("insertion_done",true);
+			insertion.add(hm);
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",insertion);
+			response_string=mapper.writeValueAsString(response);
+		}
+		
+		else if(request_name.equals("light_fort"))
+		{
+			Map data_loading=(Map) request.getData();
+
+			int insert = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 3', opacity = 'Fort' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			List<Map> insertion=new ArrayList<Map>();
+			logger.info(String.valueOf(insert));
+			Map<String,Object> hm=new HashMap<String,Object>();
+			hm.put("insertion_done",true);
+			insertion.add(hm);
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",insertion);
+			response_string=mapper.writeValueAsString(response);
+		}
+		
+		else if(request_name.equals("less_than_18"))
+		{
+			Map data_loading=(Map) request.getData();
+
+			int insert = connection.createStatement().executeUpdate(" UPDATE Windows SET status = 'Ferme' were id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			List<Map> insertion=new ArrayList<Map>();
+			logger.info(String.valueOf(insert));
+			Map<String,Object> hm=new HashMap<String,Object>();
+			hm.put("insertion_done",true);
+			insertion.add(hm);
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",insertion);
+			response_string=mapper.writeValueAsString(response);
+		}
+		
+		else if(request_name.equals("between_18_22"))
+		{
+			Map data_loading=(Map) request.getData();
+
+			int insert = connection.createStatement().executeUpdate(" UPDATE Windows SET status = 'Ouvert A Moitie' were id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			List<Map> insertion=new ArrayList<Map>();
+			logger.info(String.valueOf(insert));
+			Map<String,Object> hm=new HashMap<String,Object>();
+			hm.put("insertion_done",true);
+			insertion.add(hm);
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",insertion);
+			response_string=mapper.writeValueAsString(response);
+		}
+		
+		else if(request_name.equals("more_than_22"))
+		{
+			Map data_loading=(Map) request.getData();
+
+			int insert = connection.createStatement().executeUpdate(" UPDATE Windows SET status = 'Ouvert' were id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			List<Map> insertion=new ArrayList<Map>();
+			logger.info(String.valueOf(insert));
+			Map<String,Object> hm=new HashMap<String,Object>();
+			hm.put("insertion_done",true);
+			insertion.add(hm);
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",insertion);
+			response_string=mapper.writeValueAsString(response);
+		}
+		
+		//End Coumba's part
+		
+		
+		
 		data_source.returnCon(con);
 		return response_string;
 	}
