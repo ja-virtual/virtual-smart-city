@@ -110,11 +110,5 @@ public class WorkSpace {
 				+ ", theplace=" + ", typeprice=" + typeprice + ", id_wokspace=" + id_wokspace + "]";
 	}
 
-	public static void main(String[] args) {
-            WorkSpace wks = new WorkSpace(1, "salle de reunion", 4, 3);
-            System.out.println(wks.theprice);
-            System.out.println(wks.typeprice);
-            System.out.println(wks.themax_employee_number);
-           
-    }
+
 }

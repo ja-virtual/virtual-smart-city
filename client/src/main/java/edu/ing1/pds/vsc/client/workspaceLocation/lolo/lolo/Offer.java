@@ -173,22 +173,21 @@ public class Offer extends JPanel implements ActionListener{
                WorkSpace wks_j = offer.get(j);
                place_score.add(PlaceIncreasePrice(wks_i.thebuilding, wks_j.thebuilding));
                j++;
-               System.out.println("corp condition j");
+     
            }
            i++;
            j = i+1;
-           System.out.println("corp condition i");
+ 
            
        }
        double sum = 0;
 
        for(int k = 0; k < place_score.size(); k++)
            sum += place_score.get(k);
-      
-       System.out.println("place_score :" + place_score.get(1));
+     
        
        double score = sum / place_score.size();
-       System.out.println("score :" + score);
+     
        
        return(score);
     }
@@ -232,7 +231,7 @@ public class Offer extends JPanel implements ActionListener{
        int sum = 0;
        for(int i=0; i < offer.size(); i++) {
            WorkSpace wks_i = offer.get(i);
-           //System.out.println(wks_i);
+    
            if(wks_i.thetype.equalsIgnoreCase("individuel"))
         	   sum = sum + wks_i.themax_employee_number;
            if(wks_i.thetype.equalsIgnoreCase("open Space"))
@@ -257,18 +256,18 @@ public class Offer extends JPanel implements ActionListener{
 		if (event.getSource() == rent){
 			for ( WorkSpace w : offer ) {
 				try {
-					System.out.println("je suis ici1");
+					
 		    		ClientToServer connection = new ClientToServer();
-		    		System.out.println("je suis ici2");
+		    	
 		    		Request request=new Request();
 		            request.setName_request("set_workspace_unavailable");
 		            HashMap<String,Object> param=new HashMap<String,Object>();
 		            param.put("id_workspace", w.id_wokspace);
 		            param.put("id_gs", id_gs);
 		            request.setData(param);
-		            System.out.println("je suis ici3");
+		   
 		            Request response=connection.SendRequest(request);
-		            System.out.println("je suis ici4");
+		    
 		            connection.client.close();
 		    	 }catch(Exception e){
 		             e.printStackTrace();

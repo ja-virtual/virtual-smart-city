@@ -210,7 +210,7 @@ static public Map infoPosition(ClientToServer connection,int id_position)
 		request.setData(param);
 		Request response=connection.SendRequest(request);
 		theworkspace=(ArrayList<Map>)response.getData();
-		System.out.println(theworkspace);
+	
 	}catch(Exception e)
 	{
 		e.printStackTrace();

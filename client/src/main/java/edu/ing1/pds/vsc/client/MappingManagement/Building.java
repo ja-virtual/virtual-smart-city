@@ -47,6 +47,7 @@ public class Building {
 			workspaces=(ArrayList<Map>)response.getData();
 		}catch(Exception e)
 		{
+
 			logger.info("Server is maybe occupied");
 		}
 		return workspaces;

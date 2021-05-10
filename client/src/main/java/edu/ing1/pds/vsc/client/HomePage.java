@@ -11,15 +11,16 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import javax.swing.*;
-import edu.ing1.pds.vsc.client.General_Services;
+//import edu.ing1.pds.vsc.client.General_Services;
 import edu.ing1.pds.vsc.client.MappingManagement.InfoMapping;
 import edu.ing1.pds.vsc.client.MappingManagement.Map_Full;
 import edu.ing1.pds.vsc.client.MappingManagement.MappingUC;
 import edu.ing1.pds.vsc.client.MappingManagement.Positions;
+import edu.ing1.pds.vsc.client.analyzeIndicatorsManagement.Mairie;
 
 
 public class HomePage extends JFrame implements ActionListener  {
-	
+	private Mairie fen;
 	ClientToServer connection=new ClientToServer();
 	ArrayList<Map> company_names=General_Services.All_GeneralServices(connection);
 	General_Services my_company=new General_Services(1," Saisir le nom de votre entreprise.....");
@@ -44,7 +45,6 @@ public class HomePage extends JFrame implements ActionListener  {
 		JComboBox myCompany=new JComboBox();
 
 		myCompany.addItem(" Saisir le nom de votre entreprise....." );
-		System.out.println(company_names.toString());
 		for(Map n:company_names)
 		{
 			myCompany.addItem(n.get("company_name"));
@@ -70,6 +70,7 @@ public class HomePage extends JFrame implements ActionListener  {
 			}
 		});	
 		JButton valider= new JButton("Valider");
+		
 		valider.addActionListener (new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
 				if(my_company.getCompany_name()!=" Saisir le nom de votre entreprise.....")
@@ -153,7 +154,10 @@ public class HomePage extends JFrame implements ActionListener  {
 	}
 
 	public void actionPerformed(ActionEvent e){
+		
 
+			fen = new Mairie();
+		
 
 		this.dispose();
 

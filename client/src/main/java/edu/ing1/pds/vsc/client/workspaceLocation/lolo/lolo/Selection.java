@@ -145,13 +145,13 @@ public General_Services company;
 						if(ws==null )
 						{
 							JOptionPane.showMessageDialog(new JFrame(),
-									"Pas d'espace loué pour pouvoir utiliser cette fonctionnalité","Mappage impossible pour le moment",
+									"Pas d'espace loue pour pouvoir utiliser cette fonctionnalite","Mappage impossible pour le moment",
 									JOptionPane.ERROR_MESSAGE);
 						}
 						else if(ws.isEmpty())
 						{
 							JOptionPane.showMessageDialog(new JFrame(),
-									"Pas d'espace loué pour pouvoir utiliser cette fonctionnalité","Mappage impossible pour le moment",
+									"Pas d'espace loue pour pouvoir utiliser cette fonctionnalite","Mappage impossible pour le moment",
 									JOptionPane.ERROR_MESSAGE);
 						}
 						else
@@ -215,7 +215,7 @@ public General_Services company;
 				image.setIcon( new ImageIcon(img.getImage().getScaledInstance(65,65, Image.SCALE_SMOOTH)));
 
 
-				JLabel use_case4 = new JLabel("Gestion Accés");
+				JLabel use_case4 = new JLabel("Gestion Acces");
 				use_case4.setHorizontalAlignment(JLabel.CENTER);
 				use_case4.setFont(new Font("Serif", Font.BOLD,17));
 				p.add(use_case4,BorderLayout.CENTER);

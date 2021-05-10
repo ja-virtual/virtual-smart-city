@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,21 +21,22 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
-import net.proteanit.sql.DbUtils;
+import ch.qos.logback.classic.Logger;
+import edu.ing1.pds.vsc.client.ClientToServer;
 
 	public class Windows extends JFrame implements ActionListener{
 		Welcome welcome;
 		Config config;
 		Init init;
 		
-		Connection connect = null;
+		//Connection connect = null;
 		JTable table = new JTable();
 		static JComboBox box = new JComboBox();
-		int selection;
-
+		static int selection;
+		ClientToServer connection=new ClientToServer();
 		/**
 		 * 
 		 */
@@ -42,7 +45,7 @@ import net.proteanit.sql.DbUtils;
 
 			public Windows(String title) { 
 				super();
-				connect=DbConnection.dbConnector();
+				//connect=DbConnection.dbConnector();
 				this.setSize(900,600);
 				this.setLocationRelativeTo(null);
 				this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -95,9 +98,18 @@ import net.proteanit.sql.DbUtils;
 				load.addActionListener(this);
 			
 				northPanel.add(load);
-				JScrollPane pane = new JScrollPane(table);
 				
-				northPanel.add(pane);
+				table.setModel(new DefaultTableModel(
+						new Object[][] {
+						},
+						new String[] {
+								"id_equipment", "type_equipment", "is_available", "is_working", "id_gs", "id_position"
+						}
+					));
+				
+				//JScrollPane pane = new JScrollPane(table);
+				northPanel.add(table.getTableHeader());
+				northPanel.add(table);
 				mainPanel.add(northPanel);
 				
 				JPanel middlePanel = new JPanel();
@@ -143,81 +155,75 @@ import net.proteanit.sql.DbUtils;
 			}
 			else if (e.getActionCommand() == "Charger mes fenetres") {
 				
-				try {
+				try
+				{
+					connection.client.close();
 					
+				}
+				catch(Exception e1)
+				{
 					
+				}
 				
-				Statement stmt1 = connect.createStatement ();
-				String sql1 = " select * from equipment where type_equipment = 'fenetre' ";
-				ResultSet rs1 = stmt1.executeQuery(sql1);
-				table.setShowGrid(true);
-			    table.setShowVerticalLines(true);
-			    table.setModel(DbUtils.resultSetToTableModel(rs1));
-			    //stmt1. close ();
+				ArrayList<Map> rs = WindowsTable.ownWindows(connection);
+				for(Map n:rs)
+				{
+					String id_equipment =(String) n.get("id_equipment");
+					String type_equipment = (String) n.get("type_equipment");
+					String is_available = (String) n.get("is_available");
+					String is_working = (String) n.get("is_working");
+					String id_gs = (String) n.get("id_gs");
+					String id_position = (String) n.get("id_position");
+					
+					String [] data = {id_equipment, type_equipment, is_available, is_working, id_gs, id_position};
+					DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
+					
+					
+				    tblModel.addRow(data);
+				    
+				}
 			    
-			    
-			    Statement stmt2 = connect.createStatement ();
-			    String sql2 = " select * from equipment where type_equipment = 'fenetre' " ;
-			    ResultSet rs2 = stmt2.executeQuery(sql2);
-				while(rs2.next()) {
-					int id = rs2.getInt(1);
-										
+				for(Map n:rs)
+				{
+					int id = (int) n.get("id_equipment");
+															
 					box.addItem(id);
 					
 										
 					box.addActionListener(new ActionListener() {
 			            public void actionPerformed(ActionEvent event) {
-			                // Get the source of the component, which is our combo
-			                // box.
+			               
 			               if (event.getSource()== box) {
 			            	  selection = (int) box.getSelectedItem();
-			            	  // System.out.println(selection);
-			            	 // i=getWindows();
+			            	  
 			            	 
 			               }
 			            }
 			        });
-					
-				
 				} 
-			rs1.close();
-			stmt1.close();
-			rs2.close();
-			stmt2.close();
+			
 			}
-				
-				catch (Exception e1) {
-					e1.printStackTrace();
-				}
-						
-			}
+			
 			else if (e.getActionCommand() == "Selectionner") {
+				try
+				{
+					connection.client.close();
+					
+				}
+				catch(Exception e1)
+				{
+					
+				}
 
+				ArrayList<Map> insert = WindowsTable.windowsDefaultInsertion(connection, selection);
+				ArrayList<Map> insert1 = TemperatureTable.temperatureDefaultInsertion(connection, selection);
+				ArrayList<Map> insert2 = LightingTable.lightingDefaultInsertion(connection, selection);
+			
 				config = new Config("Virtual Smart City");
 				this.dispose();
-				
-				
-				try {
-					
-					Statement stmt = connect.createStatement ();
-					//System.out.println(selection);
-					//String i = (String) box.getSelectedItem();
-					//System.out.println(i);
-					int n1=stmt.executeUpdate (" insert into Windows (id_windows, blind, opacity, id_equipment) values ("+selection+", 'Niveau 0','Aucun',"+selection+") ");
-					System.out.println("Nouvelle insertion dans \"fenetre \" ");
-					int n2=stmt.executeUpdate (" insert into Temperature (id_temperature, degree, id_windows) values ("+selection+", 20, "+selection+") ");
-					System.out.println("Nouvelle insertion dans \"temperature \" ");
-					int n3=stmt.executeUpdate (" insert into Lighting (id_light, level, id_windows) values ("+selection+", 'Aucun', "+selection+") ");
-					System.out.println("Nouvelle insertion dans \"lighting \" ");
-				      stmt. close ();
-				}
-				
-				catch(Exception e1) {
-					e1.printStackTrace();
-				}
-					
-				
+								
 			}
+			
 			else if (e.getActionCommand() == "Fenetres electro-chromatiques") {
 				
 				welcome = new Welcome("Virtual Smart City");
