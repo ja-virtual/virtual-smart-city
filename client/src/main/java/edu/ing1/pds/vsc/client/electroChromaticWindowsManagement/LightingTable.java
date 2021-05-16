@@ -49,7 +49,7 @@ public class LightingTable {
 		this.id_windows = id_windows;
 	}
 	
-	public static ArrayList<Map> lightingDefaultInsertion(ClientToServer connection, int choice)
+	public static int lightingDefaultInsertion(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>none2=null;
 		choice = Windows.selection;
@@ -66,7 +66,7 @@ public class LightingTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return none2;
+		return 1;
 	}
 	
 	public static ArrayList<Map> levelFromLighting(ClientToServer connection, int choice)

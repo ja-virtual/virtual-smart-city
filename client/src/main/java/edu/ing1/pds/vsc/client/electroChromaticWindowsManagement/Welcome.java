@@ -9,6 +9,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,9 +18,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import edu.ing1.pds.vsc.client.ClientToServer;
+import edu.ing1.pds.vsc.client.General_Services;
+import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
+
 	public class Welcome extends JFrame implements ActionListener{
 		Init init ;
 		Welcome welcome;
+		Map n;
+		static General_Services company=null;
+		//int id_gs = company.getId_generalservices();
+		General_Services id_ws = null;
+		ClientToServer connection=new ClientToServer();
+		//Color color=new Color(190,245,116);
 		//Wanted wanted;
 		
 		/**
@@ -27,8 +39,12 @@ import javax.swing.JPanel;
 		
 		private static final long serialVersionUID = 1L;
 
-			public Welcome(String title) { 
+			public Welcome(General_Services gs) { 
+				
 				super();
+				company = gs;
+				//this.id_gs=id_gs;
+				
 				this.setSize(900,600);
 				this.setLocationRelativeTo(null);
 				this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -47,8 +63,6 @@ import javax.swing.JPanel;
 				leftPanel.add(logoLabel);
 				
 						
-				this.getContentPane().add(leftPanel, BorderLayout.WEST);
-				
 				JPanel south = new JPanel();
 				south.setBackground(Color.GREEN);
 				JButton uc1 = new JButton ("Fonctionnalite 1");
@@ -67,6 +81,8 @@ import javax.swing.JPanel;
 				south.add(uc4);
 				
 				leftPanel.add(south);
+				
+				this.getContentPane().add(leftPanel, BorderLayout.WEST);
 				
 				JPanel mainPanel = new JPanel();
 				mainPanel.setLayout(new GridLayout(3,1));
@@ -117,13 +133,30 @@ import javax.swing.JPanel;
 				System.exit(0);
 			}
 			else if (e.getActionCommand() == "Voir mes equipements") {
-
-				init = new Init("Virtual Smart City");
+				ArrayList<Map>ws=WorkSpace.allRentedWorkSpace(connection, company.getId_generalservices());
+				for(Map n:ws)
+				{
+					int id_workspace = (int) n.get("id_workspace");
+					String type_workspace = (String) n.get("type_workspace");
+					int floor_number = (int) n.get("floor_number");
+					boolean is_available = (boolean) n.get("is_available");
+					int id_building = (int) n.get("id_building");
+					int id_gs = (int) n.get("id_gs");
+				}
+				
+				init = new Init(company);
 				this.dispose();
 				
 			}
 		
 		}
+		
+		public static void main(String[] args) {
+			
+			//id_ws = n.get("id_workspace");
+			Welcome welcome = new Welcome(company);
+				      		
+				}
 		
 		
 	}

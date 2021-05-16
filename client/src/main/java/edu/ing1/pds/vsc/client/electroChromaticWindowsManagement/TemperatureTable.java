@@ -43,7 +43,7 @@ public class TemperatureTable {
 		this.id_windows = id_windows;
 	}
 	
-	public static ArrayList<Map> temperatureDefaultInsertion(ClientToServer connection, int choice)
+	public static int temperatureDefaultInsertion(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>none1=null;
 		choice = Windows.selection;
@@ -60,7 +60,7 @@ public class TemperatureTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return none1;
+		return 1;
 	}
 	
 	public static ArrayList<Map> degreeFromTemperature(ClientToServer connection, int choice)
