@@ -24,11 +24,14 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import edu.ing1.pds.vsc.client.ClientToServer;
+import edu.ing1.pds.vsc.client.General_Services;
 
 	public class Config extends JFrame implements ActionListener {
 		Welcome welcome;
 		Windows window;
+		General_Services company=null;
 		ClientToServer connection=new ClientToServer();
+		//int id_gs = company.getId_generalservices();
 		JTable table1 = new JTable();
 			
 		JTable table2 = new JTable();
@@ -42,8 +45,9 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 		
 		private static final long serialVersionUID = 1L;
 
-			public Config(String title) { 
+			public Config(General_Services gs) { 
 				super();
+				company = gs;
 				this.setSize(900,600);
 				this.setLocationRelativeTo(null);
 				this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -61,9 +65,7 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 				JLabel logoLabel = new JLabel(icon);
 				logoLabel.setIcon( new ImageIcon(icon.getImage().getScaledInstance(130,130, Image.SCALE_SMOOTH)));
 				leftPanel.add(logoLabel);
-				
-				this.getContentPane().add(leftPanel, BorderLayout.WEST);
-				
+								
 				JPanel south = new JPanel();
 				south.setBackground(Color.GREEN);
 				JButton uc1 = new JButton ("Fonctionnalite 1");
@@ -156,6 +158,7 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 			}
 			else if (e.getActionCommand() == "Statut par defaut") {
 				
+				ArrayList<Map> rs1 = WindowsTable.windowsDefaultStatus(connection, selection);
 				try
 				{
 					connection.client.close();
@@ -166,18 +169,17 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 					
 				}
 				
-				ArrayList<Map> rs1 = WindowsTable.windowsDefaultStatus(connection, selection);
 				for(Map n:rs1)
 					
 				{
 					
-					String id_windows = (String) n.get("id_windows");
+					String id_windows = String.valueOf((int) n.get("id_windows"));
 					String status = (String) n.get("status");
-					String temperature = (String) n.get("temperature");
-					String light = (String) n.get("light");
+					String temperature = String.valueOf((int) n.get("temperature"));
+					String light = String.valueOf((int) n.get("light"));
 					String blind = (String) n.get("blind");
 					String opacity = (String) n.get("opacity");
-					String id_equipment = (String) n.get("id_equipment");
+					String id_equipment = String.valueOf((int) n.get("id_equipment"));
 					
 					String [] data = {id_windows, status, temperature, light, blind, opacity, id_equipment};
 					DefaultTableModel tblModel = (DefaultTableModel) table1.getModel();
@@ -189,6 +191,7 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 			
 			else if (e.getActionCommand() == "Configurer eclairage") {
 				
+				ArrayList<Map> rs2 = LightingTable.levelFromLighting(connection, selection);
 				try
 				{
 					connection.client.close();
@@ -199,7 +202,7 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 					
 				}
 				
-				ArrayList<Map> rs2 = LightingTable.levelFromLighting(connection, selection);
+				
 				for(Map n:rs2)
 					
 				{
@@ -212,20 +215,20 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 					switch (level) {
 					
 					  case "Aucun":
-						  ArrayList<Map> update1 = WindowsTable.windowsUpdateForLightLevelAucun(connection, selection);
+						  int update1 = WindowsTable.windowsUpdateForLightLevelAucun(connection, selection);
 						  break;
 					  case "Faible":
-						  ArrayList<Map> update2 = WindowsTable.windowsUpdateForLightLevelFaible(connection, selection);
+						  int update2 = WindowsTable.windowsUpdateForLightLevelFaible(connection, selection);
 						  break;
 					  case "Moyen":
-						  ArrayList<Map> update3 = WindowsTable.windowsUpdateForLightLevelMoyen(connection, selection);
+						  int update3 = WindowsTable.windowsUpdateForLightLevelMoyen(connection, selection);
 						  break;
 					  case "Fort":
-						  ArrayList<Map> update4 = WindowsTable.windowsUpdateForLightLevelFort(connection, selection);
+						  int update4 = WindowsTable.windowsUpdateForLightLevelFort(connection, selection);
 						  break;
 						
 					  default:
-						  ArrayList<Map> update5 = WindowsTable.windowsUpdateForLightLevelAutre(connection, selection);
+						  int update5 = WindowsTable.windowsUpdateForLightLevelAutre(connection, selection);
 						  	  
 					} 
 					}
@@ -233,6 +236,7 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 			}		
 			
 			else if (e.getActionCommand() == "Configurer temperature") {
+				ArrayList<Map> rs3 = TemperatureTable.degreeFromTemperature(connection, selection);
 				
 				try
 				{
@@ -244,7 +248,6 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 					
 				}
 				
-				ArrayList<Map> rs3 = TemperatureTable.degreeFromTemperature(connection, selection);
 				
 				for(Map n:rs3)
 					
@@ -255,13 +258,13 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 					String id_windows = (String) n.get("id_windows");	
 					
 					if ( degree < 18 ) {
-						ArrayList<Map> update6 = WindowsTable.windowsUpdateForTemperatureDegreeLessThan18(connection, selection);
+						int update6 = WindowsTable.windowsUpdateForTemperatureDegreeLessThan18(connection, selection);
 					}
 					else if (degree>=18 || degree<22 ) {
-						ArrayList<Map> update6 = WindowsTable.windowsUpdateForTemperatureDegree18_22(connection, selection);
+						int update7 = WindowsTable.windowsUpdateForTemperatureDegree18_22(connection, selection);
 					}
 					else if (degree>=22) {
-						ArrayList<Map> update6 = WindowsTable.windowsUpdateForTemperatureDegree22(connection, selection);
+						int update8 = WindowsTable.windowsUpdateForTemperatureDegree22(connection, selection);
 					}
 				
 				}
@@ -269,6 +272,7 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 			
 			else if (e.getActionCommand() == "Actualiser statut") {
 				
+				ArrayList<Map> rs4 = WindowsTable.windowsUpdatedStatus(connection, selection);
 				try
 				{
 					connection.client.close();
@@ -279,18 +283,17 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 					
 				}
 				
-				ArrayList<Map> rs4 = WindowsTable.windowsUpdatedStatus(connection, selection);
 				for(Map n:rs4)
 					
 				{
 					
-					String id_windows = (String) n.get("id_windows");
+					String id_windows = String.valueOf((int) n.get("id_windows"));
 					String status = (String) n.get("status");
-					String temperature = (String) n.get("temperature");
-					String light = (String) n.get("light");
+					String temperature = String.valueOf((int) n.get("temperature"));
+					String light = String.valueOf((int) n.get("light"));
 					String blind = (String) n.get("blind");
 					String opacity = (String) n.get("opacity");
-					String id_equipment = (String) n.get("id_equipment");
+					String id_equipment = String.valueOf((int) n.get("id_equipment"));
 					
 					String [] data = {id_windows, status, temperature, light, blind, opacity, id_equipment};
 					DefaultTableModel tblModel = (DefaultTableModel) table2.getModel();
@@ -301,7 +304,7 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 			}
 			else if (e.getActionCommand() == "Fenetres electro-chromatiques") {
 				
-				welcome = new Welcome("Virtual Smart City");
+				welcome = new Welcome(company);
 				this.dispose();
 			}
 		}

@@ -673,7 +673,7 @@ logger.info(rs1.getFetchSize()+"");
 		else if(request_name.equals("own_equipment"))
 		{
 			Map data_loading=(Map) request.getData();
-			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM Equipment");
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM Equipment WHERE id_gs = "+ (Integer) data_loading.get("id_gs")+" ");
 			List<Map> equipments=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
@@ -695,7 +695,7 @@ logger.info(rs1.getFetchSize()+"");
 		else if(request_name.equals("own_windows"))
 		{
 			Map data_loading=(Map) request.getData();
-			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM Equipment where type_equipment = 'fenetre electro-chromatique'");
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM Equipment WHERE id_gs = "+(Integer) data_loading.get("id_gs")+" AND type_equipment = 'fenetre electro-chromatique' ");
 			List<Map> windows=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
@@ -740,11 +740,12 @@ logger.info(rs1.getFetchSize()+"");
 		{
 			Map data_loading=(Map) request.getData();
 
-			int insert = connection.createStatement().executeUpdate(" INSERT INTO Windows (id_windows, status, temperature, light, blind, opacity, id_equipment) VALUES ("+(Integer)data_loading.get("id_equipment")+", 'Ferme', 20, 'Aucun', 'Niveau 0', 'Aucun', "+(Integer)data_loading.get("equipment")+" ");
+			int insert = connection.createStatement().executeUpdate(" INSERT INTO Windows (id_windows, status, temperature, light, blind, opacity, id_equipment) VALUES ("+(Integer)data_loading.get("id_equipment")+", 'Ferme', 20, 'Aucun', 'Niveau 0', 'Aucun', "+(Integer)data_loading.get("id_equipment")+" ");
+			//logger.info(insert);
 			List<Map> insertion=new ArrayList<Map>();
 			logger.info(String.valueOf(insert));
 			Map<String,Object> hm=new HashMap<String,Object>();
-			hm.put("insertion_done",true);
+			hm.put("insertion_done",Integer.valueOf(insert));
 			insertion.add(hm);
 			Map<String,Object> response=new HashMap<String,Object>();
 			response.put("name_request",request_name);

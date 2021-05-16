@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.ing1.pds.vsc.client.ClientToServer;
+import edu.ing1.pds.vsc.client.General_Services;
 import edu.ing1.pds.vsc.client.Request;
 
 public class WindowsTable {
@@ -20,6 +21,8 @@ public class WindowsTable {
 	private String blind;
 	private String opacity;
 	private int id_equipment;
+	General_Services company=null;
+	
 	
 	public int getId_windows() {
 		return id_windows;
@@ -69,15 +72,16 @@ public class WindowsTable {
 		
 	}
 	
-	public static ArrayList<Map> ownEquipment(ClientToServer connection)
+	public static ArrayList<Map> ownEquipment(ClientToServer connection, int id_gs)
 	{
 		ArrayList<Map>equipment=new ArrayList<Map>();
+		//id_gs = company.
 		try
 		{
 			Request request=new Request();
 			request.setName_request("own_equipment");
 			HashMap<String,Object>param=new HashMap<String,Object>();
-			//param.put("id_equipment",id_equipment);
+			param.put("id_gs",id_gs);
 			//param.put("type_equipment",type_equipment);
 			request.setData(param);
 			Request response=connection.SendRequest(request);
@@ -89,7 +93,7 @@ public class WindowsTable {
 		return equipment;
 	}
 	
-	public static ArrayList<Map> ownWindows(ClientToServer connection)
+	public static ArrayList<Map> ownWindows(ClientToServer connection, int id_gs)
 	{
 		ArrayList<Map>window=new ArrayList<Map>();
 		//ArrayList<Map>windows=null;
@@ -98,6 +102,7 @@ public class WindowsTable {
 			Request request=new Request();
 			request.setName_request("own_windows");
 			HashMap<String,Object>param=new HashMap<String,Object>();
+			param.put("id_gs",id_gs);
 			//param.put("type_equipment", type_equipment); //fenetre electro-chromatique
 			request.setData(param);
 			Request response=connection.SendRequest(request);
@@ -129,10 +134,10 @@ public class WindowsTable {
 		return selection;
 	}
 	
-	public static ArrayList<Map> windowsDefaultInsertion(ClientToServer connection, int choice)
+	public static int windowsDefaultInsertion(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>none=null;
-		choice = Windows.selection;
+		Windows.selection = choice ;
 		try
 		{
 			Request request=new Request();
@@ -146,7 +151,7 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return none;
+		return 1;
 	}
 	
 	
@@ -154,7 +159,7 @@ public class WindowsTable {
 	public static ArrayList<Map> windowsDefaultStatus(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>defaultStatus=null;
-		choice = Windows.selection;
+		Windows.selection = choice ;
 		try
 		{
 			Request request=new Request();
@@ -171,10 +176,10 @@ public class WindowsTable {
 		return defaultStatus;
 	}
 	
-	public static ArrayList<Map> windowsUpdateForLightLevelAucun(ClientToServer connection, int choice)
+	public static int windowsUpdateForLightLevelAucun(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>none1=null;
-		choice = Windows.selection;
+		Windows.selection = choice ;
 		try
 		{
 			Request request=new Request();
@@ -188,13 +193,13 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return none1;
+		return 1;
 	}
 	
-	public static ArrayList<Map> windowsUpdateForLightLevelFaible(ClientToServer connection, int choice)
+	public static int windowsUpdateForLightLevelFaible(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>none2=null;
-		choice = Windows.selection;
+		Windows.selection = choice ;
 		try
 		{
 			Request request=new Request();
@@ -208,13 +213,13 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return none2;
+		return 1;
 	}
 	
-	public static ArrayList<Map> windowsUpdateForLightLevelMoyen(ClientToServer connection, int choice)
+	public static int windowsUpdateForLightLevelMoyen(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>none3=null;
-		choice = Windows.selection;
+		Windows.selection = choice ;
 		try
 		{
 			Request request=new Request();
@@ -228,13 +233,13 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return none3;
+		return 1;
 	}
 	
-	public static ArrayList<Map> windowsUpdateForLightLevelFort(ClientToServer connection, int choice)
+	public static int windowsUpdateForLightLevelFort(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>none4=null;
-		choice = Windows.selection;
+		Windows.selection = choice ;
 		try
 		{
 			Request request=new Request();
@@ -248,10 +253,10 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return none4;
+		return 1;
 	}
 	
-	public static ArrayList<Map> windowsUpdateForLightLevelAutre(ClientToServer connection, int choice)
+	public static int windowsUpdateForLightLevelAutre(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>none5=null;
 		choice = Windows.selection;
@@ -268,13 +273,13 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return none5;
+		return 1;
 	}
 	
-	public static ArrayList<Map> windowsUpdateForTemperatureDegreeLessThan18(ClientToServer connection, int choice)
+	public static int windowsUpdateForTemperatureDegreeLessThan18(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>none6=null;
-		choice = Windows.selection;
+		Windows.selection = choice;
 		try
 		{
 			Request request=new Request();
@@ -288,13 +293,13 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return none6;
+		return 1;
 	}
 	
-	public static ArrayList<Map> windowsUpdateForTemperatureDegree18_22(ClientToServer connection, int choice)
+	public static int windowsUpdateForTemperatureDegree18_22(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>none7=null;
-		choice = Windows.selection;
+		Windows.selection = choice ;
 		try
 		{
 			Request request=new Request();
@@ -308,13 +313,13 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return none7;
+		return 1;
 	}
 	
-	public static ArrayList<Map> windowsUpdateForTemperatureDegree22(ClientToServer connection, int choice)
+	public static int windowsUpdateForTemperatureDegree22(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>none8=null;
-		choice = Windows.selection;
+		Windows.selection = choice ;
 		try
 		{
 			Request request=new Request();
@@ -328,7 +333,7 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return none8;
+		return 1;
 	}
 		
 	public static ArrayList<Map> windowsUpdatedStatus(ClientToServer connection, int choice)

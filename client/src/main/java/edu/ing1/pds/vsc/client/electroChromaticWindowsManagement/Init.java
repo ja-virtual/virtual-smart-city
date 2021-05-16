@@ -10,10 +10,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//import java.beans.Statement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -22,10 +18,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import edu.ing1.pds.vsc.client.ClientToServer;
+import edu.ing1.pds.vsc.client.General_Services;
+import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
 
 //import net.proteanit.sql.DbUtils;
 
@@ -33,15 +32,17 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 		
 		Welcome welcome;
 		Windows window;
-
+		General_Services company=null;
+		//int id_gs = company.getId_generalservices();
 		static JTable table = new JTable();
 		ClientToServer connection=new ClientToServer();
 		
 		private static final long serialVersionUID = 1L;
 
-			public Init(String title) { 
+			public Init(General_Services gs) { 
 				super();
-				//connect=DbConnection.dbConnector();
+				company = gs;
+				//this.id_gs = id_gs;
 				this.setSize(900,600);
 				this.setLocationRelativeTo(null);
 				this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -59,7 +60,7 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 				logoLabel.setIcon( new ImageIcon(icon.getImage().getScaledInstance(130,130, Image.SCALE_SMOOTH)));
 				leftPanel.add(logoLabel);
 				
-				this.getContentPane().add(leftPanel, BorderLayout.WEST);
+				
 				
 				JPanel south = new JPanel();
 				south.setBackground(Color.GREEN);
@@ -79,7 +80,6 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 				south.add(uc4);
 				
 				leftPanel.add(south);
-				
 								
 				this.getContentPane().add(leftPanel, BorderLayout.WEST);
 				
@@ -132,7 +132,7 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 			if (e.getActionCommand() == "Retour") {
 				
 				
-				welcome = new Welcome("Virtual Smart City");
+				welcome = new Welcome(company);
 				this.dispose();
 			}
 			else if (e.getActionCommand() == "Voir mes fenetres") {
@@ -147,7 +147,7 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 					
 				}
 
-				window = new Windows("Virtual Smart City");
+				window = new Windows(company);
 				this.dispose();
 				
 				
@@ -164,14 +164,15 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 					
 				}
 				
-				welcome = new Welcome("Virtual Smart City");
+				welcome = new Welcome(company);
 				this.dispose();
 				
 			}
 			else if(e.getActionCommand() == "Charger mes équipements") {
+				//ArrayList<Map>ws=WorkSpace.allRentedWorkSpace(connection, company.getId_generalservices());
 				
 				//ClientToServer connection = new ClientToServer();
-				ArrayList<Map> rs = WindowsTable.ownEquipment(connection);
+				ArrayList<Map> rs = WindowsTable.ownEquipment(connection, company.getId_generalservices());
 				
 				try
 				{
@@ -186,13 +187,13 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 				
 				for(Map n:rs)
 				{
-					
-					String id_equipment =(String) n.get("id_equipment");
+					String id_equipment = String.valueOf((int) n.get("id_equipment"));
 					String type_equipment = (String) n.get("type_equipment");
-					String is_available = (String) n.get("is_available");
-					String is_working = (String) n.get("is_working");
-					String id_gs = (String) n.get("id_gs");
-					String id_position = (String) n.get("id_position");
+					String is_available = String.valueOf((boolean) n.get("is_available"));
+					String is_working = String.valueOf((boolean) n.get("is_working"));
+					String id_gs = String.valueOf((int) n.get("id_gs"));
+					String id_position = String.valueOf((int) n.get("id_position"));
+					
 					
 					String [] data = {id_equipment, type_equipment, is_available, is_working, id_gs, id_position};
 					DefaultTableModel tblModel = (DefaultTableModel) table.getModel();

@@ -34,6 +34,7 @@ import edu.ing1.pds.vsc.client.MappingManagement.List_Position;
 import edu.ing1.pds.vsc.client.MappingManagement.Map_Full;
 import edu.ing1.pds.vsc.client.MappingManagement.MappingUC;
 import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
+import edu.ing1.pds.vsc.client.electroChromaticWindowsManagement.Welcome;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -188,13 +189,37 @@ public General_Services company;
 				p.addMouseListener(new MouseAdapter()
 				{
 					public void mouseClicked(MouseEvent e)
+					{ClientToServer connection=new ClientToServer();
+					ArrayList<Map>ws=WorkSpace.allRentedWorkSpace(connection, company.getId_generalservices());
+					try {
+						connection.client.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					if(ws==null )
+					{
+						JOptionPane.showMessageDialog(new JFrame(),
+								"Veuillez d'abord louer un espace","Configuration fenetres, impossible pour le moment",
+								JOptionPane.ERROR_MESSAGE);
+					}
+					else if(ws.isEmpty())
 					{
 						
-						HomePage t = new HomePage();
-						t.setVisible(true);
+						JOptionPane.showMessageDialog(new JFrame(),
+								"Veuillez d'abord louer un espace","Configuration fenetres, impossible pour le moment",
+								JOptionPane.ERROR_MESSAGE);
+					}
+					else
+					{
+						
+						Welcome welcome = new Welcome(company);
+						welcome.setVisible(true);
 						dispose();
 					}
-				});
+
+
+				}});
 				p.addMouseListener(new MouseAdapter()
 				{
 					public void mouseEntered(MouseEvent e)

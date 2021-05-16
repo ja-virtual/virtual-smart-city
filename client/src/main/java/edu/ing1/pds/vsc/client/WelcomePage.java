@@ -32,6 +32,7 @@ import edu.ing1.pds.vsc.client.MappingManagement.List_Position;
 import edu.ing1.pds.vsc.client.MappingManagement.Map_Full;
 import edu.ing1.pds.vsc.client.MappingManagement.MappingUC;
 import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
+import edu.ing1.pds.vsc.client.electroChromaticWindowsManagement.Welcome;
 import edu.ing1.pds.vsc.client.workspaceLocation.lolo.lolo.Loocation;
 
 public class WelcomePage extends JFrame {
@@ -170,20 +171,39 @@ public class WelcomePage extends JFrame {
 		{
 			public void mouseClicked(MouseEvent e)
 			{
-				try
+				ArrayList<Map>ws=WorkSpace.allRentedWorkSpace(connection, company.getId_generalservices());
+				if(ws==null )
 				{
-					connection.client.close();
-
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Veuillez d'abord louer un espace","Configuration fenetres, impossible pour le moment",
+							JOptionPane.ERROR_MESSAGE);
 				}
-				catch(Exception e1)
+				else if(ws.isEmpty())
 				{
-
+					
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Veuillez d'abord louer un espace","Configuration fenetres, impossible pour le moment",
+							JOptionPane.ERROR_MESSAGE);
 				}
-				HomePage t = new HomePage();
-				t.setVisible(true);
-				dispose();
-			}
-		});
+				else
+				{
+					try
+					{
+						connection.client.close();
+
+					}
+					catch(Exception e1)
+					{
+						
+
+					}
+					Welcome welcome = new Welcome(company);
+					//t.setVisible(true);
+					dispose();
+				}
+
+
+			}});
 		p.addMouseListener(new MouseAdapter()
 		{
 			public void mouseEntered(MouseEvent e)

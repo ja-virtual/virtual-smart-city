@@ -26,11 +26,14 @@ import javax.swing.table.DefaultTableModel;
 
 import ch.qos.logback.classic.Logger;
 import edu.ing1.pds.vsc.client.ClientToServer;
+import edu.ing1.pds.vsc.client.General_Services;
 
 	public class Windows extends JFrame implements ActionListener{
 		Welcome welcome;
 		Config config;
 		Init init;
+		General_Services company=null;
+		//int id_gs = company.getId_generalservices();
 		
 		//Connection connect = null;
 		JTable table = new JTable();
@@ -43,9 +46,10 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 		
 		private static final long serialVersionUID = 1L;
 
-			public Windows(String title) { 
+			public Windows(General_Services gs) { 
 				super();
-				//connect=DbConnection.dbConnector();
+				company = gs;
+				//this.id_gs = id_gs;
 				this.setSize(900,600);
 				this.setLocationRelativeTo(null);
 				this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -63,7 +67,7 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 				logoLabel.setIcon( new ImageIcon(icon.getImage().getScaledInstance(130,130, Image.SCALE_SMOOTH)));
 				leftPanel.add(logoLabel);
 				
-				this.getContentPane().add(leftPanel, BorderLayout.WEST);
+				//this.getContentPane().add(leftPanel, BorderLayout.WEST);
 				
 				JPanel south = new JPanel();
 				south.setBackground(Color.GREEN);
@@ -150,10 +154,12 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 			// TODO Auto-generated method stub
 
 			if (e.getActionCommand() == "Retour") {
-				init = new Init("Virtual Smart City");
+				init = new Init(company);
 				this.dispose();
 			}
 			else if (e.getActionCommand() == "Charger mes fenetres") {
+				ArrayList<Map> rs1 = WindowsTable.ownWindows(connection, company.getId_generalservices());
+				ArrayList<Map> rs2 = WindowsTable.ownWindows(connection, company.getId_generalservices());
 				
 				try
 				{
@@ -165,15 +171,15 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 					
 				}
 				
-				ArrayList<Map> rs = WindowsTable.ownWindows(connection);
-				for(Map n:rs)
+				
+				for(Map n:rs1)
 				{
-					String id_equipment =(String) n.get("id_equipment");
+					String id_equipment = String.valueOf((int) n.get("id_equipment"));
 					String type_equipment = (String) n.get("type_equipment");
-					String is_available = (String) n.get("is_available");
-					String is_working = (String) n.get("is_working");
-					String id_gs = (String) n.get("id_gs");
-					String id_position = (String) n.get("id_position");
+					String is_available = String.valueOf((boolean) n.get("is_available"));
+					String is_working = String.valueOf((boolean) n.get("is_working"));
+					String id_gs = String.valueOf((int) n.get("id_gs"));
+					String id_position = String.valueOf((int) n.get("id_position"));
 					
 					String [] data = {id_equipment, type_equipment, is_available, is_working, id_gs, id_position};
 					DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
@@ -183,7 +189,7 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 				    
 				}
 			    
-				for(Map n:rs)
+				for(Map n:rs2)
 				{
 					int id = (int) n.get("id_equipment");
 															
@@ -205,6 +211,9 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 			}
 			
 			else if (e.getActionCommand() == "Selectionner") {
+				int insert = WindowsTable.windowsDefaultInsertion(connection, selection);
+				int insert1 = TemperatureTable.temperatureDefaultInsertion(connection, selection);
+				int insert2 = LightingTable.lightingDefaultInsertion(connection, selection);
 				try
 				{
 					connection.client.close();
@@ -214,19 +223,14 @@ import edu.ing1.pds.vsc.client.ClientToServer;
 				{
 					
 				}
-
-				ArrayList<Map> insert = WindowsTable.windowsDefaultInsertion(connection, selection);
-				ArrayList<Map> insert1 = TemperatureTable.temperatureDefaultInsertion(connection, selection);
-				ArrayList<Map> insert2 = LightingTable.lightingDefaultInsertion(connection, selection);
-			
-				config = new Config("Virtual Smart City");
+				config = new Config(company);
 				this.dispose();
 								
 			}
 			
 			else if (e.getActionCommand() == "Fenetres electro-chromatiques") {
 				
-				welcome = new Welcome("Virtual Smart City");
+				welcome = new Welcome(company);
 				this.dispose();
 			
 			}

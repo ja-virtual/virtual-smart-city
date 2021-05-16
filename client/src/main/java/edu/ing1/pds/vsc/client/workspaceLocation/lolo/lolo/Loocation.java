@@ -15,6 +15,7 @@ import edu.ing1.pds.vsc.client.MappingManagement.List_Position;
 import edu.ing1.pds.vsc.client.MappingManagement.Map_Full;
 import edu.ing1.pds.vsc.client.MappingManagement.MappingUC;
 import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
+import edu.ing1.pds.vsc.client.electroChromaticWindowsManagement.Welcome;
 import edu.ing1.pds.vsc.client.workspaceLocation.lolo.lolo.OfferCreator;
 import edu.ing1.pds.vsc.client.workspaceLocation.lolo.lolo.OfferManager;
 import edu.ing1.pds.vsc.client.workspaceLocation.lolo.lolo.Selection;
@@ -165,12 +166,31 @@ public class Loocation extends JFrame implements ActionListener{
 		{
 			public void mouseClicked(MouseEvent e)
 			{
-
-				HomePage t = new HomePage();
-				t.setVisible(true);
+				ClientToServer connection=new ClientToServer();
+				ArrayList<Map>ws=WorkSpace.allRentedWorkSpace(connection, company.getId_generalservices());
+			if(ws==null )
+			{
+				JOptionPane.showMessageDialog(new JFrame(),
+						"Veuillez d'abord louer un espace","Configuration fenetres, impossible pour le moment",
+						JOptionPane.ERROR_MESSAGE);
+			}
+			else if(ws.isEmpty())
+			{
+				
+				JOptionPane.showMessageDialog(new JFrame(),
+						"Veuillez d'abord louer un espace","Configuration fenetres, impossible pour le moment",
+						JOptionPane.ERROR_MESSAGE);
+			}
+			else
+			{
+				
+				Welcome welcome = new Welcome(company);
+				//t.setVisible(true);
 				dispose();
 			}
-		});
+
+
+		}});
 		p.addMouseListener(new MouseAdapter()
 		{
 			public void mouseEntered(MouseEvent e)
