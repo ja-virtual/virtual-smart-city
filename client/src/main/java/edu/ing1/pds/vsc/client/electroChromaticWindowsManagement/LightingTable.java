@@ -51,8 +51,8 @@ public class LightingTable {
 	
 	public static int lightingDefaultInsertion(ClientToServer connection, int choice)
 	{
-		ArrayList<Map>none2=null;
-		choice = Windows.selection;
+		ArrayList<Map>none2=new ArrayList<Map>();
+		//choice = Windows.selection;
 		try
 		{
 			Request request=new Request();
@@ -66,13 +66,17 @@ public class LightingTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return 1;
+		if(none2!=null) 
+			return (int) none2.get(0).get("insertion_done");
+			else
+		return (int)none2.get(0).get("not_done");
+		
 	}
 	
 	public static ArrayList<Map> levelFromLighting(ClientToServer connection, int choice)
 	{
-		ArrayList<Map>level=null;
-		choice = Windows.selection;
+		ArrayList<Map>level=new ArrayList<Map>();
+		//choice = Windows.selection;
 		try
 		{
 			Request request=new Request();

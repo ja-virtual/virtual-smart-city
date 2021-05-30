@@ -116,7 +116,7 @@ public class WindowsTable {
 	
 	public static ArrayList<Map> windowsSelected(ClientToServer connection, int choice)
 	{
-		ArrayList<Map>selection=null;
+		ArrayList<Map>selection=new ArrayList<Map>();
 		choice = Windows.selection;		
 		try
 		{
@@ -136,8 +136,8 @@ public class WindowsTable {
 	
 	public static int windowsDefaultInsertion(ClientToServer connection, int choice)
 	{
-		ArrayList<Map>none=null;
-		Windows.selection = choice ;
+		ArrayList<Map>none=new ArrayList<Map>();
+		//Windows.selection = choice ;
 		try
 		{
 			Request request=new Request();
@@ -151,15 +151,19 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return 1;
+		if(none!=null) 
+			return (int) none.get(0).get("insertion_done");
+			else
+		return (int)none.get(0).get("not_done");
+		
 	}
 	
 	
 	
 	public static ArrayList<Map> windowsDefaultStatus(ClientToServer connection, int choice)
 	{
-		ArrayList<Map>defaultStatus=null;
-		Windows.selection = choice ;
+		ArrayList<Map>defaultStatus=new ArrayList<Map>();
+		//Windows.selection = choice ;
 		try
 		{
 			Request request=new Request();
@@ -178,8 +182,8 @@ public class WindowsTable {
 	
 	public static int windowsUpdateForLightLevelAucun(ClientToServer connection, int choice)
 	{
-		ArrayList<Map>none1=null;
-		Windows.selection = choice ;
+		ArrayList<Map>none1=new ArrayList<Map>();
+		//Windows.selection = choice ;
 		try
 		{
 			Request request=new Request();
@@ -193,13 +197,17 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return 1;
+		if(none1!=null) 
+			return (int) none1.get(0).get("update_done");
+			else
+		return (int)none1.get(0).get("not_done");
+		
 	}
 	
 	public static int windowsUpdateForLightLevelFaible(ClientToServer connection, int choice)
 	{
-		ArrayList<Map>none2=null;
-		Windows.selection = choice ;
+		ArrayList<Map>none2=new ArrayList<Map>();
+		//Windows.selection = choice ;
 		try
 		{
 			Request request=new Request();
@@ -213,13 +221,17 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return 1;
+		if(none2!=null) 
+			return (int) none2.get(0).get("update_done");
+			else
+		return (int)none2.get(0).get("not_done");
+		
 	}
 	
 	public static int windowsUpdateForLightLevelMoyen(ClientToServer connection, int choice)
 	{
-		ArrayList<Map>none3=null;
-		Windows.selection = choice ;
+		ArrayList<Map>none3=new ArrayList<Map>();
+		//Windows.selection = choice ;
 		try
 		{
 			Request request=new Request();
@@ -233,13 +245,17 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return 1;
+		if(none3!=null) 
+			return (int) none3.get(0).get("update_done");
+			else
+		return (int)none3.get(0).get("not_done");
+		
 	}
 	
 	public static int windowsUpdateForLightLevelFort(ClientToServer connection, int choice)
 	{
-		ArrayList<Map>none4=null;
-		Windows.selection = choice ;
+		ArrayList<Map>none4=new ArrayList<Map>();
+		//Windows.selection = choice ;
 		try
 		{
 			Request request=new Request();
@@ -253,13 +269,17 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return 1;
+		if(none4!=null) 
+			return (int) none4.get(0).get("update_done");
+			else
+		return (int)none4.get(0).get("not_done");
+		
 	}
 	
 	public static int windowsUpdateForLightLevelAutre(ClientToServer connection, int choice)
 	{
-		ArrayList<Map>none5=null;
-		choice = Windows.selection;
+		ArrayList<Map>none5=new ArrayList<Map>();
+		//choice = Windows.selection;
 		try
 		{
 			Request request=new Request();
@@ -273,13 +293,17 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return 1;
+		if(none5!=null) 
+			return (int) none5.get(0).get("update_done");
+			else
+		return (int)none5.get(0).get("not_done");
+		
 	}
 	
 	public static int windowsUpdateForTemperatureDegreeLessThan18(ClientToServer connection, int choice)
 	{
-		ArrayList<Map>none6=null;
-		Windows.selection = choice;
+		ArrayList<Map>none6=new ArrayList<Map>();
+		//Windows.selection = choice;
 		try
 		{
 			Request request=new Request();
@@ -293,13 +317,17 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return 1;
+		if(none6!=null) 
+			return (int) none6.get(0).get("update_done");
+			else
+		return (int)none6.get(0).get("not_done");
+		
 	}
 	
 	public static int windowsUpdateForTemperatureDegree18_22(ClientToServer connection, int choice)
 	{
-		ArrayList<Map>none7=null;
-		Windows.selection = choice ;
+		ArrayList<Map>none7=new ArrayList<Map>();
+		//Windows.selection = choice ;
 		try
 		{
 			Request request=new Request();
@@ -313,13 +341,17 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return 1;
+		if(none7!=null) 
+			return (int) none7.get(0).get("update_done");
+			else
+		return (int)none7.get(0).get("not_done");
+		
 	}
 	
 	public static int windowsUpdateForTemperatureDegree22(ClientToServer connection, int choice)
 	{
-		ArrayList<Map>none8=null;
-		Windows.selection = choice ;
+		ArrayList<Map>none8=new ArrayList<Map>();
+		//Windows.selection = choice ;
 		try
 		{
 			Request request=new Request();
@@ -333,13 +365,17 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return 1;
-	}
+		if(none8!=null) 
+			return (int) none8.get(0).get("update_done");
+			else
+		return (int)none8.get(0).get("not_done");
 		
+	}
+	
 	public static ArrayList<Map> windowsUpdatedStatus(ClientToServer connection, int choice)
 	{
-		ArrayList<Map>updatedStatus=null;
-		choice = Windows.selection;
+		ArrayList<Map>updatedStatus=new ArrayList<Map>();
+		//choice = Windows.selection;
 		try
 		{
 			Request request=new Request();

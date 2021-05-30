@@ -40,6 +40,7 @@ import edu.ing1.pds.vsc.client.General_Services;
 		static JComboBox box = new JComboBox();
 		static int selection;
 		ClientToServer connection=new ClientToServer();
+		WindowsTable wTab ;
 		/**
 		 * 
 		 */
