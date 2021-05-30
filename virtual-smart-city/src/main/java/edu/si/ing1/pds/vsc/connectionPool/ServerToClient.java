@@ -359,6 +359,7 @@ logger.info(rs1.getFetchSize()+"");
 			response.put("data",positions);
 			response_string=mapper.writeValueAsString(response);
 		}
+		
 		else if(request_name.equals("the_workspace"))
 		{
 			Map data_loading=(Map) request.getData();
@@ -736,23 +737,6 @@ logger.info(rs1.getFetchSize()+"");
 			response_string=mapper.writeValueAsString(response);
 		}
 		
-//		else if(request_name.equals("win_default_insert"))
-//		{
-//			Map data_loading=(Map) request.getData();
-//
-//			int insert = connection.createStatement().executeUpdate(" INSERT INTO Windows (id_windows, status, temperature, light, blind, opacity, id_equipment) VALUES ("+(Integer)data_loading.get("id_equipment")+", 'Ferme', 20, 'Aucun', 'Niveau 0', 'Aucun', "+(Integer)data_loading.get("id_equipment")+" ");
-//			//logger.info(insert);
-//			List<Map> insertion=new ArrayList<Map>();
-//			logger.info(String.valueOf(insert));
-//			Map<String,Object> hm=new HashMap<String,Object>();
-//			hm.put("insertion_done",Integer.valueOf(insert));
-//			insertion.add(hm);
-//			Map<String,Object> response=new HashMap<String,Object>();
-//			response.put("name_request",request_name);
-//			response.put("data",insertion);
-//			response_string=mapper.writeValueAsString(response);
-//		}
-//		
 		else if(request_name.equals("win_default_insert"))
 		{
 			Map data_loading=(Map) request.getData();
@@ -784,22 +768,6 @@ logger.info(rs1.getFetchSize()+"");
 			response_string=mapper.writeValueAsString(response);
 		}
 		
-//		else if(request_name.equals("temp_default_insert"))
-//		{
-//			Map data_loading=(Map) request.getData();
-//
-//			int insert1 = connection.createStatement().executeUpdate(" INSERT INTO Temperature (id_temperature, degree, id_windows) VALUES ("+(Integer)data_loading.get("id_windows")+", 20, "+(Integer)data_loading.get("id_windows")+" ");
-//			List<Map> insertion1=new ArrayList<Map>();
-//			logger.info(String.valueOf(insert1));
-//			Map<String,Object> hm=new HashMap<String,Object>();
-//			hm.put("insertion_done",true);
-//			insertion1.add(hm);
-//			Map<String,Object> response=new HashMap<String,Object>();
-//			response.put("name_request",request_name);
-//			response.put("data",insertion1);
-//			response_string=mapper.writeValueAsString(response);
-//		}
-		
 		else if(request_name.equals("temp_default_insert"))
 		{
 			Map data_loading=(Map) request.getData();
@@ -830,22 +798,6 @@ logger.info(rs1.getFetchSize()+"");
 			response.put("data",insert);
 			response_string=mapper.writeValueAsString(response);
 		}
-		
-//		else if(request_name.equals("light_default_insert"))
-//		{
-//			Map data_loading=(Map) request.getData();
-//
-//			int insert2 = connection.createStatement().executeUpdate(" INSERT INTO Lighting (id_light, level, id_windows) VALUES ("+(Integer)data_loading.get("id_windows")+", Aucun, "+(Integer)data_loading.get("id_windows")+" ");
-//			List<Map> insertion2=new ArrayList<Map>();
-//			logger.info(String.valueOf(insert2));
-//			Map<String,Object> hm=new HashMap<String,Object>();
-//			hm.put("insertion_done",true);
-//			insertion2.add(hm);
-//			Map<String,Object> response=new HashMap<String,Object>();
-//			response.put("name_request",request_name);
-//			response.put("data",insertion2);
-//			response_string=mapper.writeValueAsString(response);
-//		}
 		
 		else if(request_name.equals("light_default_insert"))
 		{
