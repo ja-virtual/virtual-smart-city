@@ -169,7 +169,7 @@ public class WindowsTable {
 			Request request=new Request();
 			request.setName_request("default_status");
 			HashMap<String,Object>param=new HashMap<String,Object>();
-			param.put("id_equipment", choice);
+			param.put("id_windows", choice);
 			request.setData(param);
 			Request response=connection.SendRequest(request);
 			defaultStatus=(ArrayList<Map>)response.getData();

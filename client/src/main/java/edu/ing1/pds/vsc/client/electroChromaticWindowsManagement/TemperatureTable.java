@@ -61,9 +61,9 @@ public class TemperatureTable {
 			logger.info("Server is maybe occupied");
 		}
 		if(none1!=null) 
-			return (int) none1.get(0).get("insertion_done");
+			return 1 ; //(int) none1.get(0).get("insertion_done");
 			else
-		return (int)none1.get(0).get("not_done");
+		return 0 ; //(int)none1.get(0).get("not_done");
 		
 	}
 	

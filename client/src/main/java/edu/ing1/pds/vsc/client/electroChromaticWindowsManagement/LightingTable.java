@@ -67,9 +67,9 @@ public class LightingTable {
 			logger.info("Server is maybe occupied");
 		}
 		if(none2!=null) 
-			return (int) none2.get(0).get("insertion_done");
+			return 1; //(int) none2.get(0).get("insertion_done");
 			else
-		return (int)none2.get(0).get("not_done");
+		return 0; //(int)none2.get(0).get("not_done");
 		
 	}
 	
