@@ -744,7 +744,7 @@ logger.info(rs1.getFetchSize()+"");
 			int op=0;
 			connection.setAutoCommit(false);
 
-			op = connection.createStatement().executeUpdate(" INSERT INTO Windows (id_windows, status, temperature, light, blind, opacity, id_equipment) VALUES ("+(Integer)data_loading.get("id_equipment")+", 'Ferme', 20, 'Aucun', 'Niveau 0', 'Aucun', "+(Integer)data_loading.get("id_equipment")+" ");
+			op = connection.createStatement().executeUpdate(" INSERT INTO Windows (id_windows, status, temperature, light, blind, opacity, id_equipment) VALUES ("+(Integer)data_loading.get("id_equipment")+", 'Ferme', 20, 'Aucun', 'Niveau 0', 'Aucun', "+(Integer)data_loading.get("id_equipment")+") ");
 			List<Map> insert=new ArrayList<Map>();
 			logger.info(op+" "+op);
 			Map<String,Object> hm=new HashMap<String,Object>();
@@ -775,7 +775,7 @@ logger.info(rs1.getFetchSize()+"");
 			int op=0;
 			connection.setAutoCommit(false);
 
-			op = connection.createStatement().executeUpdate(" INSERT INTO Temperature (id_temperature, degree, id_windows) VALUES ("+(Integer)data_loading.get("id_windows")+", 20, "+(Integer)data_loading.get("id_windows")+" ");
+			op = connection.createStatement().executeUpdate(" INSERT INTO Temperature (id_temperature, degree, id_windows) VALUES ("+(Integer)data_loading.get("id_windows")+", 20, "+(Integer)data_loading.get("id_windows")+") ");
 			List<Map> insert=new ArrayList<Map>();
 			logger.info(op+" "+op);
 			Map<String,Object> hm=new HashMap<String,Object>();
@@ -806,7 +806,7 @@ logger.info(rs1.getFetchSize()+"");
 			int op=0;
 			connection.setAutoCommit(false);
 
-			op = connection.createStatement().executeUpdate(" INSERT INTO Lighting (id_light, level, id_windows) VALUES ("+(Integer)data_loading.get("id_windows")+", Aucun, "+(Integer)data_loading.get("id_windows")+" ");
+			op = connection.createStatement().executeUpdate(" INSERT INTO Lighting (id_light, level, id_windows) VALUES ("+(Integer)data_loading.get("id_windows")+", Aucun, "+(Integer)data_loading.get("id_windows")+") ");
 			List<Map> insert=new ArrayList<Map>();
 			logger.info(op+" "+op);
 			Map<String,Object> hm=new HashMap<String,Object>();
