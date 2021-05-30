@@ -117,7 +117,7 @@ public class WindowsTable {
 	public static ArrayList<Map> windowsSelected(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>selection=new ArrayList<Map>();
-		choice = Windows.selection;		
+		//choice = Windows.selection;		
 		try
 		{
 			Request request=new Request();
@@ -152,9 +152,9 @@ public class WindowsTable {
 			logger.info("Server is maybe occupied");
 		}
 		if(none!=null) 
-			return (int) none.get(0).get("insertion_done");
+			return 1 ; //(int) none.get(0).get("insertion_done");
 			else
-		return (int)none.get(0).get("not_done");
+		return 0 ; //(int)none.get(0).get("not_done");
 		
 	}
 	
@@ -198,9 +198,9 @@ public class WindowsTable {
 			logger.info("Server is maybe occupied");
 		}
 		if(none1!=null) 
-			return (int) none1.get(0).get("update_done");
+			return 1 ; //(int) none1.get(0).get("update_done");
 			else
-		return (int)none1.get(0).get("not_done");
+		return 0 ; //(int)none1.get(0).get("not_done");
 		
 	}
 	
@@ -222,9 +222,9 @@ public class WindowsTable {
 			logger.info("Server is maybe occupied");
 		}
 		if(none2!=null) 
-			return (int) none2.get(0).get("update_done");
+			return 1 ; //(int) none2.get(0).get("update_done");
 			else
-		return (int)none2.get(0).get("not_done");
+		return 0 ; //(int)none2.get(0).get("not_done");
 		
 	}
 	
@@ -246,9 +246,9 @@ public class WindowsTable {
 			logger.info("Server is maybe occupied");
 		}
 		if(none3!=null) 
-			return (int) none3.get(0).get("update_done");
+			return 1 ; //(int) none3.get(0).get("update_done");
 			else
-		return (int)none3.get(0).get("not_done");
+		return 0 ; //(int)none3.get(0).get("not_done");
 		
 	}
 	
@@ -270,9 +270,9 @@ public class WindowsTable {
 			logger.info("Server is maybe occupied");
 		}
 		if(none4!=null) 
-			return (int) none4.get(0).get("update_done");
+			return 1 ; //(int) none4.get(0).get("update_done");
 			else
-		return (int)none4.get(0).get("not_done");
+		return 0 ; //(int)none4.get(0).get("not_done");
 		
 	}
 	
@@ -294,9 +294,9 @@ public class WindowsTable {
 			logger.info("Server is maybe occupied");
 		}
 		if(none5!=null) 
-			return (int) none5.get(0).get("update_done");
+			return 1 ; //(int) none5.get(0).get("update_done");
 			else
-		return (int)none5.get(0).get("not_done");
+		return 0 ; //(int)none5.get(0).get("not_done");
 		
 	}
 	
@@ -318,9 +318,9 @@ public class WindowsTable {
 			logger.info("Server is maybe occupied");
 		}
 		if(none6!=null) 
-			return (int) none6.get(0).get("update_done");
+			return 1 ; //(int) none6.get(0).get("update_done");
 			else
-		return (int)none6.get(0).get("not_done");
+		return 0 ; //(int)none6.get(0).get("not_done");
 		
 	}
 	
@@ -342,9 +342,9 @@ public class WindowsTable {
 			logger.info("Server is maybe occupied");
 		}
 		if(none7!=null) 
-			return (int) none7.get(0).get("update_done");
+			return 1 ; //(int) none7.get(0).get("update_done");
 			else
-		return (int)none7.get(0).get("not_done");
+		return 0 ; //(int)none7.get(0).get("not_done");
 		
 	}
 	
@@ -366,9 +366,9 @@ public class WindowsTable {
 			logger.info("Server is maybe occupied");
 		}
 		if(none8!=null) 
-			return (int) none8.get(0).get("update_done");
+			return 1 ; //(int) none8.get(0).get("update_done");
 			else
-		return (int)none8.get(0).get("not_done");
+		return 0 ; //(int)none8.get(0).get("not_done");
 		
 	}
 	
