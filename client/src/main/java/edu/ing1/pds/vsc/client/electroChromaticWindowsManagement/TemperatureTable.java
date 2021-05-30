@@ -45,8 +45,8 @@ public class TemperatureTable {
 	
 	public static int temperatureDefaultInsertion(ClientToServer connection, int choice)
 	{
-		ArrayList<Map>none1=null;
-		choice = Windows.selection;
+		ArrayList<Map>none1=new ArrayList<Map>();
+		//choice = Windows.selection;
 		try
 		{
 			Request request=new Request();
@@ -60,13 +60,17 @@ public class TemperatureTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return 1;
+		if(none1!=null) 
+			return (int) none1.get(0).get("insertion_done");
+			else
+		return (int)none1.get(0).get("not_done");
+		
 	}
 	
 	public static ArrayList<Map> degreeFromTemperature(ClientToServer connection, int choice)
 	{
-		ArrayList<Map>degree=null;
-		choice = Windows.selection;
+		ArrayList<Map>degree=new ArrayList<Map>();
+		//choice = Windows.selection;
 		try
 		{
 			Request request=new Request();

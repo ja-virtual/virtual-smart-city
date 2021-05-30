@@ -36,7 +36,7 @@ import edu.ing1.pds.vsc.client.General_Services;
 			
 		JTable table2 = new JTable();
 		
-		int selection;
+		//int selection;
 		
 	
 		/**
@@ -158,7 +158,7 @@ import edu.ing1.pds.vsc.client.General_Services;
 			}
 			else if (e.getActionCommand() == "Statut par defaut") {
 				
-				ArrayList<Map> rs1 = WindowsTable.windowsDefaultStatus(connection, selection);
+				ArrayList<Map> rs1 = WindowsTable.windowsDefaultStatus(connection, Windows.selection);
 				try
 				{
 					connection.client.close();
@@ -191,7 +191,7 @@ import edu.ing1.pds.vsc.client.General_Services;
 			
 			else if (e.getActionCommand() == "Configurer eclairage") {
 				
-				ArrayList<Map> rs2 = LightingTable.levelFromLighting(connection, selection);
+				ArrayList<Map> rs2 = LightingTable.levelFromLighting(connection, Windows.selection);
 				try
 				{
 					connection.client.close();
@@ -215,20 +215,20 @@ import edu.ing1.pds.vsc.client.General_Services;
 					switch (level) {
 					
 					  case "Aucun":
-						  int update1 = WindowsTable.windowsUpdateForLightLevelAucun(connection, selection);
+						  int update1 = WindowsTable.windowsUpdateForLightLevelAucun(connection, Windows.selection);
 						  break;
 					  case "Faible":
-						  int update2 = WindowsTable.windowsUpdateForLightLevelFaible(connection, selection);
+						  int update2 = WindowsTable.windowsUpdateForLightLevelFaible(connection, Windows.selection);
 						  break;
 					  case "Moyen":
-						  int update3 = WindowsTable.windowsUpdateForLightLevelMoyen(connection, selection);
+						  int update3 = WindowsTable.windowsUpdateForLightLevelMoyen(connection, Windows.selection);
 						  break;
 					  case "Fort":
-						  int update4 = WindowsTable.windowsUpdateForLightLevelFort(connection, selection);
+						  int update4 = WindowsTable.windowsUpdateForLightLevelFort(connection, Windows.selection);
 						  break;
 						
 					  default:
-						  int update5 = WindowsTable.windowsUpdateForLightLevelAutre(connection, selection);
+						  int update5 = WindowsTable.windowsUpdateForLightLevelAutre(connection, Windows.selection);
 						  	  
 					} 
 					}
@@ -236,7 +236,7 @@ import edu.ing1.pds.vsc.client.General_Services;
 			}		
 			
 			else if (e.getActionCommand() == "Configurer temperature") {
-				ArrayList<Map> rs3 = TemperatureTable.degreeFromTemperature(connection, selection);
+				ArrayList<Map> rs3 = TemperatureTable.degreeFromTemperature(connection, Windows.selection);
 				
 				try
 				{
@@ -258,13 +258,13 @@ import edu.ing1.pds.vsc.client.General_Services;
 					String id_windows = (String) n.get("id_windows");	
 					
 					if ( degree < 18 ) {
-						int update6 = WindowsTable.windowsUpdateForTemperatureDegreeLessThan18(connection, selection);
+						int update6 = WindowsTable.windowsUpdateForTemperatureDegreeLessThan18(connection, Windows.selection);
 					}
 					else if (degree>=18 || degree<22 ) {
-						int update7 = WindowsTable.windowsUpdateForTemperatureDegree18_22(connection, selection);
+						int update7 = WindowsTable.windowsUpdateForTemperatureDegree18_22(connection, Windows.selection);
 					}
 					else if (degree>=22) {
-						int update8 = WindowsTable.windowsUpdateForTemperatureDegree22(connection, selection);
+						int update8 = WindowsTable.windowsUpdateForTemperatureDegree22(connection, Windows.selection);
 					}
 				
 				}
@@ -272,7 +272,7 @@ import edu.ing1.pds.vsc.client.General_Services;
 			
 			else if (e.getActionCommand() == "Actualiser statut") {
 				
-				ArrayList<Map> rs4 = WindowsTable.windowsUpdatedStatus(connection, selection);
+				ArrayList<Map> rs4 = WindowsTable.windowsUpdatedStatus(connection, Windows.selection);
 				try
 				{
 					connection.client.close();
