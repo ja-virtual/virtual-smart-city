@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -212,9 +213,15 @@ import edu.ing1.pds.vsc.client.General_Services;
 			}
 			
 			else if (e.getActionCommand() == "Selectionner") {
-				int insert = WindowsTable.windowsDefaultInsertion(connection, selection);
-				int insert1 = TemperatureTable.temperatureDefaultInsertion(connection, selection);
-				int insert2 = LightingTable.lightingDefaultInsertion(connection, selection);
+				boolean success = WindowsTable.windowsDefaultInsertion(connection, selection);
+				boolean success1 = TemperatureTable.temperatureDefaultInsertion(connection, selection);
+				boolean success2 = LightingTable.lightingDefaultInsertion(connection, selection);
+				
+				if(success==true && success1==true && success2==true)
+					JOptionPane.showMessageDialog(new JFrame(),"La fenetre est prete à etre configurée ","Selectionné !!! ",JOptionPane.PLAIN_MESSAGE);
+				else
+					JOptionPane.showMessageDialog(new JFrame(),"Vous n'avez pas sélectionner la fenetre à configurer","Aucune sélection",JOptionPane.PLAIN_MESSAGE);
+				
 				try
 				{
 					connection.client.close();

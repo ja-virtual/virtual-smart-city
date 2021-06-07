@@ -806,7 +806,7 @@ logger.info(rs1.getFetchSize()+"");
 			int op=0;
 			connection.setAutoCommit(false);
 
-			op = connection.createStatement().executeUpdate(" INSERT INTO Lighting (id_light, level, id_windows) VALUES ("+(Integer)data_loading.get("id_windows")+", Aucun, "+(Integer)data_loading.get("id_windows")+") ");
+			op = connection.createStatement().executeUpdate(" INSERT INTO Lighting (id_light, level, id_windows) VALUES ("+(Integer)data_loading.get("id_windows")+", 'Aucun', "+(Integer)data_loading.get("id_windows")+") ");
 			List<Map> insert=new ArrayList<Map>();
 			logger.info(op+" "+op);
 			Map<String,Object> hm=new HashMap<String,Object>();

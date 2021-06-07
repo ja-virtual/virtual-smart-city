@@ -134,7 +134,7 @@ public class WindowsTable {
 		return selection;
 	}
 	
-	public static int windowsDefaultInsertion(ClientToServer connection, int choice)
+	public static boolean windowsDefaultInsertion(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>none=new ArrayList<Map>();
 		//Windows.selection = choice ;
@@ -152,9 +152,9 @@ public class WindowsTable {
 			logger.info("Server is maybe occupied");
 		}
 		if(none!=null) 
-			return 1 ; //(int) none.get(0).get("insertion_done");
-			else
-		return 0 ; //(int)none.get(0).get("not_done");
+			return (boolean)none.get(0).get("insertion_done");
+		else
+			return (boolean)none.get(0).get("not_done");
 		
 	}
 	
