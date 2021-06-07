@@ -17,6 +17,7 @@ public class TemperatureTable {
 	private int id_temperature;
 	private int degree;
 	private int id_windows;
+	
 	public int getId_temperature() {
 		return id_temperature;
 	}
@@ -43,7 +44,7 @@ public class TemperatureTable {
 		this.id_windows = id_windows;
 	}
 	
-	public static int temperatureDefaultInsertion(ClientToServer connection, int choice)
+	public static boolean temperatureDefaultInsertion(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>none1=new ArrayList<Map>();
 		//choice = Windows.selection;
@@ -61,9 +62,9 @@ public class TemperatureTable {
 			logger.info("Server is maybe occupied");
 		}
 		if(none1!=null) 
-			return 1 ; //(int) none1.get(0).get("insertion_done");
-			else
-		return 0 ; //(int)none1.get(0).get("not_done");
+			return (boolean) none1.get(0).get("insertion_done");
+		else
+			return (boolean)none1.get(0).get("not_done");
 		
 	}
 	
