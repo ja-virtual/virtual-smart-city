@@ -34,7 +34,7 @@ import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
 		Windows window;
 		General_Services company=null;
 		//int id_gs = company.getId_generalservices();
-		static JTable table = new JTable();
+		JTable table = new JTable();
 		ClientToServer connection=new ClientToServer();
 		
 		private static final long serialVersionUID = 1L;
