@@ -61,12 +61,11 @@ public class TemperatureTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		if(none1!=null) 
-			return (boolean) none1.get(0).get("insertion_done");
-		else
-			return (boolean)none1.get(0).get("not_done");
-		
-	}
+		if(!none1.isEmpty()) 
+			return (boolean) none1.get(0).get("update_done");
+			else
+		return false;
+		}
 	
 	public static ArrayList<Map> degreeFromTemperature(ClientToServer connection, int choice)
 	{

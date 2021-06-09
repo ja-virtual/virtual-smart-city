@@ -66,12 +66,11 @@ public class LightingTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		if(none2!=null) 
-			return (boolean) none2.get(0).get("insertion_done");
-		else
-			return (boolean)none2.get(0).get("not_done");
-		
-	}
+		if(!none2.isEmpty()) 
+			return (boolean) none2.get(0).get("update_done");
+			else
+		return false;
+		}
 	
 	public static ArrayList<Map> levelFromLighting(ClientToServer connection, int choice)
 	{
