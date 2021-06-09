@@ -36,7 +36,7 @@ import edu.ing1.pds.vsc.client.General_Services;
 			
 		JTable table2 = new JTable();
 		
-		//int selection;
+		//int selection = Windows.selection;
 		
 	
 		/**
@@ -157,6 +157,7 @@ import edu.ing1.pds.vsc.client.General_Services;
 				System.exit(0);
 			}
 			else if (e.getActionCommand() == "Statut par defaut") {
+				System.out.println(Windows.selection);
 				
 				ArrayList<Map> rs1 = WindowsTable.windowsDefaultStatus(connection, Windows.selection);
 				try
@@ -176,7 +177,7 @@ import edu.ing1.pds.vsc.client.General_Services;
 					String id_windows = String.valueOf((int) n.get("id_windows"));
 					String status = (String) n.get("status");
 					String temperature = String.valueOf((int) n.get("temperature"));
-					String light = String.valueOf((int) n.get("light"));
+					String light = (String) n.get("light");
 					String blind = (String) n.get("blind");
 					String opacity = (String) n.get("opacity");
 					String id_equipment = String.valueOf((int) n.get("id_equipment"));
@@ -290,7 +291,7 @@ import edu.ing1.pds.vsc.client.General_Services;
 					String id_windows = String.valueOf((int) n.get("id_windows"));
 					String status = (String) n.get("status");
 					String temperature = String.valueOf((int) n.get("temperature"));
-					String light = String.valueOf((int) n.get("light"));
+					String light = (String) n.get("light");
 					String blind = (String) n.get("blind");
 					String opacity = (String) n.get("opacity");
 					String id_equipment = String.valueOf((int) n.get("id_equipment"));

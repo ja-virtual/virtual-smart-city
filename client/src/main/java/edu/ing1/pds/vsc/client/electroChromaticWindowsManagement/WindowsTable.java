@@ -16,6 +16,7 @@ public class WindowsTable {
 	private final static Logger logger = LoggerFactory.getLogger(WindowsTable.class.getName());
 
 	private int id_windows;
+	private String status;
 	private int temperature;
 	private String light;
 	private String blind;
@@ -29,6 +30,12 @@ public class WindowsTable {
 	}
 	public void setId_windows(int id_windows) {
 		this.id_windows = id_windows;
+	}
+	public String getsStatus() {
+		return status;
+	}
+	public void setsStatus(String status) {
+		this.status = status;
 	}
 	public int getTemperature() {
 		return temperature;
@@ -61,9 +68,10 @@ public class WindowsTable {
 		this.id_equipment = id_equipment;
 	}
 	
-	public WindowsTable(int id_windows, int temperature, String light, String blind, String opacity, int id_equipment) {
+	public WindowsTable(int id_windows, String status, int temperature, String light, String blind, String opacity, int id_equipment) {
 		super();
 		this.id_windows = id_windows;
+		this.status = status;
 		this.temperature = temperature;
 		this.light = light;
 		this.blind = blind;
@@ -72,6 +80,9 @@ public class WindowsTable {
 		
 	}
 	
+//	public WindowsTable(int selection) {
+//		this.id_equipment = selection;
+//	}
 	public static ArrayList<Map> ownEquipment(ClientToServer connection, int id_gs)
 	{
 		ArrayList<Map>equipment=new ArrayList<Map>();
@@ -114,49 +125,49 @@ public class WindowsTable {
 		return window;
 	}
 	
-	public static ArrayList<Map> windowsSelected(ClientToServer connection, int choice)
-	{
-		ArrayList<Map>selection=new ArrayList<Map>();
-		//choice = Windows.selection;		
-		try
-		{
-			Request request=new Request();
-			request.setName_request("box_selection");
-			HashMap<String,Object>param=new HashMap<String,Object>();
-			param.put("id_equipment", choice);
-			request.setData(param);
-			Request response=connection.SendRequest(request);
-			selection=(ArrayList<Map>)response.getData();
-		}catch(Exception e)
-		{
-			logger.info("Server is maybe occupied");
-		}
-		return selection;
-	}
-	
-	public static boolean windowsDefaultInsertion(ClientToServer connection, int choice)
-	{
-		ArrayList<Map>none=new ArrayList<Map>();
-		//Windows.selection = choice ;
-		try
-		{
-			Request request=new Request();
-			request.setName_request("win_default_insert");
-			HashMap<String,Object>param=new HashMap<String,Object>();
-			param.put("id_equipment", choice);
-			request.setData(param);
-			Request response=connection.SendRequest(request);
-			none=(ArrayList<Map>)response.getData();
-		}catch(Exception e)
-		{
-			logger.info("Server is maybe occupied");
-		}
-		if(!none.isEmpty()) 
-			return (boolean) none.get(0).get("update_done");
-			else
-		return false;
-		}
-	
+//	public static ArrayList<Map> windowsSelected(ClientToServer connection, int id_gs, int id_eq)
+//	{
+//		ArrayList<Map>selection=new ArrayList<Map>();
+//		//choice = Windows.selection;		
+//		try
+//		{
+//			Request request=new Request();
+//			request.setName_request("box_selection");
+//			HashMap<String,Object>param=new HashMap<String,Object>();
+//			param.put("id_equipment", id_eq);
+//			request.setData(param);
+//			Request response=connection.SendRequest(request);
+//			selection=(ArrayList<Map>)response.getData();
+//		}catch(Exception e)
+//		{
+//			logger.info("Server is maybe occupied");
+//		}
+//		return selection;
+//	}
+//	
+//	public static boolean windowsDefaultInsertion(ClientToServer connection, int id_gs, int id_eq)
+//	{
+//		ArrayList<Map>none=new ArrayList<Map>();
+//		//Windows.selection = choice ;
+//		try
+//		{
+//			Request request=new Request();
+//			request.setName_request("win_default_insert");
+//			HashMap<String,Object>param=new HashMap<String,Object>();
+//			param.put("id_equipment", id_eq);
+//			request.setData(param);
+//			Request response=connection.SendRequest(request);
+//			none=(ArrayList<Map>)response.getData();
+//		}catch(Exception e)
+//		{
+//			logger.info("Server is maybe occupied");
+//		}
+//		if(!none.isEmpty()) 
+//			return (boolean) none.get(0).get("update_done");
+//			else
+//		return false;
+//		}
+//	
 	
 	
 	public static ArrayList<Map> windowsDefaultStatus(ClientToServer connection, int choice)
@@ -168,7 +179,7 @@ public class WindowsTable {
 			Request request=new Request();
 			request.setName_request("default_status");
 			HashMap<String,Object>param=new HashMap<String,Object>();
-			param.put("id_windows", choice);
+			param.put("id_equipment", choice);
 			request.setData(param);
 			Request response=connection.SendRequest(request);
 			defaultStatus=(ArrayList<Map>)response.getData();

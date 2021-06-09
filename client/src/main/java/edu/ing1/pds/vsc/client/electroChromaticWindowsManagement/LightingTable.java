@@ -49,28 +49,28 @@ public class LightingTable {
 		this.id_windows = id_windows;
 	}
 	
-	public static boolean lightingDefaultInsertion(ClientToServer connection, int choice)
-	{
-		ArrayList<Map>none2=new ArrayList<Map>();
-		//choice = Windows.selection;
-		try
-		{
-			Request request=new Request();
-			request.setName_request("light_default_insert");
-			HashMap<String,Object>param=new HashMap<String,Object>();
-			param.put("id_windows", choice);
-			request.setData(param);
-			Request response=connection.SendRequest(request);
-			none2=(ArrayList<Map>)response.getData();
-		}catch(Exception e)
-		{
-			logger.info("Server is maybe occupied");
-		}
-		if(!none2.isEmpty()) 
-			return (boolean) none2.get(0).get("update_done");
-			else
-		return false;
-		}
+//	public static boolean lightingDefaultInsertion(ClientToServer connection, int id_gs, int id_eq)
+//	{
+//		ArrayList<Map>none2=new ArrayList<Map>();
+//		//choice = Windows.selection;
+//		try
+//		{
+//			Request request=new Request();
+//			request.setName_request("light_default_insert");
+//			HashMap<String,Object>param=new HashMap<String,Object>();
+//			param.put("id_windows", id_eq);
+//			request.setData(param);
+//			Request response=connection.SendRequest(request);
+//			none2=(ArrayList<Map>)response.getData();
+//		}catch(Exception e)
+//		{
+//			logger.info("Server is maybe BBBBB occupied");
+//		}
+//		if(!none2.isEmpty()) 
+//			return (boolean) none2.get(0).get("update_done");
+//			else
+//		return false;
+//		}
 	
 	public static ArrayList<Map> levelFromLighting(ClientToServer connection, int choice)
 	{
