@@ -151,12 +151,11 @@ public class WindowsTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		if(none!=null) 
-			return (boolean)none.get(0).get("insertion_done");
-		else
-			return (boolean)none.get(0).get("not_done");
-		
-	}
+		if(!none.isEmpty()) 
+			return (boolean) none.get(0).get("update_done");
+			else
+		return false;
+		}
 	
 	
 	
