@@ -19,12 +19,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import edu.ing1.pds.vsc.client.ClientToServer;
 import edu.ing1.pds.vsc.client.General_Services;
+import edu.ing1.pds.vsc.client.MappingManagement.Sensor;
 
 	public class Config extends JFrame implements ActionListener {
 		Welcome welcome;
@@ -35,7 +37,9 @@ import edu.ing1.pds.vsc.client.General_Services;
 		JTable table1 = new JTable();
 			
 		JTable table2 = new JTable();
-		
+		//ArrayList<Map> rs1 = WindowsTable.windowsDefaultStatus(connection, Windows.selection);
+		//Map n;
+		//int id_win = (int) n.get("id_windows");
 		//int selection = Windows.selection;
 		
 	
@@ -157,7 +161,7 @@ import edu.ing1.pds.vsc.client.General_Services;
 				System.exit(0);
 			}
 			else if (e.getActionCommand() == "Statut par defaut") {
-				System.out.println(Windows.selection);
+				//System.out.println(id_win);
 				
 				ArrayList<Map> rs1 = WindowsTable.windowsDefaultStatus(connection, Windows.selection);
 				try
@@ -173,7 +177,8 @@ import edu.ing1.pds.vsc.client.General_Services;
 				for(Map n:rs1)
 					
 				{
-					
+					int id_win = (int) n.get("id_windows");
+					//System.out.println(id_win);
 					String id_windows = String.valueOf((int) n.get("id_windows"));
 					String status = (String) n.get("status");
 					String temperature = String.valueOf((int) n.get("temperature"));
@@ -192,7 +197,7 @@ import edu.ing1.pds.vsc.client.General_Services;
 			
 			else if (e.getActionCommand() == "Configurer eclairage") {
 				
-				ArrayList<Map> rs2 = LightingTable.levelFromLighting(connection, Windows.selection);
+				ArrayList<Map> rs1 = WindowsTable.windowsDefaultStatus(connection, Windows.selection);
 				try
 				{
 					connection.client.close();
@@ -203,41 +208,51 @@ import edu.ing1.pds.vsc.client.General_Services;
 					
 				}
 				
-				
-				for(Map n:rs2)
+				for(Map n:rs1)
 					
 				{
-					String id_light = (String) n.get("id_light");
-					String level = (String) n.get("level");
-					String id_windows = (String) n.get("id_windows");
+					int id_win = (int) n.get("id_windows");
+					ArrayList<Map> rs2 = LightingTable.levelFromLighting(connection, id_win);
+								
+					for(Map m:rs2)
 					
-				
-					
-					switch (level) {
-					
-					  case "Aucun":
-						  int update1 = WindowsTable.windowsUpdateForLightLevelAucun(connection, Windows.selection);
-						  break;
-					  case "Faible":
-						  int update2 = WindowsTable.windowsUpdateForLightLevelFaible(connection, Windows.selection);
-						  break;
-					  case "Moyen":
-						  int update3 = WindowsTable.windowsUpdateForLightLevelMoyen(connection, Windows.selection);
-						  break;
-					  case "Fort":
-						  int update4 = WindowsTable.windowsUpdateForLightLevelFort(connection, Windows.selection);
-						  break;
+					{
+						//int id_light = (int) m.get("id_light");
+						String level = (String) m.get("level");
+						//int id_windows = (int) m.get("id_windows");
 						
-					  default:
-						  int update5 = WindowsTable.windowsUpdateForLightLevelAutre(connection, Windows.selection);
-						  	  
-					} 
+						Boolean update;
+												
+						switch (level) {
+						
+						  case "Aucun":
+							  update = WindowsTable.windowsUpdateForLightLevelAucun(connection, id_win);
+							  break;
+						  case "Faible":
+							  update = WindowsTable.windowsUpdateForLightLevelFaible(connection, id_win);
+							  break;
+						  case "Moyen":
+							  update = WindowsTable.windowsUpdateForLightLevelMoyen(connection, id_win);
+							  break;
+						  case "Fort":
+							  update = WindowsTable.windowsUpdateForLightLevelFort(connection, id_win);
+							  break;
+						  default:
+							  update = WindowsTable.windowsUpdateForLightLevelAutre(connection, id_win);
+							}
+						
+						if(update==true) {
+					 		JOptionPane.showMessageDialog(new JFrame()," Configuration effectuée avec succès "," Succés ! ",JOptionPane.PLAIN_MESSAGE);
+						}
+						else {
+							JOptionPane.showMessageDialog(new JFrame()," Echec configuration ","Echec ! ",JOptionPane.PLAIN_MESSAGE);
+						} 
 					}
-				
+				}
 			}		
 			
 			else if (e.getActionCommand() == "Configurer temperature") {
-				ArrayList<Map> rs3 = TemperatureTable.degreeFromTemperature(connection, Windows.selection);
+				ArrayList<Map> rs1 = WindowsTable.windowsDefaultStatus(connection, Windows.selection);
 				
 				try
 				{
@@ -248,26 +263,38 @@ import edu.ing1.pds.vsc.client.General_Services;
 				{
 					
 				}
-				
-				
-				for(Map n:rs3)
+				for(Map n:rs1)
 					
 				{
+					int id_win = (int) n.get("id_windows");
+					ArrayList<Map> rs3 = TemperatureTable.degreeFromTemperature(connection, id_win);
 					
-					String id_temperature = (String) n.get("id_temperature");
-					int degree = (int) n.get("degree");
-					String id_windows = (String) n.get("id_windows");	
+						for(Map m:rs3)
 					
-					if ( degree < 18 ) {
-						int update6 = WindowsTable.windowsUpdateForTemperatureDegreeLessThan18(connection, Windows.selection);
-					}
-					else if (degree>=18 || degree<22 ) {
-						int update7 = WindowsTable.windowsUpdateForTemperatureDegree18_22(connection, Windows.selection);
-					}
-					else if (degree>=22) {
-						int update8 = WindowsTable.windowsUpdateForTemperatureDegree22(connection, Windows.selection);
-					}
-				
+							{
+					
+								//int id_temperature = (int) m.get("id_temperature");
+								int degree = (int) m.get("degree");
+								//int id_windows = (int) m.get("id_windows");
+								Boolean update = null ; //= false ; 
+								
+									if ( degree < 18 ) {
+									update = WindowsTable.windowsUpdateForTemperatureDegreeLessThan18(connection, id_win);
+									}
+									else if (degree>=18 || degree<22 ) {
+										update = WindowsTable.windowsUpdateForTemperatureDegree18_22(connection, id_win);
+									}
+									else if (degree>=22) {
+										update = WindowsTable.windowsUpdateForTemperatureDegree22(connection, id_win);
+									}
+								
+										if(update==true) {
+									 		JOptionPane.showMessageDialog(new JFrame()," Configuration effectuée avec succès "," Succés ! ",JOptionPane.PLAIN_MESSAGE);
+										}
+										else {
+											JOptionPane.showMessageDialog(new JFrame()," Echec configuration ","Echec ! ",JOptionPane.PLAIN_MESSAGE);
+										} 
+							}
 				}
 		}
 			

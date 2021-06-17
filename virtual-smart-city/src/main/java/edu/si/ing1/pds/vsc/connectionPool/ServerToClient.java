@@ -834,7 +834,7 @@ logger.info(rs1.getFetchSize()+"");
 		else if(request_name.equals("default_status"))
 		{
 			Map data_loading=(Map) request.getData();
-			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM Windows WHERE id_equipment = "+(Integer)data_loading.get("id_equipment")+" ");
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM Windows WHERE id_equipment = "+(Integer)data_loading.get("id_equipment")+" LIMIT 1 ");
 			List<Map> windowStatus=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
@@ -854,16 +854,35 @@ logger.info(rs1.getFetchSize()+"");
 			response_string=mapper.writeValueAsString(response);
 		}
 		
-		else         if(request_name.equals("got_light"))
+		else if(request_name.equals("got_degree"))
+		{
+			Map data_loading=(Map) request.getData();
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT degree FROM Temperature WHERE id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			List<Map> windowStatus=new ArrayList<Map>();
+			while(rs1.next()) {
+				Map<String,Object> hm=new HashMap<String,Object>();
+				//hm.put("id_temperature",rs1.getInt("id_temperature"));
+				hm.put("degree",rs1.getInt("degree"));
+				//hm.put("id_windows",rs1.getInt("id_windows"));
+				windowStatus.add(hm);
+			}
+			rs1.close();
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",windowStatus);
+			response_string=mapper.writeValueAsString(response);
+		}
+		
+		else if(request_name.equals("got_light"))
 		{
 			Map data_loading=(Map) request.getData();
 			ResultSet rs1 = connection.createStatement().executeQuery("SELECT level FROM Light where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
 			List<Map> windowStatus=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
-				hm.put("id_light",rs1.getInt("id_light"));
-				hm.put("level",rs1.getInt("level"));
-				hm.put("id_windows",rs1.getString("id_windows"));
+				//hm.put("id_light",rs1.getInt("id_light"));
+				hm.put("level",rs1.getString("level"));
+				//hm.put("id_windows",rs1.getInt("id_windows"));
 				windowStatus.add(hm);
 			}
 			rs1.close();
@@ -1118,6 +1137,29 @@ logger.info(rs1.getFetchSize()+"");
 			Map<String,Object> response=new HashMap<String,Object>();
 			response.put("name_request",request_name);
 			response.put("data",update);
+			response_string=mapper.writeValueAsString(response);
+		}
+		
+		else if(request_name.equals("updated_status"))
+		{
+			Map data_loading=(Map) request.getData();
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM Windows WHERE id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			List<Map> windowStatus=new ArrayList<Map>();
+			while(rs1.next()) {
+				Map<String,Object> hm=new HashMap<String,Object>();
+				hm.put("id_windows",rs1.getInt("id_windows"));
+				hm.put("status",rs1.getString("status"));
+				hm.put("temperature",rs1.getInt("temperature"));
+				hm.put("light",rs1.getString("light"));
+				hm.put("blind",rs1.getString("blind"));
+				hm.put("opacity",rs1.getString("opacity"));
+				hm.put("id_equipment",rs1.getInt("id_equipment"));
+				windowStatus.add(hm);
+			}
+			rs1.close();
+			Map<String,Object> response=new HashMap<String,Object>();
+			response.put("name_request",request_name);
+			response.put("data",windowStatus);
 			response_string=mapper.writeValueAsString(response);
 		}
 		
