@@ -9,10 +9,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+//import edu.ing1.pds.vsc.client.electroChromaticWindowsManagement.WindowsTable;
 
 public class ServerToClient {
 
@@ -674,7 +679,7 @@ logger.info(rs1.getFetchSize()+"");
 		else if(request_name.equals("own_equipment"))
 		{
 			Map data_loading=(Map) request.getData();
-			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM Equipment WHERE id_gs = "+ (Integer) data_loading.get("id_gs")+" ");
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM Equipment WHERE id_gs = "+ (Integer) data_loading.get("id_gs")+" ORDER BY id_equipment");
 			List<Map> equipments=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
@@ -696,7 +701,7 @@ logger.info(rs1.getFetchSize()+"");
 		else if(request_name.equals("own_windows"))
 		{
 			Map data_loading=(Map) request.getData();
-			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM Equipment WHERE id_gs = "+(Integer) data_loading.get("id_gs")+" AND type_equipment = 'fenetre electro-chromatique' ");
+			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM Equipment WHERE id_gs = "+(Integer) data_loading.get("id_gs")+" AND type_equipment = 'fenetre electro-chromatique' ORDER BY id_equipment ");
 			List<Map> windows=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
@@ -714,122 +719,6 @@ logger.info(rs1.getFetchSize()+"");
 			response.put("data",windows);
 			response_string=mapper.writeValueAsString(response);
 		}
-		
-//		else if(request_name.equals("box_selection"))
-//		{
-//			Map data_loading=(Map) request.getData();
-//			ResultSet rs1 = connection.createStatement().executeQuery("SELECT id FROM Equipment where type_equipment = 'fenetre electro-chromatique'");
-//			List<Map> box_selection=new ArrayList<Map>();
-//			while(rs1.next()) {
-//				Map<String,Object> hm=new HashMap<String,Object>();
-//				hm.put("id_equipment",rs1.getInt("id_equipment"));
-//				hm.put("type_equipment",rs1.getString("type_equipment"));
-//				hm.put("is_available",rs1.getBoolean("is_available"));
-//				hm.put("is_working",rs1.getBoolean("is_working"));
-//				hm.put("id_gs",rs1.getInt("id_gs"));
-//				hm.put("id_position",rs1.getInt("id_position"));
-//				box_selection.add(hm);
-//			}
-//			rs1.close();
-//			Map<String,Object> response=new HashMap<String,Object>();
-//			response.put("name_request",request_name);
-//			response.put("data",box_selection);
-//			response_string=mapper.writeValueAsString(response);
-//		}
-//		
-//		else if(request_name.equals("win_default_insert"))
-//		{
-//			Map data_loading=(Map) request.getData();
-//
-//			int op1=0;
-//			int op2=0;
-//			connection.setAutoCommit(false);
-//			op1 = connection.createStatement().executeUpdate(" WITH selection AS ( SELECT id FROM Equipment where type_equipment = 'fenetre electro-chromatique' LIMIT  1) ");
-//			op2 = connection.createStatement().executeUpdate(" UPDATE Windows SET id_windows="+(Integer)data_loading.get("id_equipment")+", status='Ferme', temperature=20, light='Aucun', blind='Niveau 0', opacity='Aucun', id_equipment="+(Integer)data_loading.get("id_equipment")+" ");
-//			List<Map> insert=new ArrayList<Map>();
-//			logger.info(op1+" "+op2);
-//			Map<String,Object> hm=new HashMap<String,Object>();
-//			if(op1>0 && op2>0)
-//			{
-//				connection.commit();
-//				connection.setAutoCommit(true);
-//				hm.put("insertion_done",true);
-//			}
-//			else
-//			{
-//				connection.rollback();
-//				connection.setAutoCommit(true);
-//				hm.put("not_done",false);
-//
-//			}
-//			insert.add(hm);
-//			Map<String,Object> response=new HashMap<String,Object>();
-//			response.put("name_request",request_name);
-//			response.put("data",insert);
-//			response_string=mapper.writeValueAsString(response);
-//		}
-//		
-//		else if(request_name.equals("temp_default_insert"))
-//		{
-//			Map data_loading=(Map) request.getData();
-//
-//			int op=0;
-//			connection.setAutoCommit(false);
-//
-//			op = connection.createStatement().executeUpdate(" INSERT INTO Temperature (id_temperature, degree, id_windows) VALUES ("+(Integer)data_loading.get("id_windows")+", 20, "+(Integer)data_loading.get("id_windows")+") ");
-//			List<Map> insert=new ArrayList<Map>();
-//			logger.info(op+" "+op);
-//			Map<String,Object> hm=new HashMap<String,Object>();
-//			if(op>0)
-//			{
-//				connection.commit();
-//				connection.setAutoCommit(true);
-//				hm.put("insertion_done",true);
-//			}
-//			else
-//			{
-//				connection.rollback();
-//				connection.setAutoCommit(true);
-//				hm.put("not_done",false);
-//
-//			}
-//			insert.add(hm);
-//			Map<String,Object> response=new HashMap<String,Object>();
-//			response.put("name_request",request_name);
-//			response.put("data",insert);
-//			response_string=mapper.writeValueAsString(response);
-//		}
-//		
-//		else if(request_name.equals("light_default_insert"))
-//		{
-//			Map data_loading=(Map) request.getData();
-//
-//			int op=0;
-//			connection.setAutoCommit(false);
-//
-//			op = connection.createStatement().executeUpdate(" INSERT INTO Lighting (id_light, level, id_windows) VALUES ("+(Integer)data_loading.get("id_windows")+", 'Aucun', "+(Integer)data_loading.get("id_windows")+") ");
-//			List<Map> insert=new ArrayList<Map>();
-//			logger.info(op+" "+op);
-//			Map<String,Object> hm=new HashMap<String,Object>();
-//			if(op>0)
-//			{
-//				connection.commit();
-//				connection.setAutoCommit(true);
-//				hm.put("insertion_done",true);
-//			}
-//			else
-//			{
-//				connection.rollback();
-//				connection.setAutoCommit(true);
-//				hm.put("not_done",false);
-//
-//			}
-//			insert.add(hm);
-//			Map<String,Object> response=new HashMap<String,Object>();
-//			response.put("name_request",request_name);
-//			response.put("data",insert);
-//			response_string=mapper.writeValueAsString(response);
-//		}
 		
 		else if(request_name.equals("default_status"))
 		{
@@ -858,11 +747,45 @@ logger.info(rs1.getFetchSize()+"");
 		{
 			Map data_loading=(Map) request.getData();
 			ResultSet rs1 = connection.createStatement().executeQuery("SELECT degree FROM Temperature WHERE id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			boolean update = false ;
+			connection.setAutoCommit(false);
+			int op = 0;
 			List<Map> windowStatus=new ArrayList<Map>();
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
 				//hm.put("id_temperature",rs1.getInt("id_temperature"));
 				hm.put("degree",rs1.getInt("degree"));
+				
+				if ( rs1.getInt("degree") < 18 ) {
+					op = connection.createStatement().executeUpdate(" UPDATE Windows SET status = 'Ferme' were id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+					}
+					
+				else if (rs1.getInt("degree")>=18 || rs1.getInt("degree")<22 ) {
+					op = connection.createStatement().executeUpdate(" UPDATE Windows SET status = 'Ouvert A Moitie' were id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+					}
+					
+				else if (rs1.getInt("degree")>=22) {
+					op = connection.createStatement().executeUpdate(" UPDATE Windows SET status = 'Ouvert' were id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+					}
+				switch(op) {
+				case 1:
+				{
+					connection.commit();
+					connection.setAutoCommit(true);
+					update = true;
+					 break;
+				}
+				
+				default:
+				{
+					connection.rollback();
+					connection.setAutoCommit(true);
+					update = false;
+
+				}
+					
+				}
+				
 				//hm.put("id_windows",rs1.getInt("id_windows"));
 				windowStatus.add(hm);
 			}
@@ -878,10 +801,63 @@ logger.info(rs1.getFetchSize()+"");
 			Map data_loading=(Map) request.getData();
 			ResultSet rs1 = connection.createStatement().executeQuery("SELECT level FROM Light where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
 			List<Map> windowStatus=new ArrayList<Map>();
+			boolean update = false ;
+			connection.setAutoCommit(false);
+			int op = 0;
 			while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
 				//hm.put("id_light",rs1.getInt("id_light"));
 				hm.put("level",rs1.getString("level"));
+				
+				if (rs1.getString("level").equals("Aucun")) {
+					op = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 0', opacity = 'Aucun' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+				}
+				else if (rs1.getString("level").equals("Faible")) {
+					op = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 1', opacity = 'Faible' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+					}
+				else if (rs1.getString("level").equals("Moyen")) {
+					op = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 2', opacity = 'Moyen' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+					}
+				else if (rs1.getString("level").equals("Fort")) {
+					op = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 3', opacity = 'Fort' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+					}
+				else if(rs1.getString("level").equals("Autre")) {
+					op = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 4', opacity = 'Fort' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+					}
+				
+				switch(op) {
+				case 1:
+				{
+					connection.commit();
+					connection.setAutoCommit(true);
+					update = true;
+					 break;
+				}
+				
+				default:
+				{
+					connection.rollback();
+					connection.setAutoCommit(true);
+					update = false;
+
+				}
+					
+				}
+				
+//				  case "Faible":
+//					  update = WindowsTable.windowsUpdateForLightLevelFaible(connection, id_win);
+//					  break;
+//				  case "Moyen":
+//					  update = WindowsTable.windowsUpdateForLightLevelMoyen(connection, id_win);
+//					  break;
+//				  case "Fort":
+//					  update = WindowsTable.windowsUpdateForLightLevelFort(connection, id_win);
+//					  break;
+//				  default:
+//					  update = WindowsTable.windowsUpdateForLightLevelAutre(connection, id_win);
+				
+				
+				
 				//hm.put("id_windows",rs1.getInt("id_windows"));
 				windowStatus.add(hm);
 			}

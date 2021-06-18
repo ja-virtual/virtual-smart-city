@@ -221,27 +221,28 @@ import edu.ing1.pds.vsc.client.MappingManagement.Sensor;
 						String level = (String) m.get("level");
 						//int id_windows = (int) m.get("id_windows");
 						
-						Boolean update;
+						//Boolean update = null;
 												
-						switch (level) {
+//						switch (level) {
+//						
+//						  case "Aucun":
+//							  update = WindowsTable.windowsUpdateForLightLevelAucun(connection, id_win);
+//							  break;
+//						  case "Faible":
+//							  update = WindowsTable.windowsUpdateForLightLevelFaible(connection, id_win);
+//							  break;
+//						  case "Moyen":
+//							  update = WindowsTable.windowsUpdateForLightLevelMoyen(connection, id_win);
+//							  break;
+//						  case "Fort":
+//							  update = WindowsTable.windowsUpdateForLightLevelFort(connection, id_win);
+//							  break;
+//						  default:
+//							  update = WindowsTable.windowsUpdateForLightLevelAutre(connection, id_win);
+//							}
 						
-						  case "Aucun":
-							  update = WindowsTable.windowsUpdateForLightLevelAucun(connection, id_win);
-							  break;
-						  case "Faible":
-							  update = WindowsTable.windowsUpdateForLightLevelFaible(connection, id_win);
-							  break;
-						  case "Moyen":
-							  update = WindowsTable.windowsUpdateForLightLevelMoyen(connection, id_win);
-							  break;
-						  case "Fort":
-							  update = WindowsTable.windowsUpdateForLightLevelFort(connection, id_win);
-							  break;
-						  default:
-							  update = WindowsTable.windowsUpdateForLightLevelAutre(connection, id_win);
-							}
+						if (!level.isEmpty()) {
 						
-						if(update==true) {
 					 		JOptionPane.showMessageDialog(new JFrame()," Configuration effectuée avec succès "," Succés ! ",JOptionPane.PLAIN_MESSAGE);
 						}
 						else {
@@ -274,21 +275,21 @@ import edu.ing1.pds.vsc.client.MappingManagement.Sensor;
 							{
 					
 								//int id_temperature = (int) m.get("id_temperature");
-								int degree = (int) m.get("degree");
+								String degree = String.valueOf((int) m.get("degree"));
 								//int id_windows = (int) m.get("id_windows");
-								Boolean update = null ; //= false ; 
+//								Boolean update = false ; 
+//								
+//									if ( degree < 18 ) {
+//									update = WindowsTable.windowsUpdateForTemperatureDegreeLessThan18(connection, id_win);
+//									}
+//									else if (degree>=18 || degree<22 ) {
+//										update = WindowsTable.windowsUpdateForTemperatureDegree18_22(connection, id_win);
+//									}
+//									else if(degree>=22) {
+//										update = WindowsTable.windowsUpdateForTemperatureDegree22(connection, id_win);
+//									}
 								
-									if ( degree < 18 ) {
-									update = WindowsTable.windowsUpdateForTemperatureDegreeLessThan18(connection, id_win);
-									}
-									else if (degree>=18 || degree<22 ) {
-										update = WindowsTable.windowsUpdateForTemperatureDegree18_22(connection, id_win);
-									}
-									else if (degree>=22) {
-										update = WindowsTable.windowsUpdateForTemperatureDegree22(connection, id_win);
-									}
-								
-										if(update==true) {
+										if(!degree.isEmpty()) {
 									 		JOptionPane.showMessageDialog(new JFrame()," Configuration effectuée avec succès "," Succés ! ",JOptionPane.PLAIN_MESSAGE);
 										}
 										else {
