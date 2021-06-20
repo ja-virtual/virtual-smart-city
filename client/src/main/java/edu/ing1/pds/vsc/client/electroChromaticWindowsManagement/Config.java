@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -113,10 +114,10 @@ import edu.ing1.pds.vsc.client.MappingManagement.Sensor;
 				JPanel pan2 = new JPanel();
 				pan2.setLayout(new FlowLayout());
 				
-				JButton bouton2 = new JButton("Configurer temperature");
+				JButton bouton2 = new JButton("Configurer température");
 				bouton2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				bouton2.addActionListener(this);
-				JButton bouton3 = new JButton("Configurer eclairage");
+				JButton bouton3 = new JButton("Configurer éclairage");
 				bouton3.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				bouton3.addActionListener(this);
 				pan2.add(bouton2);
@@ -162,6 +163,7 @@ import edu.ing1.pds.vsc.client.MappingManagement.Sensor;
 				{
 					connection.client.close();
 					
+					
 				}
 				catch(Exception e1)
 				{
@@ -187,97 +189,87 @@ import edu.ing1.pds.vsc.client.MappingManagement.Sensor;
 				
 			}
 			
-			else if (e.getActionCommand() == "Configurer eclairage") {
-				
+			else if (e.getActionCommand() == "Configurer éclairage") {
+			
 				Map window = WindowsTable.getWindow(connection, Windows.selection);
+				System.out.println(window.toString());
 				
-				if(window!=null)
-				{
-					try
-					{
-						connection.client.close();
-						
-					}
-					catch(Exception e1)
-					{
-						e1.printStackTrace();
-					}
+				
+//				if(window==null)
+//				{ 
+//					System.out.println("window IS null");
+//				}
+//				else {
 					
-					int id_win = (Integer)window.get("id_windows");
+					Integer id_win = (Integer) window.get("id_windows");
+					System.out.println("avant!  Apres " +id_win.toString());
+					
 					WindowsTable wTab = new WindowsTable ((Integer)window.get("id_windows"),
 							(String) window.get("status"),(Integer)window.get("temperature"),
 							(String) window.get("light"),(String)window.get("blind"),
 							(String)window.get("opacity"),(Integer)window.get("id_equipment") );
-						
+					
+				System.out.println("avant!  Apres " +wTab.toString());
+					
 				
 					Map light = LightingTable.levelFromLighting(connection, id_win);
-				
-//					try
-//					{
-//						connection.client.close();
-//						
-//					}
-//					catch(Exception e1)
-//					{
-//						
-//					}		
 										
-						//int id_light = (int) m.get("id_light");
 						String level = (String) light.get("level");
-						System.out.println(level);
-						//int id_windows = (int) m.get("id_windows");
-						
+						System.out.println(level.toString());
+												
 						Boolean update = false;
+						
 												
 						switch (level) {
-						
+												
 						  case "Aucun":
-							  update = WindowsTable.windowsUpdateForLightLevelAucun(connection, id_win);
+							  update = WindowsTable.windowsUpdateForLightLevelAucun(connection, id_win, level);
 							  break;
 						  case "Faible":
-							  update = WindowsTable.windowsUpdateForLightLevelFaible(connection, id_win);
+							  update = WindowsTable.windowsUpdateForLightLevelFaible(connection, id_win, level);
 							  break;
 						  case "Moyen":
-							  update = WindowsTable.windowsUpdateForLightLevelMoyen(connection, id_win);
+							  update = WindowsTable.windowsUpdateForLightLevelMoyen(connection, id_win, level);
 							  break;
 						  case "Fort":
-							  update = WindowsTable.windowsUpdateForLightLevelFort(connection, id_win);
+							  update = WindowsTable.windowsUpdateForLightLevelFort(connection, id_win, level);
 							  break;
 						  default:
-							  update = WindowsTable.windowsUpdateForLightLevelAutre(connection, id_win);
+							  update = WindowsTable.windowsUpdateForLightLevelAutre(connection, id_win, level);
 							}
-						
-								if(update==true)
+						//System.out.println(update);
+						//System.out.println(update.toString());
+								if(update==true) {
 									JOptionPane.showMessageDialog(new JFrame(),
 											" Configuration terminée ! ",
 											" Succès ",
 											JOptionPane.PLAIN_MESSAGE);
 		
-								else
+								}
+								else {
 									JOptionPane.showMessageDialog(new JFrame(),
 											" Aucune modification apportée ",
 											" Echec ",
 											JOptionPane.PLAIN_MESSAGE);
-
-					}
-			}
+								}
+								
+								try
+								{
+									connection.client.close();
+																		
+								}
+								catch(Exception e1)
+								{
+									
+								}
+						}
 			
-			else if (e.getActionCommand() == "Configurer temperature") {
+				//}
+			
+			else if (e.getActionCommand() == "Configurer température") {
 				
 			Map window = WindowsTable.getWindow(connection, Windows.selection);
 				
-				if(window!=null)
-				{
-					try
-					{
-						connection.client.close();
-						
-					}
-					catch(Exception e1)
-					{
-						e1.printStackTrace();
-					}
-					
 					int id_win = (Integer) window.get("id_windows");
 				
 					Map temperature = TemperatureTable.degreeFromTemperature(connection, id_win);
@@ -287,13 +279,13 @@ import edu.ing1.pds.vsc.client.MappingManagement.Sensor;
 								Boolean update = false ; 
 								
 									if ( degree < 18 ) {
-										update = WindowsTable.windowsUpdateForTemperatureDegreeLessThan18(connection, Windows.selection);
+										update = WindowsTable.windowsUpdateForTemperatureDegreeLessThan18(connection, id_win, degree);
 									}
 									else if (degree>=18 || degree<22 ) {
-										update = WindowsTable.windowsUpdateForTemperatureDegree18_22(connection, Windows.selection);
+										update = WindowsTable.windowsUpdateForTemperatureDegree18_22(connection, id_win, degree);
 									}
 									else if (degree>=22) {
-										update = WindowsTable.windowsUpdateForTemperatureDegree22(connection, Windows.selection);
+										update = WindowsTable.windowsUpdateForTemperatureDegree22(connection, id_win, degree);
 									}
 								
 											if(update==true)
@@ -308,7 +300,6 @@ import edu.ing1.pds.vsc.client.MappingManagement.Sensor;
 														" Echec ",
 														JOptionPane.PLAIN_MESSAGE);
 							}
-			}
 				
 			else if (e.getActionCommand() == "Actualiser statut") {
 				

@@ -73,6 +73,8 @@ public class TemperatureTable {
 		//choice = Windows.selection;
 		try
 		{
+			if(connection.client.isClosed())
+				   connection = new ClientToServer();
 			Request request=new Request();
 			request.setName_request("get_temperature");
 			HashMap<String,Object>param=new HashMap<String,Object>();
@@ -82,6 +84,7 @@ public class TemperatureTable {
 			degree=(ArrayList<Map>)response.getData();
 		}catch(Exception e)
 		{
+			e.printStackTrace();
 			logger.info("Server is maybe occupied");
 		}
 		if(degree.isEmpty())
