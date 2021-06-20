@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -149,9 +150,8 @@ import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
 
 				window = new Windows(company);
 				this.dispose();
+				}
 				
-				
-			}
 			else if (e.getActionCommand() == "Fenetres electro-chromatiques") {
 				
 				try
@@ -169,11 +169,15 @@ import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
 				
 			}
 			else if(e.getActionCommand() == "Charger mes équipements") {
-				//ArrayList<Map>ws=WorkSpace.allRentedWorkSpace(connection, company.getId_generalservices());
 				
-				//ClientToServer connection = new ClientToServer();
 				ArrayList<Map> rs = WindowsTable.ownEquipment(connection, company.getId_generalservices());
 				
+				if (rs.isEmpty()) {
+					
+					JOptionPane.showMessageDialog(new JFrame(),"Pas encore d'équipement mappé pour cet emplacement"," Ressayer !",JOptionPane.PLAIN_MESSAGE);
+				}
+				else {
+						
 				try
 				{
 					connection.client.close();
@@ -183,7 +187,6 @@ import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
 				{
 					
 				}
-				
 				
 				for(Map n:rs)
 				{
@@ -202,6 +205,7 @@ import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
 				    tblModel.addRow(data);
 				}
 				
+				}	
 				
 		}
 			

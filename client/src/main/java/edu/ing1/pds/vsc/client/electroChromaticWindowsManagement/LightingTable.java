@@ -77,7 +77,9 @@ public class LightingTable {
 		ArrayList<Map>level=new ArrayList<Map>();
 		//choice = Windows.selection;
 		try
-		{
+		{	
+			if(connection.client.isClosed())
+			   connection = new ClientToServer();
 			Request request=new Request();
 			request.setName_request("get_light");
 			HashMap<String,Object>param=new HashMap<String,Object>();
@@ -87,6 +89,7 @@ public class LightingTable {
 			level=(ArrayList<Map>)response.getData();
 		}catch(Exception e)
 		{
+			e.printStackTrace();
 			logger.info("Server is maybe occupied");
 		}
 		if(level.isEmpty())

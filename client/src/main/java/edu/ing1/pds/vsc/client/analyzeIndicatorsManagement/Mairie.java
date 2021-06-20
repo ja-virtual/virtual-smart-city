@@ -5,6 +5,8 @@ package edu.ing1.pds.vsc.client.analyzeIndicatorsManagement;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -16,23 +18,47 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
+import edu.ing1.pds.vsc.client.ClientToServer;
+import edu.ing1.pds.vsc.client.General_Services;
+import edu.ing1.pds.vsc.client.WelcomePage;
 import edu.ing1.pds.vsc.client.analyzeIndicatorsManagement.AnalyserDao;
 import edu.ing1.pds.vsc.client.analyzeIndicatorsManagement.AnalyserDaoImpl;
 
 public class Mairie extends JFrame {
 
+
+
+
+
+
+//bouton
+
+
+
+
+
+    //
+
+
+
     private AnalyserDao analyserDao = new AnalyserDaoImpl();
 
 
-    private static final String LOGO_ICON_PATH = "C:\\\\Users\\\\compt\\\\eclipse-workspace\\\\projet\\\\src\\\\projet\\\\logo.png";
+    private static final String LOGO_ICON_PATH = "C:\\Users\\compt\\eclipse-workspace\\projet\\src\\\\projet\\\\logo.png";
     private static final String ANALYSER_LES_INDICATEURS = "Analyser les indicateurs";
     private JPanel right = new JPanel();
     private JPanel left = new JPanel(new GridLayout(5, 1));
     Color color = new Color(190, 245, 116);
+
     JTable table;
 
-    // L'en-tête de Jtable
-    String titre[] = { "Indicateurs", "Taux", "Tables" };
+    // liste
+
+
+
+
+    // L'en-tÃªte de Jtable
+    String titre[] = { "Indicateurs", "Taux" };
 
     // Les valeurs de Jtable
 
@@ -42,6 +68,7 @@ public class Mairie extends JFrame {
 
     DefaultTableModel tabModel;
 
+
     private void Interface() {
         setLayout(new BorderLayout());
 
@@ -50,6 +77,9 @@ public class Mairie extends JFrame {
         left.setMinimumSize(new Dimension(250, 480));
         left.setPreferredSize(new Dimension(250, 480));
         left.setMaximumSize(new Dimension(250, 480));
+
+        // setLocationRelativeTo(this.getParent());
+
 
         JPanel p = new JPanel();
         JLabel image = new JLabel();
@@ -105,7 +135,6 @@ public class Mairie extends JFrame {
         p = new JPanel(new BorderLayout());
 
         image = new JLabel();
-
 
         use_case = new JLabel(ANALYSER_LES_INDICATEURS);
         use_case.setFont(new Font("Serif", Font.BOLD, 15));
@@ -195,7 +224,7 @@ public class Mairie extends JFrame {
 
         table = new JTable();
 
-        // modifier le modèle du composant
+        // modifier le modÃ¨le du composant
         TableModel tableModel = new DefaultTableModel(valeurs, titre) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -218,6 +247,12 @@ public class Mairie extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
+        //bouton
+
+        JButton bouton = new JButton("calculer");
+        bouton.setLocation(50, 840);
+        left.add(bouton);
+
     }
 
     public Mairie() {
@@ -236,7 +271,111 @@ public class Mairie extends JFrame {
         // exit
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+
+
     }
+
+
+
+
+    //liste 
+
+
+
+    ClientToServer connection=new ClientToServer();
+    ArrayList<Map> company_names=General_Services.All_GeneralServices(connection);
+    General_Services my_company=new General_Services(1," Saisir le nom de votre entreprise.....");
+
+    {
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setTitle("Ja-Virtual app");
+        setSize(new Dimension(450,450));
+        setLocationRelativeTo(null);
+        setLayout(new GridBagLayout());
+
+
+
+
+        JComboBox myCompany=new JComboBox();
+
+        myCompany.addItem(" Saisir le nom de votre entreprise....." );
+        for(Map n:company_names)
+        {
+            myCompany.addItem(n.get("company_name"));
+        }
+        myCompany.addActionListener (new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+                JComboBox cn = (JComboBox)e.getSource();
+                String company_name= (String)cn.getSelectedItem();
+                Boolean contains=false;
+                for(Map n:company_names)
+                {
+                    if(n.containsValue(company_name))
+                    {
+                        contains=true;
+                        my_company=new General_Services((Integer)n.get("id_generalservices"),company_name);
+
+                    }
+                }
+                if(!contains)
+                {
+                    my_company=new General_Services(1," Saisir le nom de votre entreprise.....");
+                }
+            }
+        });
+        this.setVisible(true);
+        GridBagConstraints c = new GridBagConstraints();
+        c.insets=new Insets(30,5,30,5);
+
+        c.ipadx=1;
+        c.ipady=5;
+        c.gridx = 0;//set the x location of the grid for the next component
+        c.gridy = 0;//set the y location of the grid for the next component
+
+
+
+        c.ipadx=10;
+        c.ipady=10;
+        c.gridx = 1;//set the x location of the grid for the next component
+
+
+        c.anchor=GridBagConstraints.CENTER;
+
+
+        c.gridy = 30;//change the y location
+        c.ipadx=30;
+        c.ipady=30;
+
+        this.getContentPane().add(myCompany,c);
+
+        c.gridy = 6;//change the y location
+
+        c.ipadx=45;
+        c.ipady=5;
+
+
+        c.gridy = 40;//change the y location
+
+
+        c.gridy = 8;//change the y location
+        c.ipadx=15;
+        c.ipady=5;
+
+
+
+        myCompany.getEditor().getEditorComponent().setBackground(Color.white);
+        myCompany.setFont(new Font("Serif", Font.ITALIC, 16));
+        myCompany.setBackground(Color.white);
+
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+
+        setResizable(false);
+        setVisible(true);
+
+
+    }
+    //fin
 
     public static void main(String[] args) {
 
