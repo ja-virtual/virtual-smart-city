@@ -25,11 +25,16 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.Logger;
 import edu.ing1.pds.vsc.client.ClientToServer;
 import edu.ing1.pds.vsc.client.General_Services;
+import edu.ing1.pds.vsc.client.MappingManagement.Equipment;
 import edu.ing1.pds.vsc.client.MappingManagement.Sensor;
 
 	public class Config extends JFrame implements ActionListener {
+		private final static Logger logger = (Logger) LoggerFactory.getLogger(Config.class.getName());
 		Welcome welcome;
 		Windows window;
 		General_Services company=null;
@@ -192,24 +197,16 @@ import edu.ing1.pds.vsc.client.MappingManagement.Sensor;
 			else if (e.getActionCommand() == "Configurer éclairage") {
 			
 				Map window = WindowsTable.getWindow(connection, Windows.selection);
-				System.out.println(window.toString());
-				
-				
-//				if(window==null)
-//				{ 
-//					System.out.println("window IS null");
-//				}
-//				else {
-					
+				logger.info(" "+window);
+								
 					Integer id_win = (Integer) window.get("id_windows");
-					System.out.println("avant!  Apres " +id_win.toString());
-					
+							
 					WindowsTable wTab = new WindowsTable ((Integer)window.get("id_windows"),
 							(String) window.get("status"),(Integer)window.get("temperature"),
 							(String) window.get("light"),(String)window.get("blind"),
 							(String)window.get("opacity"),(Integer)window.get("id_equipment") );
 					
-				System.out.println("avant!  Apres " +wTab.toString());
+					logger.info(" " +wTab.toString());
 					
 				
 					Map light = LightingTable.levelFromLighting(connection, id_win);
@@ -218,8 +215,7 @@ import edu.ing1.pds.vsc.client.MappingManagement.Sensor;
 						System.out.println(level.toString());
 												
 						Boolean update = false;
-						
-												
+																		
 						switch (level) {
 												
 						  case "Aucun":
@@ -237,8 +233,7 @@ import edu.ing1.pds.vsc.client.MappingManagement.Sensor;
 						  default:
 							  update = WindowsTable.windowsUpdateForLightLevelAutre(connection, id_win, level);
 							}
-						//System.out.println(update);
-						//System.out.println(update.toString());
+					
 								if(update==true) {
 									JOptionPane.showMessageDialog(new JFrame(),
 											" Configuration terminée ! ",
@@ -253,15 +248,7 @@ import edu.ing1.pds.vsc.client.MappingManagement.Sensor;
 											JOptionPane.PLAIN_MESSAGE);
 								}
 								
-								try
-								{
-									connection.client.close();
-																		
-								}
-								catch(Exception e1)
-								{
-									
-								}
+								
 						}
 			
 				//}
