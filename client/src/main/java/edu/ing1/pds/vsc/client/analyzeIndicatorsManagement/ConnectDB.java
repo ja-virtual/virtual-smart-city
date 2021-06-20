@@ -14,15 +14,15 @@ public class ConnectDB {
 	}
 	public Connection get_connection() {
 	  Connection connection = null;
-    String host="localhost";
-    String port="5435";
+//    String host="localhost";
+  //  String port="5435";
     String db_name="postgres";
     String username="postgres";
     String password="root";
     try {
         Class.forName("org.postgresql.Driver");
-        String url = "jdbc:postgresql://"+host+":"+port+"/"+db_name;
-        connection = DriverManager.getConnection(url, username, password);
+   //     String url = "jdbc:postgresql://"+host+":"+port+"/"+db_name;
+    //    connection = DriverManager.getConnection(url, username, password);
         if (connection != null) {
             System.out.println("Connection OK");
         } else {
