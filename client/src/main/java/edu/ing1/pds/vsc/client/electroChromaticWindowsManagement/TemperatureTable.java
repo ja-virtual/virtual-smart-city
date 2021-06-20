@@ -67,14 +67,14 @@ public class TemperatureTable {
 //		return false;
 //		}
 	
-	public static ArrayList<Map> degreeFromTemperature(ClientToServer connection, int choice)
+	public static Map degreeFromTemperature(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>degree=new ArrayList<Map>();
 		//choice = Windows.selection;
 		try
 		{
 			Request request=new Request();
-			request.setName_request("got_degree");
+			request.setName_request("get_temperature");
 			HashMap<String,Object>param=new HashMap<String,Object>();
 			param.put("id_windows", choice);
 			request.setData(param);
@@ -84,7 +84,10 @@ public class TemperatureTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return degree;
+		if(degree.isEmpty())
+			return null;
+			else
+		return degree.get(0);
 	}
 
 }
