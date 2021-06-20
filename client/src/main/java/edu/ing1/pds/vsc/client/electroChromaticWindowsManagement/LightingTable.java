@@ -72,14 +72,14 @@ public class LightingTable {
 //		return false;
 //		}
 	
-	public static ArrayList<Map> levelFromLighting(ClientToServer connection, int choice)
+	public static Map levelFromLighting(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>level=new ArrayList<Map>();
 		//choice = Windows.selection;
 		try
 		{
 			Request request=new Request();
-			request.setName_request("got_light");
+			request.setName_request("get_light");
 			HashMap<String,Object>param=new HashMap<String,Object>();
 			param.put("id_windows", choice);
 			request.setData(param);
@@ -89,7 +89,10 @@ public class LightingTable {
 		{
 			logger.info("Server is maybe occupied");
 		}
-		return level;
+		if(level.isEmpty())
+			return null;
+			else
+		return level.get(0);
 	}
 
 }
