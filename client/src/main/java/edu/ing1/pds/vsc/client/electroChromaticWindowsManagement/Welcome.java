@@ -104,7 +104,7 @@ import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
 				JPanel middlePanel = new JPanel();
 				middlePanel.setLayout(new FlowLayout());
 			
-				JButton bouton2 = new JButton("Voir mes equipements");
+				JButton bouton2 = new JButton("Voir mes équipements");
 				bouton2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				bouton2.addActionListener(this);
 				
@@ -132,7 +132,7 @@ import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
 			if (e.getActionCommand() == "Quitter") {
 				System.exit(0);
 			}
-			else if (e.getActionCommand() == "Voir mes equipements") {
+			else if (e.getActionCommand() == "Voir mes équipements") {
 				ArrayList<Map>ws=WorkSpace.allRentedWorkSpace(connection, company.getId_generalservices());
 				for(Map n:ws)
 				{
