@@ -1165,6 +1165,23 @@ logger.info(rs1.getFetchSize()+"");
 		
 		//Ines's part
 		
+				else if(request_name.equals("count_equipment"))
+				{
+				Map data_loading=(Map) request.getData();
+				ResultSet rs1 = connection.createStatement()
+						.executeQuery("select count(*) as number_equipment from equipment AS w  where  w.id_gs="+(Integer)data_loading.get("id_gs"));
+				List<Map> nb=new ArrayList<Map>();
+				while(rs1.next()) {
+					Map<String,Object> hm=new HashMap<String,Object>();
+					hm.put("number_equipment",rs1.getDouble("number_equipment"));
+					nb.add(hm);
+				}
+				rs1.close();
+				Map<String,Object> response=new HashMap<String,Object>();
+				response.put("name_request",request_name);
+				response.put("data",nb);
+				response_string=mapper.writeValueAsString(response);
+				}
 				else if(request_name.equals("count_sensors"))
 				{
 					logger.info("++++++++++++++count_sensors+++++++++++++++++");

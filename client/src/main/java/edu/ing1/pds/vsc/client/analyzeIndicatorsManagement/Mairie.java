@@ -469,6 +469,33 @@ public class Mairie extends JFrame  implements ActionListener{
 		return null;
 	}
 	 
+	 public Double nbEquipment(ClientToServer connection, int id_gs)
+		{
+			ArrayList<Map>nbList=new ArrayList<Map>();
+			try
+			{
+				Request request=new Request();
+				request.setName_request("count_equipment");
+				Map<String,Object>param=new HashMap<String,Object>();
+				param.put("id_gs",id_gs);
+				request.setData(param);
+				Request response=connection.SendRequest(request);
+				nbList=(ArrayList<Map>)response.getData();
+				if(nbList != null && !nbList.isEmpty()) {
+					Map<String,Object> map = nbList.get(0);
+					
+					if(map != null && !map.isEmpty()) {
+						return (Double) map.get("number_equipment");
+					}
+				}
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+				logger.error("Errrlihkugjgh");
+			}
+			return null;
+		}
+	 
 	 public Double degre(ClientToServer connection, int id_gs)
 		{
 			ArrayList<Map>degreeList=new ArrayList<Map>();
