@@ -325,22 +325,22 @@ public class Mairie extends JFrame  implements ActionListener{
             public void actionPerformed(ActionEvent e) {
                 JComboBox cn = (JComboBox)e.getSource();
                 String company_name= (String)cn.getSelectedItem();
+                System.out.println("company_name---"+company_name);
                 Boolean contains=false;
                 for(Map n:company_names)
                 {
-                    if(n.containsValue(company_name))
+                	System.out.println("+++++"+n.get("company_name"));
+                    if(n.get("company_name").equals(company_name))
                     {
-                        contains=true;
+                    	System.out.println("ok+++++++++++++++++++++++++++++");
                         my_company=new General_Services((Integer)n.get("id_generalservices"),company_name);
-
+                        System.out.println("id---"+my_company.getId_generalservices()+"---name ---"+my_company.getCompany_name());
                     }
-                }
-                if(!contains)
-                {
-                    my_company=new General_Services(1," Saisir le nom de votre entreprise.....");
                 }
             }
         });
+        
+        
         this.setVisible(true);
         GridBagConstraints c = new GridBagConstraints();
         c.insets=new Insets(30,5,30,5);
@@ -413,8 +413,9 @@ public class Mairie extends JFrame  implements ActionListener{
 	}
 	
 	private void calculerBouton() {
-		dgrTemp = 50.0;
-		nbCapteur = nbConsur(connection, 2);
+		dgrTemp = degre(connection, my_company.getId_generalservices());
+		nbCapteur = nbConsur(connection, my_company.getId_generalservices());
+		elec = level(connection, my_company.getId_generalservices());
 		
 		Object[][] valeurs = { { "Degre de temperature", dgrTemp },
 	    		{ "Nombre de capteurs",nbCapteur },
@@ -445,23 +446,87 @@ public class Mairie extends JFrame  implements ActionListener{
 		{
 			Request request=new Request();
 			request.setName_request("count_sensors");
-			HashMap<String,Object>param=new HashMap<String,Object>();
+			Map<String,Object>param=new HashMap<String,Object>();
 			param.put("id_gs",id_gs);
 			request.setData(param);
 			Request response=connection.SendRequest(request);
 			nbList=(ArrayList<Map>)response.getData();
-			
-			for (Iterator iterator = nbList.iterator(); iterator.hasNext();) {
-				Map map = (Map) iterator.next();
-				System.out.println("----"+map.toString());
+			System.out.println("nbList----"+nbList.size());
+			if(nbList != null && !nbList.isEmpty()) {
+				Map<String,Object> map = nbList.get(0);
 				
+				if(map != null && !map.isEmpty()) {
+					System.out.println("++++++"+map.toString());
+					System.out.println("++++++"+map.get("number_sensor"));
+					return (Double) map.get("number_sensor");
+				}
 			}
 		}catch(Exception e)
 		{
 			e.printStackTrace();
 			logger.error("Errrlihkugjgh");
 		}
-		return 100.0;
+		return null;
 	}
+	 
+	 public Double degre(ClientToServer connection, int id_gs)
+		{
+			ArrayList<Map>degreeList=new ArrayList<Map>();
+			try
+			{
+				Request request=new Request();
+				request.setName_request("degre_tempurateur");
+				Map<String,Object>param=new HashMap<String,Object>();
+				param.put("id_gs",id_gs);
+				request.setData(param);
+				Request response=connection.SendRequest(request);
+				degreeList=(ArrayList<Map>)response.getData();
+				System.out.println("nbList----"+degreeList.size());
+				if(degreeList != null && !degreeList.isEmpty()) {
+					Map<String,Object> map = degreeList.get(0);
+					
+					if(map != null && !map.isEmpty()) {
+						System.out.println("++++++"+map.toString());
+						System.out.println("++++++"+map.get("degree"));
+						return (Double) map.get("degree");
+					}
+				}
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+				logger.error("Errrlihkugjgh");
+			}
+			return null;
+		}
+	 
+
+	 public Double level(ClientToServer connection, int id_gs)
+		{
+			ArrayList<Map>levelList=new ArrayList<Map>();
+			try
+			{
+				Request request=new Request();
+				request.setName_request("level_lighting");
+				Map<String,Object>param=new HashMap<String,Object>();
+				param.put("id_gs",id_gs);
+				request.setData(param);
+				Request response=connection.SendRequest(request);
+				levelList=(ArrayList<Map>)response.getData();
+				System.out.println("nbList----"+levelList.size());
+				if(levelList != null && !levelList.isEmpty()) {
+					Map<String,Object> map = levelList.get(0);
+					
+					if(map != null && !map.isEmpty()) {
+						return (Double) map.get("level");
+					}
+				}
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+				logger.error("Errrlihkugjgh");
+			}
+			return null;
+		}
+
 
 }
