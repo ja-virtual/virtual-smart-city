@@ -1166,7 +1166,7 @@ logger.info(rs1.getFetchSize()+"");
 		
 				else if(request_name.equals("count_sensors"))
 				{
-					System.out.println("++++++++++++++count_sensors+++++++++++++++++");
+					logger.info("++++++++++++++count_sensors+++++++++++++++++");
 				Map data_loading=(Map) request.getData();
 				ResultSet rs1 = connection.createStatement()
 						.executeQuery("select count(*) as number_sensor from sensor AS w  where  w.id_gs="+(Integer)data_loading.get("id_gs"));
@@ -1174,6 +1174,7 @@ logger.info(rs1.getFetchSize()+"");
 				while(rs1.next()) {
 					Map<String,Object> hm=new HashMap<String,Object>();
 						hm.put("number_sensor",rs1.getDouble("number_sensor"));
+						logger.info("count_sensors--------"+rs1.getDouble("number_sensor"));
 					nb.add(hm);
 				}
 				rs1.close();
