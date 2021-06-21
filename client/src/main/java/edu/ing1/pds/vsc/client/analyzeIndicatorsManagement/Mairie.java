@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
 
@@ -18,13 +20,24 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.ing1.pds.vsc.client.ClientToServer;
 import edu.ing1.pds.vsc.client.General_Services;
+import edu.ing1.pds.vsc.client.Request;
 import edu.ing1.pds.vsc.client.WelcomePage;
+import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
 import edu.ing1.pds.vsc.client.analyzeIndicatorsManagement.AnalyserDao;
 import edu.ing1.pds.vsc.client.analyzeIndicatorsManagement.AnalyserDaoImpl;
+import edu.ing1.pds.vsc.client.electroChromaticWindowsManagement.Welcome;
 
-public class Mairie extends JFrame {
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+
+public class Mairie extends JFrame  implements ActionListener{
+	private final static Logger logger = LoggerFactory.getLogger(WorkSpace.class.getName());
 
 
 
@@ -39,9 +52,7 @@ public class Mairie extends JFrame {
 
     //
 
-
-
-    private AnalyserDao analyserDao = new AnalyserDaoImpl();
+   // private AnalyserDao analyserDao = new AnalyserDaoImpl();
 
 
     private static final String LOGO_ICON_PATH = "C:\\Users\\compt\\eclipse-workspace\\projet\\src\\\\projet\\\\logo.png";
@@ -49,6 +60,12 @@ public class Mairie extends JFrame {
     private JPanel right = new JPanel();
     private JPanel left = new JPanel(new GridLayout(5, 1));
     Color color = new Color(190, 245, 116);
+    
+    private Double nbCapteur;
+    private Double dgrTemp;
+    private Double occupWs;
+    private Double elec;
+    private Double nbEq;
 
     JTable table;
 
@@ -62,9 +79,6 @@ public class Mairie extends JFrame {
 
     // Les valeurs de Jtable
 
-    Object[][] valeurs = { { "Degré de température", "", "Lumière" }, { "Nombre de capteurs", analyserDao.getNombreCapteurs(), "capteurs" },
-            { "consommation électricité", "", "Lumière" }, { "nombre d'équipements", analyserDao.getNombreServices(), "équipements" },
-            { "occupation de workspace", "", "workspace" } };
 
     DefaultTableModel tabModel;
 
@@ -79,7 +93,10 @@ public class Mairie extends JFrame {
         left.setMaximumSize(new Dimension(250, 480));
 
         // setLocationRelativeTo(this.getParent());
-
+//test
+        
+      
+        //
 
         JPanel p = new JPanel();
         JLabel image = new JLabel();
@@ -225,7 +242,7 @@ public class Mairie extends JFrame {
         table = new JTable();
 
         // modifier le modÃ¨le du composant
-        TableModel tableModel = new DefaultTableModel(valeurs, titre) {
+        TableModel tableModel = new DefaultTableModel(null, titre) {
             @Override
             public boolean isCellEditable(int row, int column) {
 
@@ -249,9 +266,10 @@ public class Mairie extends JFrame {
 
         //bouton
 
-        JButton bouton = new JButton("calculer");
+        JButton bouton = new JButton("Calculer");
         bouton.setLocation(50, 840);
         left.add(bouton);
+        bouton.addActionListener(this);
 
     }
 
@@ -376,11 +394,74 @@ public class Mairie extends JFrame {
 
     }
     //fin
+    
+    
+	
 
     public static void main(String[] args) {
 
         new Mairie();
 
     }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getActionCommand() == "Calculer") {
+			calculerBouton();
+		}
+	}
+	
+	private void calculerBouton() {
+		dgrTemp = 50.0;
+		nbCapteur = nbConsur(connection, 2);
+		
+		Object[][] valeurs = { { "Degre de temperature", dgrTemp },
+	    		{ "Nombre de capteurs",nbCapteur },
+	            { "consommation electricite", elec }, 
+	            { "nombre d'equipements", nbEq },
+	            { "occupation de workspace", occupWs } };
+		
+		TableModel tableModel = new DefaultTableModel(valeurs, titre) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+
+                return false;
+            }
+        };
+        table.setModel(tableModel);
+	}
+	/*
+	ArrayList<Map> cc = AnalyserDaoImpl.All_NombreCapteurs(connection);
+	for (Map n:cc)
+	{
+		my_company.addItem(n.get("id_sensor"));
+		
+	}*/
+	 public Double nbConsur(ClientToServer connection, int id_gs)
+	{
+		ArrayList<Map>nbList=new ArrayList<Map>();
+		try
+		{
+			Request request=new Request();
+			request.setName_request("count_sensors");
+			HashMap<String,Object>param=new HashMap<String,Object>();
+			param.put("id_gs",id_gs);
+			request.setData(param);
+			Request response=connection.SendRequest(request);
+			nbList=(ArrayList<Map>)response.getData();
+			
+			for (Iterator iterator = nbList.iterator(); iterator.hasNext();) {
+				Map map = (Map) iterator.next();
+				System.out.println("----"+map.toString());
+				
+			}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+			logger.error("Errrlihkugjgh");
+		}
+		return 100.0;
+	}
 
 }
