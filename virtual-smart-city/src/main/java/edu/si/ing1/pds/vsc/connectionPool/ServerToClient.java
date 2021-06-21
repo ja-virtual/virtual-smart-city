@@ -1169,13 +1169,12 @@ logger.info(rs1.getFetchSize()+"");
 					System.out.println("++++++++++++++count_sensors+++++++++++++++++");
 				Map data_loading=(Map) request.getData();
 				ResultSet rs1 = connection.createStatement()
-						.executeQuery("select count(*) as numberSensor from sensor AS w  where  w.id_gs="+(Integer)data_loading.get("id_gs"));
+						.executeQuery("select count(*) as number_sensor from sensor AS w  where  w.id_gs="+(Integer)data_loading.get("id_gs"));
 				List<Map> nb=new ArrayList<Map>();
 				while(rs1.next()) {
-				Map<String,Object> hm=new HashMap<String,Object>();
-				hm.put("numberSensor",rs1.getDouble("numberSensor"));
-				System.out.println(rs1.getDouble("numberSensor"));
-				nb.add(hm);
+					Map<String,Object> hm=new HashMap<String,Object>();
+						hm.put("number_sensor",rs1.getDouble("number_sensor"));
+					nb.add(hm);
 				}
 				rs1.close();
 				Map<String,Object> response=new HashMap<String,Object>();
