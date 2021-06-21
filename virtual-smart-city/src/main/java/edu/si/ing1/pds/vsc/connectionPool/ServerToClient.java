@@ -34,6 +34,7 @@ public class ServerToClient {
 		String request_name=request.getName_request();
 		System.out.println(request_name);
 		String response_string="";
+		logger.info("++++++++++++++SendResponse+++++++++++++++++");
 		if(request_name.equals("all_rented_workspaces"))
 		{
 			Map data_loading=(Map) request.getData();
