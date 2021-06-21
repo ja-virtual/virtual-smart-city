@@ -835,6 +835,58 @@ logger.info(rs1.getFetchSize()+"");
 			response.put("data",light);
 			response_string=mapper.writeValueAsString(response);
 		}
+				
+//				if (rs1.getString("level").equals("Aucun")) {
+//					op = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 0', opacity = 'Aucun' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+//				}
+//				else if (rs1.getString("level").equals("Faible")) {
+//					op = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 1', opacity = 'Faible' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+//					}
+//				else if (rs1.getString("level").equals("Moyen")) {
+//					op = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 2', opacity = 'Moyen' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+//					}
+//				else if (rs1.getString("level").equals("Fort")) {
+//					op = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 3', opacity = 'Fort' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+//					}
+//				else if(rs1.getString("level").equals("Autre")) {
+//					op = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 4', opacity = 'Fort' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+//					}
+//				
+//				switch(op) {
+//				case 1:
+//				{
+//					connection.commit();
+//					connection.setAutoCommit(true);
+//					update = true;
+//					 break;
+//				}
+//				
+//				default:
+//				{
+//					connection.rollback();
+//					connection.setAutoCommit(true);
+//					update = false;
+//
+//				}
+//					
+//				}
+//				
+//				  case "Faible":
+//					  update = WindowsTable.windowsUpdateForLightLevelFaible(connection, id_win);
+//					  break;
+//				  case "Moyen":
+//					  update = WindowsTable.windowsUpdateForLightLevelMoyen(connection, id_win);
+//					  break;
+//				  case "Fort":
+//					  update = WindowsTable.windowsUpdateForLightLevelFort(connection, id_win);
+//					  break;
+//				  default:
+//					  update = WindowsTable.windowsUpdateForLightLevelAutre(connection, id_win);
+				
+				
+				
+				//hm.put("id_windows",rs1.getInt("id_windows"));
+				
 		
 		else if(request_name.equals("light_aucun"))
 		{
@@ -843,7 +895,7 @@ logger.info(rs1.getFetchSize()+"");
 			int op=0;
 			connection.setAutoCommit(false);
 
-			op = connection.createStatement().executeUpdate(" UPDATE Windows SET light = '"+(String)data_loading.get("light")+"', blind = 'Niveau 0', opacity = 'Aucun' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			op = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 0', opacity = 'Aucun' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
 			List<Map> update=new ArrayList<Map>();
 			logger.info(op+" "+op);
 			Map<String,Object> hm=new HashMap<String,Object>();
@@ -874,7 +926,7 @@ logger.info(rs1.getFetchSize()+"");
 			int op=0;
 			connection.setAutoCommit(false);
 
-			op = connection.createStatement().executeUpdate(" UPDATE Windows SET light = '"+(String)data_loading.get("light")+"', blind = 'Niveau 1', opacity = 'Faible' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			op = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 1', opacity = 'Faible' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
 			List<Map> update=new ArrayList<Map>();
 			logger.info(op+" "+op);
 			Map<String,Object> hm=new HashMap<String,Object>();
@@ -905,7 +957,7 @@ logger.info(rs1.getFetchSize()+"");
 			int op=0;
 			connection.setAutoCommit(false);
 
-			op = connection.createStatement().executeUpdate(" UPDATE Windows SET light = '"+(String)data_loading.get("light")+"', blind = 'Niveau 2', opacity = 'Moyen' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			op = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 2', opacity = 'Moyen' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
 			List<Map> update=new ArrayList<Map>();
 			logger.info(op+" "+op);
 			Map<String,Object> hm=new HashMap<String,Object>();
@@ -936,7 +988,7 @@ logger.info(rs1.getFetchSize()+"");
 			int op=0;
 			connection.setAutoCommit(false);
 
-			op = connection.createStatement().executeUpdate(" UPDATE Windows SET light = '"+(String)data_loading.get("light")+"', blind = 'Niveau 3', opacity = 'Fort' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			op = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 3', opacity = 'Fort' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
 			List<Map> update=new ArrayList<Map>();
 			logger.info(op+" "+op);
 			Map<String,Object> hm=new HashMap<String,Object>();
@@ -967,7 +1019,7 @@ logger.info(rs1.getFetchSize()+"");
 			int op=0;
 			connection.setAutoCommit(false);
 
-			op = connection.createStatement().executeUpdate(" UPDATE Windows SET light = '"+(String)data_loading.get("light")+"', blind = 'Niveau 4', opacity = 'Fort' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			op = connection.createStatement().executeUpdate(" UPDATE Windows SET blind = 'Niveau 4', opacity = 'Fort' where id_windows = "+(Integer)data_loading.get("id_windows")+" ");
 			List<Map> update=new ArrayList<Map>();
 			logger.info(op+" "+op);
 			Map<String,Object> hm=new HashMap<String,Object>();
@@ -998,7 +1050,7 @@ logger.info(rs1.getFetchSize()+"");
 			int op=0;
 			connection.setAutoCommit(false);
 
-			op = connection.createStatement().executeUpdate(" UPDATE Windows SET status = 'Ferme' , temperature = "+(Integer)data_loading.get("temperature")+" WHERE id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			op = connection.createStatement().executeUpdate(" UPDATE Windows SET status = 'Ferme' were id_windows = "+(Integer)data_loading.get("id_windows")+" ");
 			List<Map> update=new ArrayList<Map>();
 			logger.info(op+" "+op);
 			Map<String,Object> hm=new HashMap<String,Object>();
@@ -1029,7 +1081,7 @@ logger.info(rs1.getFetchSize()+"");
 			int op=0;
 			connection.setAutoCommit(false);
 
-			op = connection.createStatement().executeUpdate(" UPDATE Windows SET status = 'Ouvert A Moitie', temperature = "+(Integer)data_loading.get("temperature")+" WHERE id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			op = connection.createStatement().executeUpdate(" UPDATE Windows SET status = 'Ouvert A Moitie' were id_windows = "+(Integer)data_loading.get("id_windows")+" ");
 			List<Map> update=new ArrayList<Map>();
 			logger.info(op+" "+op);
 			Map<String,Object> hm=new HashMap<String,Object>();
@@ -1060,7 +1112,7 @@ logger.info(rs1.getFetchSize()+"");
 			int op=0;
 			connection.setAutoCommit(false);
 
-			op = connection.createStatement().executeUpdate(" UPDATE Windows SET status = 'Ouvert', temperature = "+(Integer)data_loading.get("temperature")+" WHERE id_windows = "+(Integer)data_loading.get("id_windows")+" ");
+			op = connection.createStatement().executeUpdate(" UPDATE Windows SET status = 'Ouvert' were id_windows = "+(Integer)data_loading.get("id_windows")+" ");
 			List<Map> update=new ArrayList<Map>();
 			logger.info(op+" "+op);
 			Map<String,Object> hm=new HashMap<String,Object>();
@@ -1117,7 +1169,7 @@ logger.info(rs1.getFetchSize()+"");
 					System.out.println("++++++++++++++count_sensors+++++++++++++++++");
 				Map data_loading=(Map) request.getData();
 				ResultSet rs1 = connection.createStatement()
-						.executeQuery("select count(*) as numberSensor from sensor");
+						.executeQuery("select count(*) as numberSensor from sensor AS w  where  w.id_gs="+(Integer)data_loading.get("id_gs"));
 				List<Map> nb=new ArrayList<Map>();
 				while(rs1.next()) {
 				Map<String,Object> hm=new HashMap<String,Object>();
