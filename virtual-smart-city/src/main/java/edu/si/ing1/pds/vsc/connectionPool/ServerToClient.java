@@ -1162,6 +1162,31 @@ logger.info(rs1.getFetchSize()+"");
 		//End Coumba's part
 		
 		
+		//Ines's part
+		
+				else if(request_name.equals("count_sensors"))
+				{
+					System.out.println("++++++++++++++count_sensors+++++++++++++++++");
+				Map data_loading=(Map) request.getData();
+				ResultSet rs1 = connection.createStatement()
+						.executeQuery("select count(*) as numberSensor from sensor");
+				List<Map> nb=new ArrayList<Map>();
+				while(rs1.next()) {
+				Map<String,Object> hm=new HashMap<String,Object>();
+				hm.put("numberSensor",rs1.getDouble("numberSensor"));
+				System.out.println(rs1.getDouble("numberSensor"));
+				nb.add(hm);
+				}
+				rs1.close();
+				Map<String,Object> response=new HashMap<String,Object>();
+				response.put("name_request",request_name);
+				response.put("data",nb);
+				response_string=mapper.writeValueAsString(response);
+				}
+				
+				//end
+		
+		
 		
 		data_source.returnCon(con);
 		return response_string;
