@@ -1206,16 +1206,16 @@ logger.info(rs1.getFetchSize()+"");
 				Map data_loading=(Map) request.getData();
 				ResultSet rs1 = connection.createStatement()
 						.executeQuery("select w.level from lighting AS w  where  w.id_gs="+(Integer)data_loading.get("id_gs"));
-				List<Map> degree=new ArrayList<Map>();
+				List<Map> level=new ArrayList<Map>();
 				while(rs1.next()) {
 					Map<String,Object> hm=new HashMap<String,Object>();
-						hm.put("degree",rs1.getDouble("level"));
-						degree.add(hm);
+						hm.put("level",rs1.getDouble("level"));
+						level.add(hm);
 				}
 				rs1.close();
 				Map<String,Object> response=new HashMap<String,Object>();
 				response.put("name_request",request_name);
-				response.put("data",degree);
+				response.put("data",level);
 				response_string=mapper.writeValueAsString(response);
 				}
 				//end
