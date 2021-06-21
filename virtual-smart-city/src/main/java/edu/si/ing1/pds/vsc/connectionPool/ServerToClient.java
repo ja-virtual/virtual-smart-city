@@ -1184,7 +1184,25 @@ logger.info(rs1.getFetchSize()+"");
 				response.put("data",nb);
 				response_string=mapper.writeValueAsString(response);
 				}
-				
+				else if(request_name.equals("degre_tempurateur"))
+				{
+					logger.info("++++++++++++++degre_tempurateur+++++++++++++++++");
+				Map data_loading=(Map) request.getData();
+				ResultSet rs1 = connection.createStatement()
+						.executeQuery("select w.degree from temperature AS w  where  w.id_gs="+(Integer)data_loading.get("id_gs"));
+				List<Map> degree=new ArrayList<Map>();
+				while(rs1.next()) {
+					Map<String,Object> hm=new HashMap<String,Object>();
+						hm.put("degree",rs1.getDouble("degree"));
+						logger.info("degree--------"+rs1.getDouble("degree"));
+						degree.add(hm);
+				}
+				rs1.close();
+				Map<String,Object> response=new HashMap<String,Object>();
+				response.put("name_request",request_name);
+				response.put("data",degree);
+				response_string=mapper.writeValueAsString(response);
+				}
 				//end
 		
 		
