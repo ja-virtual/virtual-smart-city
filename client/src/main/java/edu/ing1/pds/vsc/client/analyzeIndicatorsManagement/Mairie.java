@@ -2,43 +2,22 @@ package edu.ing1.pds.vsc.client.analyzeIndicatorsManagement;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Vector;
-
 import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import edu.ing1.pds.vsc.client.ClientToServer;
 import edu.ing1.pds.vsc.client.General_Services;
-import edu.ing1.pds.vsc.client.Request;
-import edu.ing1.pds.vsc.client.WelcomePage;
-import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
-import edu.ing1.pds.vsc.client.analyzeIndicatorsManagement.AnalyserDao;
-import edu.ing1.pds.vsc.client.analyzeIndicatorsManagement.AnalyserDaoImpl;
-import edu.ing1.pds.vsc.client.electroChromaticWindowsManagement.Welcome;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
 
-public class Mairie extends JFrame implements ActionListener {
+public class Mairie extends JFrame {
 
-//bouton
 
-	//
 
 	// private AnalyserDao analyserDao = new AnalyserDaoImpl();
 
@@ -57,12 +36,12 @@ public class Mairie extends JFrame implements ActionListener {
 
 	JTable table;
 
-	// liste
+	
 
-	// L'en-tÃªte de Jtable
-	String titre[] = { "Indicateurs", "Taux" };
+	// header of Jtable
+	String title[] = { "Indicateurs", "Taux" };
 
-	// Les valeurs de Jtable
+	// values of Jtable
 
 	DefaultTableModel tabModel;
 
@@ -226,7 +205,7 @@ public class Mairie extends JFrame implements ActionListener {
 		table = new JTable();
 
 		// modifier le modÃ¨le du composant
-		TableModel tableModel = new DefaultTableModel(null, titre) {
+		TableModel tableModel = new DefaultTableModel(null, title) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 
@@ -248,50 +227,15 @@ public class Mairie extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 		setResizable(false);
 
-		// bouton
-
-		JButton bouton = new JButton("Calculer");
-		bouton.setLocation(50, 840);
-		left.add(bouton);
-		bouton.addActionListener(this);
-
 	}
 
 	public Mairie() {
 		Interface();
 		JLabel Title = new JLabel(ANALYSER_LES_INDICATEURS);
+		JLabel espace = new JLabel("                           ");
 		Title.setFont(new Font("Serif", Font.BOLD, 45));
 		Title.setHorizontalAlignment(JLabel.CENTER);
-		JPanel p3 = new JPanel(new BorderLayout());
-		JPanel p4 = new JPanel(new BorderLayout());
-		p3.add(Title, BorderLayout.NORTH);
-		p4.add(Title, BorderLayout.NORTH);
-		TableCellRenderer tableRenderer;
-
-		p3.setBackground(Color.white);
-		right.add(p3, BorderLayout.NORTH);
-		p4.setBackground(Color.white);
-		right.add(p4, BorderLayout.NORTH);
-
-		setVisible(true);
-		// exit
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-	}
-
-	// liste
-
-	ClientToServer connection = new ClientToServer();
-	ArrayList<Map> company_names = General_Services.All_GeneralServices(connection);
-	General_Services my_company = new General_Services(1, " Saisir le nom de votre entreprise.....");
-
-	{
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setTitle("Ja-Virtual app");
-		setSize(new Dimension(450, 450));
-		setLocationRelativeTo(null);
-		setLayout(new GridBagLayout());
-
+		
 		JComboBox myCompany = new JComboBox();
 
 		myCompany.addItem(" Saisir le nom de votre entreprise.....");
@@ -302,63 +246,104 @@ public class Mairie extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				JComboBox cn = (JComboBox) e.getSource();
 				String company_name = (String) cn.getSelectedItem();
-				System.out.println("company_name---" + company_name);
 				Boolean contains = false;
 				for (Map n : company_names) {
-					System.out.println("+++++" + n.get("company_name"));
 					if (n.get("company_name").equals(company_name)) {
-						System.out.println("ok+++++++++++++++++++++++++++++");
 						my_company = new General_Services((Integer) n.get("id_generalservices"), company_name);
-						System.out.println("id---" + my_company.getId_generalservices() + "---name ---"
-								+ my_company.getCompany_name());
+						contains =  true;
+						break;
 					}
 				}
+				if(!contains) {
+					my_company = new General_Services(0, "");
+					TableModel tableModel = new DefaultTableModel(null, title) {
+						@Override
+						public boolean isCellEditable(int row, int column) {
+
+							return false;
+						}
+					};
+					table.setModel(tableModel);
+				}else
+				calculer();
 			}
 		});
-
-		this.setVisible(true);
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(30, 5, 30, 5);
-
-		c.ipadx = 1;
-		c.ipady = 5;
-		c.gridx = 0;// set the x location of the grid for the next component
-		c.gridy = 0;// set the y location of the grid for the next component
-
-		c.ipadx = 10;
-		c.ipady = 10;
-		c.gridx = 1;// set the x location of the grid for the next component
-
-		c.anchor = GridBagConstraints.CENTER;
-
-		c.gridy = 30;// change the y location
-		c.ipadx = 30;
-		c.ipady = 30;
-
-		this.getContentPane().add(myCompany, c);
-
-		c.gridy = 6;// change the y location
-
-		c.ipadx = 45;
-		c.ipady = 5;
-
-		c.gridy = 40;// change the y location
-
-		c.gridy = 8;// change the y location
-		c.ipadx = 15;
-		c.ipady = 5;
-
 		myCompany.getEditor().getEditorComponent().setBackground(Color.white);
 		myCompany.setFont(new Font("Serif", Font.ITALIC, 16));
 		myCompany.setBackground(Color.white);
+		
+		
+		JPanel p3 = new JPanel(new BorderLayout());
+		JPanel p4 = new JPanel(new BorderLayout());
+		p3.add(Title, BorderLayout.NORTH);
+		p4.add(myCompany, BorderLayout.NORTH);
+		p4.add(espace, BorderLayout.SOUTH);
+		p3.add(p4, BorderLayout.SOUTH);
+		TableCellRenderer tableRenderer;
 
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		p3.setBackground(Color.white);
+		right.add(p3, BorderLayout.NORTH);
 
-		setResizable(false);
 		setVisible(true);
+		// exit
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
-	// fin
+
+	// list
+
+	ClientToServer connection = new ClientToServer();
+	ArrayList<Map> company_names = General_Services.All_GeneralServices(connection);
+	General_Services my_company = new General_Services(1, " Saisir le nom de votre entreprise.....");
+//
+//	{
+//		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+//		setTitle("Ja-Virtual app");
+//		setSize(new Dimension(450, 450));
+//		setLocationRelativeTo(null);
+//		setLayout(new GridBagLayout());
+//
+//		
+//
+//		this.setVisible(true);
+//		GridBagConstraints c = new GridBagConstraints();
+//		c.insets = new Insets(30, 5, 30, 5);
+//
+//		c.ipadx = 1;
+//		c.ipady = 5;
+//		c.gridx = 0;// set the x location of the grid for the next component
+//		c.gridy = 0;// set the y location of the grid for the next component
+//
+//		c.ipadx = 10;
+//		c.ipady = 10;
+//		c.gridx = 1;// set the x location of the grid for the next component
+//
+//		c.anchor = GridBagConstraints.CENTER;
+//
+//		c.gridy = 30;// change the y location
+//		c.ipadx = 30;
+//		c.ipady = 30;
+//
+//		c.gridy = 6;// change the y location
+//
+//		c.ipadx = 45;
+//		c.ipady = 5;
+//
+//		c.gridy = 40;// change the y location
+//
+//		c.gridy = 8;// change the y location
+//		c.ipadx = 15;
+//		c.ipady = 5;
+//
+//		
+//
+//		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//
+//		setResizable(false);
+//		setVisible(true);
+//
+//	}
+	// end
 
 	public static void main(String[] args) {
 
@@ -366,15 +351,7 @@ public class Mairie extends JFrame implements ActionListener {
 
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		if (e.getActionCommand() == "Calculer") {
-			calculerBouton();
-		}
-	}
-
-	private void calculerBouton() {
+	private void calculer() {
 		
 		AnalyserDao analyserDao = new AnalyserDaoImpl();
 		dgrTemp = analyserDao.degre(connection, my_company.getId_generalservices());
@@ -387,7 +364,7 @@ public class Mairie extends JFrame implements ActionListener {
 				{ "consommation electricite", elec }, { "nombre d'equipements", nbEq },
 				{ "occupation de workspace", occupWs } };
 
-		TableModel tableModel = new DefaultTableModel(valeurs, titre) {
+		TableModel tableModel = new DefaultTableModel(valeurs, title) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 

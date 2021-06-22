@@ -41,7 +41,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("Ereur count equipment");
+			logger.error("Error count equipment");
 		}
 		return null;
 	}
@@ -65,7 +65,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("Erreur count sensors");
+			logger.error("Error count sensors");
 		}
 		return null;
 	}
@@ -90,7 +90,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("Erreurr degre tempurateur");
+			logger.error("Error degree of temperature");
 		}
 		return null;
 	}
@@ -115,7 +115,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("Erreur level lighting");
+			logger.error("Error level lighting");
 		}
 		return null;
 	}
@@ -139,7 +139,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("Erreur nbre workspace available");
+			logger.error("Error number workspace available");
 		}
 		return null;
 	}
