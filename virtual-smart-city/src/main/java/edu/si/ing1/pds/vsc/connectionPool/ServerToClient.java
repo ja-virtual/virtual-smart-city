@@ -1182,7 +1182,7 @@ public class ServerToClient {
 			response.put("name_request", request_name);
 			response.put("data", nb);
 			response_string = mapper.writeValueAsString(response);
-		} else if (request_name.equals("degre_tempurateur")) {
+		} else if (request_name.equals("degree_temperature")) {
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement().executeQuery(
 					"select w.degree from temperature AS w  where  w.id_gs=" + (Integer) data_loading.get("id_gs"));

@@ -21,7 +21,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 
 	private final static Logger logger = LoggerFactory.getLogger(WorkSpace.class.getName());
     
-	public Double nbreEquipment(ClientToServer connection, int id_gs) {
+	public Double numberEquipment(ClientToServer connection, int id_gs) {
 		ArrayList<Map> nbList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
@@ -70,11 +70,11 @@ public class AnalyserDaoImpl implements AnalyserDao {
 		return null;
 	}
 
-	public Double degre(ClientToServer connection, int id_gs) {
+	public Double degree(ClientToServer connection, int id_gs) {
 		ArrayList<Map> degreeList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
-			request.setName_request("degre_tempurateur");
+			request.setName_request("degree_temperature");
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("id_gs", id_gs);
 			request.setData(param);
