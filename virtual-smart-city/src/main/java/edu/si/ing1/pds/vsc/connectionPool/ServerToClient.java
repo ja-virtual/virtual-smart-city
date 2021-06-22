@@ -1204,7 +1204,7 @@ public class ServerToClient {
 			List<Map> level = new ArrayList<Map>();
 			while (rs1.next()) {
 				Map<String, Object> hm = new HashMap<String, Object>();
-				hm.put("level", rs1.getDouble("level"));
+				hm.put("electricity", rs1.getDouble("electricity"));
 				level.add(hm);
 			}
 			rs1.close();

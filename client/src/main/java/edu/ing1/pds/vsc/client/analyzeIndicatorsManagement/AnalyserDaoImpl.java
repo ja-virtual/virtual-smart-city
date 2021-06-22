@@ -46,7 +46,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 		return null;
 	}
 
-	public Double nbConsur(ClientToServer connection, int id_gs) {
+	public Double numberSensor(ClientToServer connection, int id_gs) {
 		ArrayList<Map> nbList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
@@ -95,7 +95,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 		return null;
 	}
 
-	public Double level(ClientToServer connection, int id_gs) {
+	public Double electricity(ClientToServer connection, int id_gs) {
 		ArrayList<Map> levelList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
@@ -110,12 +110,12 @@ public class AnalyserDaoImpl implements AnalyserDao {
 				Map<String, Object> map = levelList.get(0);
 
 				if (map != null && !map.isEmpty()) {
-					return (Double) map.get("level");
+					return (Double) map.get("electricity");
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("Error level lighting");
+			logger.error("Error electricity lighting");
 		}
 		return null;
 	}
