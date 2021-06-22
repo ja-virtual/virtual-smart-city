@@ -14,6 +14,6 @@ public interface AnalyserDao {
 	Double level(ClientToServer connection, int id_gs);
 	
 	
-	Double nbreWorkspaceAvailable(ClientToServer connection, int id_gs);
+	Double numberWorkspaceAvailable(ClientToServer connection, int id_gs);
 
 }

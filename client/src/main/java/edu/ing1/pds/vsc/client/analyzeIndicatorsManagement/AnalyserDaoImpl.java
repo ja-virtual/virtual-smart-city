@@ -120,11 +120,11 @@ public class AnalyserDaoImpl implements AnalyserDao {
 		return null;
 	}
 	
-	public Double nbreWorkspaceAvailable(ClientToServer connection, int id_gs) {
+	public Double numberWorkspaceAvailable(ClientToServer connection, int id_gs) {
 		ArrayList<Map> nbList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
-			request.setName_request("nbre_workspace_available");
+			request.setName_request("number_workspace_available");
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("id_gs", id_gs);
 			request.setData(param);
