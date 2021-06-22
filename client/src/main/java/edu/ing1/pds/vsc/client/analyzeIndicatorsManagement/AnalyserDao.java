@@ -6,8 +6,7 @@ public interface AnalyserDao {
 	Double nbreEquipment(ClientToServer connection, int id_gs);
 	
 	Double nbConsur(ClientToServer connection, int id_gs);
-	
-	Double nbEquipment(ClientToServer connection, int id_gs);
+
 	
 	Double degre(ClientToServer connection, int id_gs);
 	

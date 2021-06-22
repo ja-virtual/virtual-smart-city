@@ -41,7 +41,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("Errrlihkugjgh");
+			logger.error("Ereur count equipment");
 		}
 		return null;
 	}
@@ -56,43 +56,16 @@ public class AnalyserDaoImpl implements AnalyserDao {
 			request.setData(param);
 			Request response = connection.SendRequest(request);
 			nbList = (ArrayList<Map>) response.getData();
-			System.out.println("nbList----" + nbList.size());
 			if (nbList != null && !nbList.isEmpty()) {
 				Map<String, Object> map = nbList.get(0);
 
 				if (map != null && !map.isEmpty()) {
-					System.out.println("++++++" + map.toString());
-					System.out.println("++++++" + map.get("number_sensor"));
 					return (Double) map.get("number_sensor");
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("Errrlihkugjgh");
-		}
-		return null;
-	}
-
-	public Double nbEquipment(ClientToServer connection, int id_gs) {
-		ArrayList<Map> nbList = new ArrayList<Map>();
-		try {
-			Request request = new Request();
-			request.setName_request("count_equipment");
-			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("id_gs", id_gs);
-			request.setData(param);
-			Request response = connection.SendRequest(request);
-			nbList = (ArrayList<Map>) response.getData();
-			if (nbList != null && !nbList.isEmpty()) {
-				Map<String, Object> map = nbList.get(0);
-
-				if (map != null && !map.isEmpty()) {
-					return (Double) map.get("number_equipment");
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("Errrlihkugjgh");
+			logger.error("Erreur count sensors");
 		}
 		return null;
 	}
@@ -112,14 +85,12 @@ public class AnalyserDaoImpl implements AnalyserDao {
 				Map<String, Object> map = degreeList.get(0);
 
 				if (map != null && !map.isEmpty()) {
-					System.out.println("++++++" + map.toString());
-					System.out.println("++++++" + map.get("degree"));
 					return (Double) map.get("degree");
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("Errrlihkugjgh");
+			logger.error("Erreurr degre tempurateur");
 		}
 		return null;
 	}
@@ -144,7 +115,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("Errrlihkugjgh");
+			logger.error("Erreur level lighting");
 		}
 		return null;
 	}
@@ -168,7 +139,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("Errrlihkugjgh");
+			logger.error("Erreur nbre workspace available");
 		}
 		return null;
 	}
