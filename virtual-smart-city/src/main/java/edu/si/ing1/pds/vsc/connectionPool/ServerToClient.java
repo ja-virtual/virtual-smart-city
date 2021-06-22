@@ -1212,7 +1212,7 @@ public class ServerToClient {
 			response.put("name_request", request_name);
 			response.put("data", level);
 			response_string = mapper.writeValueAsString(response);
-		} else if (request_name.equals("number_workspace_available")) {
+		} else if (request_name.equals("nbre_workspace_available")) {
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement()
 					.executeQuery("Select count(*) AS nbWs from workspace where is_available = true AND id_gs ="
