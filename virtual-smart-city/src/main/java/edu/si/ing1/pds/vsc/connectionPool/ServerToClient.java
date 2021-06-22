@@ -30,7 +30,7 @@ public class ServerToClient {
 		String request_name = request.getName_request();
 		System.out.println(request_name);
 		String response_string = "";
-		logger.info("++++++++++++++Send++++++++Response+++++++++++++++++");
+		logger.info("++++++++11111++++++Send++++++++Response+++++++++++++++++");
 		if (request_name.equals("all_rented_workspaces")) {
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where id_gs="
@@ -1215,7 +1215,7 @@ public class ServerToClient {
 		} else if (request_name.equals("nbre_workspace_available")) {
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement()
-					.executeQuery("Select count(*) from workspace where is_available = true AND id_gs ="
+					.executeQuery("Select count(*) AS nbWs from workspace where is_available = true AND id_gs ="
 							+ (Integer) data_loading.get("id_gs"));
 			List<Map> nbWs = new ArrayList<Map>();
 			while (rs1.next()) {

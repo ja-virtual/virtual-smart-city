@@ -17,7 +17,9 @@ import java.awt.event.ActionListener;
 
 public class Mairie extends JFrame {
 
+//bouton
 
+	//
 
 	// private AnalyserDao analyserDao = new AnalyserDaoImpl();
 
@@ -36,7 +38,7 @@ public class Mairie extends JFrame {
 
 	JTable table;
 
-	
+	// liste
 
 	// header of Jtable
 	String title[] = { "Indicateurs", "Taux" };
