@@ -30,7 +30,7 @@ public class ServerToClient {
 		String request_name = request.getName_request();
 		System.out.println(request_name);
 		String response_string = "";
-		logger.info("++++++++11111++++++Send++++++++Response+++++++++++++++++");
+		logger.info("++++++++++++++Send++++++++Response+++++++++++++++++");
 		if (request_name.equals("all_rented_workspaces")) {
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where id_gs="
@@ -1182,7 +1182,7 @@ public class ServerToClient {
 			response.put("name_request", request_name);
 			response.put("data", nb);
 			response_string = mapper.writeValueAsString(response);
-		} else if (request_name.equals("degree_temperature")) {
+		} else if (request_name.equals("degre_tempurateur")) {
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement().executeQuery(
 					"select w.degree from temperature AS w  where  w.id_gs=" + (Integer) data_loading.get("id_gs"));
@@ -1204,7 +1204,7 @@ public class ServerToClient {
 			List<Map> level = new ArrayList<Map>();
 			while (rs1.next()) {
 				Map<String, Object> hm = new HashMap<String, Object>();
-				hm.put("electricity", rs1.getDouble("electricity"));
+				hm.put("level", rs1.getDouble("level"));
 				level.add(hm);
 			}
 			rs1.close();
@@ -1212,10 +1212,10 @@ public class ServerToClient {
 			response.put("name_request", request_name);
 			response.put("data", level);
 			response_string = mapper.writeValueAsString(response);
-		} else if (request_name.equals("number_workspace_available")) {
+		} else if (request_name.equals("nbre_workspace_available")) {
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement()
-					.executeQuery("Select count(*) AS nbWs from workspace where is_available = true AND id_gs ="
+					.executeQuery("Select count(*) from workspace where is_available = true AND id_gs ="
 							+ (Integer) data_loading.get("id_gs"));
 			List<Map> nbWs = new ArrayList<Map>();
 			while (rs1.next()) {

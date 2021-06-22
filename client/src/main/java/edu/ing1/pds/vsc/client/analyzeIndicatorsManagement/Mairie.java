@@ -28,7 +28,7 @@ public class Mairie extends JFrame {
 
 	Color color = new Color(190, 245, 116);
 	private JPanel center = new JPanel();
-	private Double numberSensor;
+	private Double nbCapteur;
 	private Double dgrTemp;
 	private Double occupWs;
 	private Double elec;
@@ -354,13 +354,13 @@ public class Mairie extends JFrame {
 	private void calculer() {
 		
 		AnalyserDao analyserDao = new AnalyserDaoImpl();
-		dgrTemp = analyserDao.degree(connection, my_company.getId_generalservices());
-		numberSensor = analyserDao.numberSensor(connection, my_company.getId_generalservices());
-		elec = analyserDao.electricity(connection, my_company.getId_generalservices());
-		nbEq = analyserDao.numberEquipment(connection, my_company.getId_generalservices());
-		occupWs = analyserDao.numberWorkspaceAvailable(connection, my_company.getId_generalservices());
+		dgrTemp = analyserDao.degre(connection, my_company.getId_generalservices());
+		nbCapteur = analyserDao.nbConsur(connection, my_company.getId_generalservices());
+		elec = analyserDao.level(connection, my_company.getId_generalservices());
+		nbEq = analyserDao.nbreEquipment(connection, my_company.getId_generalservices());
+		occupWs = analyserDao.nbreWorkspaceAvailable(connection, my_company.getId_generalservices());
 
-		Object[][] valeurs = { { "Degre de temperature", dgrTemp }, { "Nombre de capteurs", numberSensor },
+		Object[][] valeurs = { { "Degre de temperature", dgrTemp }, { "Nombre de capteurs", nbCapteur },
 				{ "consommation electricite", elec }, { "nombre d'equipements", nbEq },
 				{ "occupation de workspace", occupWs } };
 

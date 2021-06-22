@@ -21,7 +21,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 
 	private final static Logger logger = LoggerFactory.getLogger(WorkSpace.class.getName());
     
-	public Double numberEquipment(ClientToServer connection, int id_gs) {
+	public Double nbreEquipment(ClientToServer connection, int id_gs) {
 		ArrayList<Map> nbList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
@@ -46,7 +46,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 		return null;
 	}
 
-	public Double numberSensor(ClientToServer connection, int id_gs) {
+	public Double nbConsur(ClientToServer connection, int id_gs) {
 		ArrayList<Map> nbList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
@@ -70,11 +70,11 @@ public class AnalyserDaoImpl implements AnalyserDao {
 		return null;
 	}
 
-	public Double degree(ClientToServer connection, int id_gs) {
+	public Double degre(ClientToServer connection, int id_gs) {
 		ArrayList<Map> degreeList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
-			request.setName_request("degree_temperature");
+			request.setName_request("degre_tempurateur");
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("id_gs", id_gs);
 			request.setData(param);
@@ -95,7 +95,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 		return null;
 	}
 
-	public Double electricity(ClientToServer connection, int id_gs) {
+	public Double level(ClientToServer connection, int id_gs) {
 		ArrayList<Map> levelList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
@@ -110,21 +110,21 @@ public class AnalyserDaoImpl implements AnalyserDao {
 				Map<String, Object> map = levelList.get(0);
 
 				if (map != null && !map.isEmpty()) {
-					return (Double) map.get("electricity");
+					return (Double) map.get("level");
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("Error electricity lighting");
+			logger.error("Error level lighting");
 		}
 		return null;
 	}
 	
-	public Double numberWorkspaceAvailable(ClientToServer connection, int id_gs) {
+	public Double nbreWorkspaceAvailable(ClientToServer connection, int id_gs) {
 		ArrayList<Map> nbList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
-			request.setName_request("number_workspace_available");
+			request.setName_request("nbre_workspace_available");
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("id_gs", id_gs);
 			request.setData(param);
