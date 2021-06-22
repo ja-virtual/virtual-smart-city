@@ -2,63 +2,174 @@ package edu.ing1.pds.vsc.client.analyzeIndicatorsManagement;
 
 
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.ing1.pds.vsc.client.ClientToServer;
+import edu.ing1.pds.vsc.client.Request;
+import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 
 public class AnalyserDaoImpl implements AnalyserDao {
+	
 
-    private Connection getConnection() {
-        Connection connection = null;
-        ConnectDB obj_ConnectDB = new ConnectDB();
-        connection = obj_ConnectDB.get_connection();
-        return connection;
-    }
+	private final static Logger logger = LoggerFactory.getLogger(WorkSpace.class.getName());
     
+	public Double nbreEquipment(ClientToServer connection, int id_gs) {
+		ArrayList<Map> nbList = new ArrayList<Map>();
+		try {
+			Request request = new Request();
+			request.setName_request("count_equipment");
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("id_gs", id_gs);
+			request.setData(param);
+			Request response = connection.SendRequest(request);
+			nbList = (ArrayList<Map>) response.getData();
+			System.out.println("nbList----" + nbList.size());
+			if (nbList != null && !nbList.isEmpty()) {
+				Map<String, Object> map = nbList.get(0);
 
-    @Override
-    public int getNombreCapteurs() {
-        Connection connection = getConnection();
-        try {
+				if (map != null && !map.isEmpty()) {
+					return (Double) map.get("number_equipment");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Errrlihkugjgh");
+		}
+		return null;
+	}
 
-            String query = "select count(*) from capteurs";
-            Statement statemnt = connection.createStatement();
-            ResultSet rs = statemnt.executeQuery(query);
-            while (rs.next()) {
-                return rs.getInt(1);
-                // System.out.println(rs.getString(2));
-            }
-            throw new RuntimeException("Not Found");
+	public Double nbConsur(ClientToServer connection, int id_gs) {
+		ArrayList<Map> nbList = new ArrayList<Map>();
+		try {
+			Request request = new Request();
+			request.setName_request("count_sensors");
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("id_gs", id_gs);
+			request.setData(param);
+			Request response = connection.SendRequest(request);
+			nbList = (ArrayList<Map>) response.getData();
+			System.out.println("nbList----" + nbList.size());
+			if (nbList != null && !nbList.isEmpty()) {
+				Map<String, Object> map = nbList.get(0);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Not Found");
-        }
-    }
+				if (map != null && !map.isEmpty()) {
+					System.out.println("++++++" + map.toString());
+					System.out.println("++++++" + map.get("number_sensor"));
+					return (Double) map.get("number_sensor");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Errrlihkugjgh");
+		}
+		return null;
+	}
 
+	public Double nbEquipment(ClientToServer connection, int id_gs) {
+		ArrayList<Map> nbList = new ArrayList<Map>();
+		try {
+			Request request = new Request();
+			request.setName_request("count_equipment");
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("id_gs", id_gs);
+			request.setData(param);
+			Request response = connection.SendRequest(request);
+			nbList = (ArrayList<Map>) response.getData();
+			if (nbList != null && !nbList.isEmpty()) {
+				Map<String, Object> map = nbList.get(0);
 
+				if (map != null && !map.isEmpty()) {
+					return (Double) map.get("number_equipment");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Errrlihkugjgh");
+		}
+		return null;
+	}
 
-    @Override
-    public int getNombreServices() {
-        Connection connection = getConnection();
-        try {
+	public Double degre(ClientToServer connection, int id_gs) {
+		ArrayList<Map> degreeList = new ArrayList<Map>();
+		try {
+			Request request = new Request();
+			request.setName_request("degre_tempurateur");
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("id_gs", id_gs);
+			request.setData(param);
+			Request response = connection.SendRequest(request);
+			degreeList = (ArrayList<Map>) response.getData();
+			System.out.println("nbList----" + degreeList.size());
+			if (degreeList != null && !degreeList.isEmpty()) {
+				Map<String, Object> map = degreeList.get(0);
 
-            String query = "select count(*) from services";
-            Statement statemnt = connection.createStatement();
-            ResultSet rs = statemnt.executeQuery(query);
-            while (rs.next()) {
-                return rs.getInt(1);
-                // System.out.println(rs.getString(2));
-            }
-            throw new RuntimeException("Not Found");
+				if (map != null && !map.isEmpty()) {
+					System.out.println("++++++" + map.toString());
+					System.out.println("++++++" + map.get("degree"));
+					return (Double) map.get("degree");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Errrlihkugjgh");
+		}
+		return null;
+	}
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Not Found");
-        }
-    }
+	public Double level(ClientToServer connection, int id_gs) {
+		ArrayList<Map> levelList = new ArrayList<Map>();
+		try {
+			Request request = new Request();
+			request.setName_request("level_lighting");
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("id_gs", id_gs);
+			request.setData(param);
+			Request response = connection.SendRequest(request);
+			levelList = (ArrayList<Map>) response.getData();
+			System.out.println("nbList----" + levelList.size());
+			if (levelList != null && !levelList.isEmpty()) {
+				Map<String, Object> map = levelList.get(0);
 
-    public static void main(String[] args) throws Exception {
-        System.out.println("Capteurs : "+new AnalyserDaoImpl().getNombreCapteurs());
+				if (map != null && !map.isEmpty()) {
+					return (Double) map.get("level");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Errrlihkugjgh");
+		}
+		return null;
+	}
+	
+	public Double nbreWorkspaceAvailable(ClientToServer connection, int id_gs) {
+		ArrayList<Map> nbList = new ArrayList<Map>();
+		try {
+			Request request = new Request();
+			request.setName_request("nbre_workspace_available");
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("id_gs", id_gs);
+			request.setData(param);
+			Request response = connection.SendRequest(request);
+			nbList = (ArrayList<Map>) response.getData();
+			if (nbList != null && !nbList.isEmpty()) {
+				Map<String, Object> map = nbList.get(0);
 
-    }
+				if (map != null && !map.isEmpty()) {
+					return (Double) map.get("nbWs");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Errrlihkugjgh");
+		}
+		return null;
+	}
 }

@@ -1239,7 +1239,7 @@ logger.info(rs1.getFetchSize()+"");
 				{
 				Map data_loading=(Map) request.getData();
 				ResultSet rs1 = connection.createStatement()
-						.executeQuery("Select count(*) from workspace where status = 'isAvailable' AND id_gd ="+(Integer)data_loading.get("id_gs"));
+						.executeQuery("Select count(*) from workspace where is_available = true AND id_gs ="+(Integer)data_loading.get("id_gs"));
 				List<Map> nbWs=new ArrayList<Map>();
 				while(rs1.next()) {
 					Map<String,Object> hm=new HashMap<String,Object>();

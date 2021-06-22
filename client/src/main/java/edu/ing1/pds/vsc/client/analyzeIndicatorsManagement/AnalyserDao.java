@@ -1,8 +1,20 @@
 package edu.ing1.pds.vsc.client.analyzeIndicatorsManagement;
 
-public interface AnalyserDao {
-    int getNombreCapteurs();
+import edu.ing1.pds.vsc.client.ClientToServer;
 
-    int getNombreServices();
+public interface AnalyserDao {
+	Double nbreEquipment(ClientToServer connection, int id_gs);
+	
+	Double nbConsur(ClientToServer connection, int id_gs);
+	
+	Double nbEquipment(ClientToServer connection, int id_gs);
+	
+	Double degre(ClientToServer connection, int id_gs);
+	
+	
+	Double level(ClientToServer connection, int id_gs);
+	
+	
+	Double nbreWorkspaceAvailable(ClientToServer connection, int id_gs);
 
 }
