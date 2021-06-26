@@ -41,7 +41,7 @@ public class Mairie extends JFrame {
 	// liste
 
 	// header of Jtable
-	String title[] = { "Indicateurs", "Taux" };
+	String title[] = { "Indicateurs", "Valeurs" };
 
 	// values of Jtable
 
