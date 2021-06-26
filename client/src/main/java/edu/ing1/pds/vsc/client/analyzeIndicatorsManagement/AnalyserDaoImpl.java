@@ -74,7 +74,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 		ArrayList<Map> degreeList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
-			request.setName_request("degre_tempurateu_reqr");
+			request.setName_request("degre_tempurateur_req");
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("id_gs", id_gs);
 			request.setData(param);
