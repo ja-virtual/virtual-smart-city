@@ -25,7 +25,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 		ArrayList<Map> nbList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
-			request.setName_request("count_equipment");
+			request.setName_request("number_equipment_req");
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("id_gs", id_gs);
 			request.setData(param);
@@ -50,7 +50,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 		ArrayList<Map> nbList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
-			request.setName_request("count_sensors");
+			request.setName_request("number_sensor_req");
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("id_gs", id_gs);
 			request.setData(param);
@@ -74,13 +74,12 @@ public class AnalyserDaoImpl implements AnalyserDao {
 		ArrayList<Map> degreeList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
-			request.setName_request("degre_tempurateur");
+			request.setName_request("degre_tempurateu_reqr");
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("id_gs", id_gs);
 			request.setData(param);
 			Request response = connection.SendRequest(request);
 			degreeList = (ArrayList<Map>) response.getData();
-			System.out.println("nbList----" + degreeList.size());
 			if (degreeList != null && !degreeList.isEmpty()) {
 				Map<String, Object> map = degreeList.get(0);
 
@@ -96,26 +95,25 @@ public class AnalyserDaoImpl implements AnalyserDao {
 	}
 
 	public Double power(ClientToServer connection, int id_gs) {
-		ArrayList<Map> levelList = new ArrayList<Map>();
+		ArrayList<Map> powerList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
-			request.setName_request("level_lighting");
+			request.setName_request("power_consumption_req");
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("id_gs", id_gs);
 			request.setData(param);
 			Request response = connection.SendRequest(request);
-			levelList = (ArrayList<Map>) response.getData();
-			System.out.println("nbList----" + levelList.size());
-			if (levelList != null && !levelList.isEmpty()) {
-				Map<String, Object> map = levelList.get(0);
+			powerList = (ArrayList<Map>) response.getData();
+			if (powerList != null && !powerList.isEmpty()) {
+				Map<String, Object> map = powerList.get(0);
 
 				if (map != null && !map.isEmpty()) {
-					return (Double) map.get("level");
+					return (Double) map.get("power_consumption");
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("Error level lighting");
+			logger.error("Error power consumption");
 		}
 		return null;
 	}
@@ -124,7 +122,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 		ArrayList<Map> nbList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
-			request.setName_request("nbre_workspace_available");
+			request.setName_request("nb_workspace_available_req");
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("id_gs", id_gs);
 			request.setData(param);
@@ -134,7 +132,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 				Map<String, Object> map = nbList.get(0);
 
 				if (map != null && !map.isEmpty()) {
-					return (Double) map.get("nbWs");
+					return (Double) map.get("nb_workspace_available");
 				}
 			}
 		} catch (Exception e) {

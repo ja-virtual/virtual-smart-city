@@ -1077,7 +1077,7 @@ public class ServerToClient {
 
 		// Ines's part
 
-		else if (request_name.equals("count_equipment")) {
+		else if (request_name.equals("number_equipment_req")) {
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement()
 					.executeQuery("select count(*) as number_equipment from equipment AS w  where  w.id_gs="
@@ -1093,7 +1093,7 @@ public class ServerToClient {
 			response.put("name_request", request_name);
 			response.put("data", nb);
 			response_string = mapper.writeValueAsString(response);
-		} else if (request_name.equals("count_sensors")) {
+		} else if (request_name.equals("number_sensor_req")) {
 			logger.info("++++++++++++++count_sensors+++++++++++++++++");
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement()
@@ -1111,10 +1111,10 @@ public class ServerToClient {
 			response.put("name_request", request_name);
 			response.put("data", nb);
 			response_string = mapper.writeValueAsString(response);
-		} else if (request_name.equals("degre_tempurateur")) {
+		} else if (request_name.equals("degre_tempurateur_req")) {
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement().executeQuery(
-					"select w.degree from temperature AS w  where  w.id_gs=" + (Integer) data_loading.get("id_gs"));
+					"select w.degree AS degree from temperature AS w  where  w.id_gs=" + (Integer) data_loading.get("id_gs"));
 			List<Map> degree = new ArrayList<Map>();
 			while (rs1.next()) {
 				Map<String, Object> hm = new HashMap<String, Object>();
@@ -1126,15 +1126,15 @@ public class ServerToClient {
 			response.put("name_request", request_name);
 			response.put("data", degree);
 			response_string = mapper.writeValueAsString(response);
-		} else if (request_name.equals("level_lighting")) {
+		} else if (request_name.equals("power_consumption_req")) {
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement().executeQuery(
-					"select SUM(e.power_consumption) from public.equipment as e inner join public.generalservices as gs on gs.id_generalservices = e.id_gs where gs.id_generalservices ="
+					"select SUM(e.power_consumption) AS power_consumption from equipment as e inner join generalservices as gs on gs.id_generalservices = e.id_gs where gs.id_generalservices ="
 					+ (Integer) data_loading.get("id_gs"));
 			List<Map> level = new ArrayList<Map>();
 			while (rs1.next()) {
 				Map<String, Object> hm = new HashMap<String, Object>();
-				hm.put("level", rs1.getDouble("level"));
+				hm.put("power_consumption", rs1.getDouble("power_consumption"));
 				level.add(hm);
 			}
 			rs1.close();
@@ -1142,15 +1142,15 @@ public class ServerToClient {
 			response.put("name_request", request_name);
 			response.put("data", level);
 			response_string = mapper.writeValueAsString(response);
-		} else if (request_name.equals("nbre_workspace_available")) {
+		} else if (request_name.equals("nb_workspace_available_req")) {
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement()
-					.executeQuery("Select count(*) AS nbWs from workspace where is_available = true AND id_gs ="
+					.executeQuery("Select count(*) AS nb_workspace_available from workspace where is_available = true AND id_gs ="
 							+ (Integer) data_loading.get("id_gs"));
 			List<Map> nbWs = new ArrayList<Map>();
 			while (rs1.next()) {
 				Map<String, Object> hm = new HashMap<String, Object>();
-				hm.put("nbWs", rs1.getDouble("nbWs"));
+				hm.put("nb_workspace_available", rs1.getDouble("nb_workspace_available"));
 				nbWs.add(hm);
 			}
 			rs1.close();
