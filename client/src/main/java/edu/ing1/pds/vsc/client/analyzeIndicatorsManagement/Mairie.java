@@ -30,7 +30,7 @@ public class Mairie extends JFrame {
 
 	Color color = new Color(190, 245, 116);
 	private JPanel center = new JPanel();
-	private Double nbCapteur;
+	private Double nbSensor;
 	private Double dgrTemp;
 	private Double occupWs;
 	private Double elec;
@@ -357,12 +357,12 @@ public class Mairie extends JFrame {
 		
 		AnalyserDao analyserDao = new AnalyserDaoImpl();
 		dgrTemp = analyserDao.degre(connection, my_company.getId_generalservices());
-		nbCapteur = analyserDao.nbConsur(connection, my_company.getId_generalservices());
-		elec = analyserDao.level(connection, my_company.getId_generalservices());
-		nbEq = analyserDao.nbreEquipment(connection, my_company.getId_generalservices());
-		occupWs = analyserDao.nbreWorkspaceAvailable(connection, my_company.getId_generalservices());
+		nbSensor = analyserDao.nbSensor(connection, my_company.getId_generalservices());
+		elec = analyserDao.power(connection, my_company.getId_generalservices());
+		nbEq = analyserDao.nbEquipment(connection, my_company.getId_generalservices());
+		occupWs = analyserDao.nbWorkspaceAvailable(connection, my_company.getId_generalservices());
 
-		Object[][] valeurs = { { "Degre de temperature", dgrTemp }, { "Nombre de capteurs", nbCapteur },
+		Object[][] valeurs = { { "Degre de temperature", dgrTemp }, { "Nombre de capteurs", nbSensor },
 				{ "consommation electricite", elec }, { "nombre d'equipements", nbEq },
 				{ "occupation de workspace", occupWs } };
 

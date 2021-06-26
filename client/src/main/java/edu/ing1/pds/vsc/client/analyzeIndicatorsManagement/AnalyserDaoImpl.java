@@ -21,7 +21,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 
 	private final static Logger logger = LoggerFactory.getLogger(WorkSpace.class.getName());
     
-	public Double nbreEquipment(ClientToServer connection, int id_gs) {
+	public Double nbEquipment(ClientToServer connection, int id_gs) {
 		ArrayList<Map> nbList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
@@ -46,7 +46,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 		return null;
 	}
 
-	public Double nbConsur(ClientToServer connection, int id_gs) {
+	public Double nbSensor(ClientToServer connection, int id_gs) {
 		ArrayList<Map> nbList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
@@ -95,7 +95,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 		return null;
 	}
 
-	public Double level(ClientToServer connection, int id_gs) {
+	public Double power(ClientToServer connection, int id_gs) {
 		ArrayList<Map> levelList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
@@ -120,7 +120,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 		return null;
 	}
 	
-	public Double nbreWorkspaceAvailable(ClientToServer connection, int id_gs) {
+	public Double nbWorkspaceAvailable(ClientToServer connection, int id_gs) {
 		ArrayList<Map> nbList = new ArrayList<Map>();
 		try {
 			Request request = new Request();
