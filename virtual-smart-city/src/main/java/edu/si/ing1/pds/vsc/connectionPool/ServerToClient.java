@@ -30,7 +30,7 @@ public class ServerToClient {
 		String request_name = request.getName_request();
 		System.out.println(request_name);
 		String response_string = "";
-		logger.info("++++++++11111++++++Send++++++++Response+++++++++++++++++");
+		logger.info("++++++++++++++Send++++++++Response+++++++++++++++++20210626");
 		if (request_name.equals("all_rented_workspaces")) {
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement().executeQuery("SELECT * FROM workspace where id_gs="
