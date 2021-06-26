@@ -31,17 +31,15 @@ public class AnalyserDaoImpl implements AnalyserDao {
 			request.setData(param);
 			Request response = connection.SendRequest(request);
 			nbList = (ArrayList<Map>) response.getData();
-			System.out.println("nbList----" + nbList.size());
 			if (nbList != null && !nbList.isEmpty()) {
 				Map<String, Object> map = nbList.get(0);
-
 				if (map != null && !map.isEmpty()) {
 					return (Double) map.get("number_equipment");
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("Error count equipment");
+			logger.error("Error number equipment");
 		}
 		return null;
 	}
@@ -65,7 +63,7 @@ public class AnalyserDaoImpl implements AnalyserDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("Error count sensors");
+			logger.error("Error number sensors");
 		}
 		return null;
 	}

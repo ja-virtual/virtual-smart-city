@@ -1078,6 +1078,7 @@ public class ServerToClient {
 		// Ines's part
 
 		else if (request_name.equals("number_equipment_req")) {
+			logger.info("++++++++++++++number_equipment_req+++++++++++++++++");
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement()
 					.executeQuery("select count(*) as number_equipment from equipment AS w  where  w.id_gs="
@@ -1094,7 +1095,7 @@ public class ServerToClient {
 			response.put("data", nb);
 			response_string = mapper.writeValueAsString(response);
 		} else if (request_name.equals("number_sensor_req")) {
-			logger.info("++++++++++++++count_sensors+++++++++++++++++");
+			logger.info("++++++++++++++number_sensor_req+++++++++++++++++");
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement()
 					.executeQuery("select count(*) as number_sensor from sensor AS w  where  w.id_gs="
@@ -1103,7 +1104,6 @@ public class ServerToClient {
 			while (rs1.next()) {
 				Map<String, Object> hm = new HashMap<String, Object>();
 				hm.put("number_sensor", rs1.getDouble("number_sensor"));
-				logger.info("count_sensors--------" + rs1.getDouble("number_sensor"));
 				nb.add(hm);
 			}
 			rs1.close();
@@ -1112,6 +1112,7 @@ public class ServerToClient {
 			response.put("data", nb);
 			response_string = mapper.writeValueAsString(response);
 		} else if (request_name.equals("degre_tempurateur_req")) {
+			logger.info("++++++++++++++degre_tempurateur_req+++++++++++++++++");
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement().executeQuery(
 					"select w.degree AS degree from temperature AS w  where  w.id_gs=" + (Integer) data_loading.get("id_gs"));
@@ -1127,6 +1128,7 @@ public class ServerToClient {
 			response.put("data", degree);
 			response_string = mapper.writeValueAsString(response);
 		} else if (request_name.equals("power_consumption_req")) {
+			logger.info("++++++++++++++power_consumption_req+++++++++++++++++");
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement().executeQuery(
 					"select SUM(e.power_consumption) AS power_consumption from equipment as e inner join generalservices as gs on gs.id_generalservices = e.id_gs where gs.id_generalservices ="
@@ -1143,6 +1145,7 @@ public class ServerToClient {
 			response.put("data", level);
 			response_string = mapper.writeValueAsString(response);
 		} else if (request_name.equals("nb_workspace_available_req")) {
+			logger.info("++++++++++++++nb_workspace_available_req+++++++++++++++++");
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement()
 					.executeQuery("Select count(*) AS nb_workspace_available from workspace where is_available = true AND id_gs ="
