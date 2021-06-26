@@ -44,29 +44,6 @@ public class TemperatureTable {
 		this.id_windows = id_windows;
 	}
 	
-//	public static boolean temperatureDefaultInsertion(ClientToServer connection, int id_gs, int id_eq)
-//	{
-//		ArrayList<Map>none1=new ArrayList<Map>();
-//		//choice = Windows.selection;
-//		try
-//		{
-//			Request request=new Request();
-//			request.setName_request("temp_default_insert");
-//			HashMap<String,Object>param=new HashMap<String,Object>();
-//			param.put("id_windows", id_eq);
-//			request.setData(param);
-//			Request response=connection.SendRequest(request);
-//			none1=(ArrayList<Map>)response.getData();
-//		}catch(Exception e)
-//		{
-//			logger.info("Server is maybe occupied");
-//		}
-//		if(!none1.isEmpty()) 
-//			return (boolean) none1.get(0).get("update_done");
-//			else
-//		return false;
-//		}
-	
 	public static Map degreeFromTemperature(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>degree=new ArrayList<Map>();

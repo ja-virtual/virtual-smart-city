@@ -27,11 +27,7 @@ import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
 		Welcome welcome;
 		Map n;
 		static General_Services company=null;
-		//int id_gs = company.getId_generalservices();
-		//General_Services id_ws = null;
 		ClientToServer connection=new ClientToServer();
-		//Color color=new Color(190,245,116);
-		//Wanted wanted;
 		
 		/**
 		 * 

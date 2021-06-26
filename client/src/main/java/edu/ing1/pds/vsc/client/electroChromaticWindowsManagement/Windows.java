@@ -36,18 +36,11 @@ import edu.ing1.pds.vsc.client.MappingManagement.Equipment;
 		Init init;
 		General_Services company=null;
 		Equipment equipment = null;
-		//int id_gs = company.getId_generalservices();
-		
-		//Connection connect = null;
 		JTable table = new JTable();
 		static JComboBox box = new JComboBox();
 		static int selection;
 		ClientToServer connection=new ClientToServer();
 		
-		//Equipment equipment = new Equipment(1, "Cable", false , false , 1, 1);
-//		
-		//WindowsTable wTable=null;
-		//private WindowsTable my_window = new WindowsTable(1, 20, "Aucun", "Niveau 0", "Aucun", 1);
 		/**
 		 * 
 		 */
@@ -166,7 +159,7 @@ import edu.ing1.pds.vsc.client.MappingManagement.Equipment;
 			}
 			else if (e.getActionCommand() == "Charger mes fenetres") {
 				ArrayList<Map> rs1 = WindowsTable.ownWindows(connection, company.getId_generalservices());
-				//ArrayList<Map> rs2 = WindowsTable.windowsSelected(connection, company.getId_generalservices(), equipment.getId_equipment());
+				
 				if (rs1.isEmpty()) {
 				
 					JOptionPane.showMessageDialog(new JFrame(),"Cet emplacement n'a pas d'equipments de type Fenetre Electro-chromatique"," Ressayer !",JOptionPane.PLAIN_MESSAGE);

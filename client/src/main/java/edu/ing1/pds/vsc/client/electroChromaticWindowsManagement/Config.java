@@ -251,8 +251,6 @@ import edu.ing1.pds.vsc.client.MappingManagement.Sensor;
 								
 						}
 			
-				//}
-			
 			else if (e.getActionCommand() == "Configurer température") {
 				
 			Map window = WindowsTable.getWindow(connection, Windows.selection);
@@ -271,23 +269,24 @@ import edu.ing1.pds.vsc.client.MappingManagement.Sensor;
 									else if (degree>=18 || degree<22 ) {
 										update = WindowsTable.windowsUpdateForTemperatureDegree18_22(connection, id_win, degree);
 									}
-									else if (degree>=22) {
+									else {
 										update = WindowsTable.windowsUpdateForTemperatureDegree22(connection, id_win, degree);
 									}
 								
-											if(update==true)
+											if (update==true) {
 												JOptionPane.showMessageDialog(new JFrame(),
 														" Configuration terminée ! ",
 														" Succès ",
 														JOptionPane.PLAIN_MESSAGE);
-					
-											else
+											}
+												else {
 												JOptionPane.showMessageDialog(new JFrame(),
 														" Aucune modification apportée ",
 														" Echec ",
 														JOptionPane.PLAIN_MESSAGE);
-							}
-				
+												}
+											}
+											
 			else if (e.getActionCommand() == "Actualiser statut") {
 				
 				ArrayList<Map> rs4 = WindowsTable.windowsUpdatedStatus(connection, Windows.selection);

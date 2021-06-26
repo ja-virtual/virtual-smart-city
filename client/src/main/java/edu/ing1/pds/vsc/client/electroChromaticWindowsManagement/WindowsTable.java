@@ -80,15 +80,14 @@ public class WindowsTable {
 		
 	}
 	
-//	public WindowsTable(int selection) {
-//		this.id_equipment = selection;
-//	}
 	public static ArrayList<Map> ownEquipment(ClientToServer connection, int id_gs)
 	{
 		ArrayList<Map>equipment=new ArrayList<Map>();
 		//id_gs = company.
 		try
 		{
+			if(connection.client.isClosed())
+				   connection = new ClientToServer();
 			Request request=new Request();
 			request.setName_request("own_equipment");
 			HashMap<String,Object>param=new HashMap<String,Object>();
@@ -110,6 +109,8 @@ public class WindowsTable {
 		//ArrayList<Map>windows=null;
 		try
 		{
+			if(connection.client.isClosed())
+				   connection = new ClientToServer();
 			Request request=new Request();
 			request.setName_request("own_windows");
 			HashMap<String,Object>param=new HashMap<String,Object>();
@@ -150,38 +151,15 @@ public class WindowsTable {
 	else
 		return null;
 	}
-	
-//	public static boolean windowsDefaultInsertion(ClientToServer connection, int id_gs, int id_eq)
-//	{
-//		ArrayList<Map>none=new ArrayList<Map>();
-//		//Windows.selection = choice ;
-//		try
-//		{
-//			Request request=new Request();
-//			request.setName_request("win_default_insert");
-//			HashMap<String,Object>param=new HashMap<String,Object>();
-//			param.put("id_equipment", id_eq);
-//			request.setData(param);
-//			Request response=connection.SendRequest(request);
-//			none=(ArrayList<Map>)response.getData();
-//		}catch(Exception e)
-//		{
-//			logger.info("Server is maybe occupied");
-//		}
-//		if(!none.isEmpty()) 
-//			return (boolean) none.get(0).get("update_done");
-//			else
-//		return false;
-//		}
-//	
-	
-	
+		
 	public static ArrayList<Map> windowsDefaultStatus(ClientToServer connection, int choice)
 	{
 		ArrayList<Map>defaultStatus=new ArrayList<Map>();
 		//Windows.selection = choice ;
 		try
 		{
+			if(connection.client.isClosed())
+				   connection = new ClientToServer();
 			Request request=new Request();
 			request.setName_request("default_status");
 			HashMap<String,Object>param=new HashMap<String,Object>();

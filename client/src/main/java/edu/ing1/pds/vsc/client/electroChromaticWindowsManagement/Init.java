@@ -174,7 +174,15 @@ import edu.ing1.pds.vsc.client.MappingManagement.WorkSpace;
 				
 				if (rs.isEmpty()) {
 					
-					JOptionPane.showMessageDialog(new JFrame(),"Pas encore d'équipement mappé pour cet emplacement"," Ressayer !",JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Pas encore d'équipement mappé pour cet emplacement"," Ressayer !",
+							JOptionPane.PLAIN_MESSAGE);
+				}
+				else if(rs==null )
+				{
+					JOptionPane.showMessageDialog(new JFrame(),
+							" Pas de location effectuée "," Aucun equipment disponible",
+							JOptionPane.ERROR_MESSAGE);
 				}
 				else {
 						
