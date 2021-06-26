@@ -1115,7 +1115,7 @@ public class ServerToClient {
 			logger.info("++++++++++++++degre_tempurateur_req+++++++++++++++++");
 			Map data_loading = (Map) request.getData();
 			ResultSet rs1 = connection.createStatement().executeQuery(
-					"select w.degree AS degree from temperature AS w  where  w.id_gs=" + (Integer) data_loading.get("id_gs"));
+					"select AVG(t.degree) AS degree from temperature AS t inner join windows as w on t.id_windows = w.id_windows inner join equipment as e on e.id_equipment = w.id_equipment inner join generalservices as gs on gs.id_generalservices = e.id_gs where  gs.id_generalservices =" + (Integer) data_loading.get("id_gs"));
 			List<Map> degree = new ArrayList<Map>();
 			while (rs1.next()) {
 				Map<String, Object> hm = new HashMap<String, Object>();
