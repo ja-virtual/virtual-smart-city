@@ -268,7 +268,7 @@ import edu.ing1.pds.vsc.client.MappingManagement.Sensor;
 									if ( degree < 18 ) {
 										update = WindowsTable.windowsUpdateForTemperatureDegreeLessThan18(connection, id_win, degree);
 									}
-									else if (degree>=18 || degree<22 ) {
+									else if (degree>=18 && degree<22 ) {
 										update = WindowsTable.windowsUpdateForTemperatureDegree18_22(connection, id_win, degree);
 									}
 									else {
