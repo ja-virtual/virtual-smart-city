@@ -200,6 +200,7 @@ import edu.ing1.pds.vsc.client.MappingManagement.Sensor;
 				logger.info(" "+window);
 								
 					Integer id_win = (Integer) window.get("id_windows");
+					System.out.println(id_win);
 							
 					WindowsTable wTab = new WindowsTable ((Integer)window.get("id_windows"),
 							(String) window.get("status"),(Integer)window.get("temperature"),
@@ -255,11 +256,12 @@ import edu.ing1.pds.vsc.client.MappingManagement.Sensor;
 				
 			Map window = WindowsTable.getWindow(connection, Windows.selection);
 				
-					int id_win = (Integer) window.get("id_windows");
+			Integer id_win = (Integer) window.get("id_windows");
 				
 					Map temperature = TemperatureTable.degreeFromTemperature(connection, id_win);
-									
-								int degree = (int) temperature.get("degree");
+						
+								int degree = (Integer) temperature.get("degree");
+								System.out.println(degree);
 														
 								Boolean update = false ; 
 								
